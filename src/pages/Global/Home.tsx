@@ -16,6 +16,10 @@ const Home = () => {
       <Link to="/register">
         <button className="bt">Become a Hunter!</button>
       </Link>
+
+      <Link to="/selected-hunt">
+        <button className="bt">Selected Hunt</button>
+      </Link>
     </>
   );
 };
