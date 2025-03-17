@@ -20,6 +20,10 @@ const Home = () => {
       <Link to="/selected-hunt">
         <button className="bt">Selected Hunt</button>
       </Link>
+
+      <Link to="/admin-dashboard">
+        <button className="bt">Admin Dashboard</button>
+      </Link>
     </>
   );
 };

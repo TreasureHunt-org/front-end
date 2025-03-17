@@ -3,7 +3,7 @@ import square from "/src/assets/square.jpg";
 
 const HuntMapPieces = () => {
   const navigate = useNavigate();
-  const totalPieces = 6;
+  const totalPieces: number = 6;
   const unlockedPieces = 3;
   const pointsCollected = unlockedPieces * 50;
 

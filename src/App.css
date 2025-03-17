@@ -32,10 +32,12 @@
   /* color: #f39c12; */
 }
 
-.menu {
+.navbar .menu {
   display: flex;
+  flex-direction: row;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: nowrap;
 }
 
 .menu a {
@@ -309,7 +311,7 @@ h1 {
 
 /* __________________HuntMapPieces style_____________________________  */
 /* __________________HuntMapPieces style_____________________________  */
-/* __________________Hunt Map Pieces Style_____________________________  */
+/* __________________HuntMapPieces Style_____________________________  */
 .map-pieces-container {
   text-align: center;
   padding: 2rem;
@@ -365,7 +367,6 @@ progress::-webkit-progress-value {
   box-shadow: 0px 0px 15px rgba(243, 156, 18, 0.7);
 }
 
-/* Locked & Unlocked Styles */
 .locked {
   opacity: 0.5;
   filter: grayscale(80%);
@@ -376,7 +377,6 @@ progress::-webkit-progress-value {
   filter: none;
 }
 
-/* Treasure Reveal */
 .treasure {
   margin-top: 2rem;
   padding: 1rem;
@@ -389,7 +389,7 @@ progress::-webkit-progress-value {
   width: 200px;
   margin-top: 1rem;
 }
-/* __________________Navigation Button Style_____________________________  */
+
 .rank-btn {
   margin-top: 2rem;
   padding: 1rem 2rem;
@@ -410,7 +410,6 @@ progress::-webkit-progress-value {
   transform: scale(1.1);
 }
 
-/* __________________Points & Progress Style_____________________________  */
 .points {
   margin-top: 1rem;
   font-size: 1.5rem;
@@ -501,7 +500,6 @@ progress::-webkit-progress-value {
 }
 
 .leaderboard-table tbody tr:hover {
-  /* background-color: #f39c12; */
   cursor: pointer;
 }
 
@@ -543,4 +541,385 @@ progress::-webkit-progress-value {
 .pagination span {
   font-size: 1rem;
   color: #fff;
+}
+/* __________________AdminDashboard style_____________________________  */
+/* __________________AdminDashboard style_____________________________  */
+/* __________________AdminDashboard style_____________________________  */
+
+.admin-dashboard {
+  display: flex;
+  height: 100vh;
+  background-color: #222;
+  color: white;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: #333;
+  /* padding: 0rem; */
+  padding-right: 1rem;
+  display: flex;
+  flex-direction: column;
+  /* gap: 0rem; */
+}
+
+.sidebar .admin-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f39c12;
+  text-align: center;
+  /* margin-bottom: 1rem; */
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  /* gap: 1rem; */
+  /* font-size: 0.3rem; */
+}
+
+.menu .menu-item {
+  /* border: solid #fff 1px;
+  border-radius: 13px; */
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: color 0.3s;
+  padding: 0.5rem;
+  /* margin: 0.1rem; */
+  width: 100%;
+}
+/* .menu .menu-item .arrow {
+  flex-direction: row;
+} */
+
+.menu-item:hover {
+  color: #f39c12;
+}
+.items .menu-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.logout-btn {
+  width: 50%;
+  margin-top: 7.5rem;
+  padding: 0.8rem 0.8rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #e67e22;
+}
+
+/* .logout-icon {
+  font-size: 1.5rem;
+} */
+
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.search-bar {
+  /* position: relative; */
+  padding-left: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background-color: #444;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  /* gap: 0.1rem; */
+  margin-bottom: 1.5rem;
+  width: 450px;
+  height: 45px;
+  justify-content: flex-start;
+}
+
+.search-icon {
+  font-size: 1rem;
+
+  /* position: absolute; */
+
+  /* margin-left: 10px; */
+}
+
+.search-input {
+  margin-bottom: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+  border: none;
+  font-size: 0.9rem;
+
+  /* padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #444;
+  color: white;
+  font-size: 1rem;
+  height: 60px; */
+}
+.search-input:focus {
+  border: none;
+  outline: none;
+}
+
+.content {
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 10px;
+  height: calc(100% - 70px);
+  overflow-y: auto;
+}
+/* __________________MANAGE USERS TABLE style_____________________________  */
+/* __________________MANAGE USERS TABLE style_____________________________  */
+/* __________________MANAGE USERS TABLE style_____________________________  */
+.manage-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem auto;
+  background-color: #333;
+  color: white;
+  text-align: left;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.manage-users-table thead {
+  background-color: #f39c12;
+}
+
+.manage-users-table th,
+.manage-users-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #555;
+}
+
+.manage-users-table th {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.manage-users-table tbody tr:hover {
+  background-color: #444;
+}
+
+.control-btns {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.edit-btn:hover {
+  color: #f39c12;
+  transform: scale(1.1);
+}
+
+.delete-btn:hover {
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+.edit-icon,
+.delete-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.add-btn {
+  border-radius: 20px;
+  padding: 0.5rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 1rem;
+  font-weight: bold;
+  /* position: relative;
+  top: 0.1rem;
+  left: 75px; */
+  width: 10rem;
+  text-align: center;
+}
+.manage-button {
+  border-radius: 20px;
+  padding: 0.9rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 0.8rem;
+  font-weight: bold;
+  width: 6rem;
+  text-align: center;
+}
+
+.manage-button:hover {
+  background-color: #e67e22;
+  transform: scale(1.1);
+}
+
+/* ______________________ */
+/* __________________CREATE HUNT style_____________________________  */
+/* __________________CREATE HUNT style_____________________________  */
+/* __________________CREATE HUNT style_____________________________  */
+
+.create-hunt-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #333;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+.create-hunt-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #f39c12;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.create-hunt-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.create-hunt-form label {
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.create-hunt-form input,
+.create-hunt-form textarea,
+.create-hunt-form select {
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  background-color: #444;
+  color: white;
+}
+
+.create-hunt-form input[type="file"] {
+  padding: 0.6rem;
+}
+
+.create-hunt-form textarea {
+  resize: vertical;
+  height: 150px;
+}
+
+.create-hunt-form .form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-hunt-form .form-group input,
+.create-hunt-form .form-group textarea {
+  width: 100%;
+}
+
+.create-hunt-button {
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+  align-self: center;
+  width: auto;
+}
+
+.create-hunt-button:hover {
+  background-color: #e67e22;
+  transform: scale(1.05);
+}
+
+.create-hunt-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  color: white;
+}
+
+.create-hunt-map .map-container {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #222;
+  position: relative;
+}
+
+.create-hunt-location {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+.create-hunt-location input {
+  width: 60%;
+}
+
+.create-hunt-location button {
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.create-hunt-location button:hover {
+  background-color: #e67e22;
+  transform: scale(1.05);
 }
