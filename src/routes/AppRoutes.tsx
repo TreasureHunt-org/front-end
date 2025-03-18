@@ -19,6 +19,7 @@ import SendAnnouncement from "../pages/Admin/SendAnnouncement";
 import ViewSubmissions from "../pages/Admin/ViewSubmissions";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import ViewFeedback from "../pages/Admin/ViewFeedback";
+import ReviewHunt from "../pages/Reviewer/ReviewHunt";
 const AppRoutes = () => {
   return (
     <>
@@ -45,6 +46,11 @@ const AppRoutes = () => {
           <Route path="view-submissions" element={<ViewSubmissions />} />
           <Route path="view-feedback" element={<ViewFeedback />} />
         </Route>
+
+        {/* <Route path="reviewer-dashboard" element={<ReviewerDashboard />}> */}
+
+        {/* </Route> */}
+        <Route path="review-hunt" element={<ReviewHunt />}></Route>
 
         <Route path="*" element={<NotFound />}></Route>
       </Routes>

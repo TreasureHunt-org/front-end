@@ -17,13 +17,13 @@ const Home = () => {
         <button className="bt">Become a Hunter!</button>
       </Link>
 
-      <Link to="/selected-hunt">
-        <button className="bt">Selected Hunt</button>
-      </Link>
-
-      <Link to="/admin-dashboard">
+      {/* <Link to="/admin-dashboard">
         <button className="bt">Admin Dashboard</button>
       </Link>
+
+      <Link to="/review-hunt">
+        <button className="bt">Review Hunt</button>
+      </Link> */}
     </>
   );
 };
