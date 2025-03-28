@@ -11,11 +11,21 @@ const api = axios.create({
 // Interceptor for adding the Access Token in each request
 api.interceptors.request.use(
   (config) => {
-    const accessToken = localStorage.getItem("accessToken"); // Use accessToken
-    if (accessToken) {
-      console.log("inside request interceptor =>" + accessToken);
-      config.headers.Authorization = accessToken;
+    // Skip adding Authorization header for login and signup endpoints
+    if (
+      config.url &&
+      (config.url.includes("/auth/login") ||
+        config.url.includes("/auth/signup"))
+    ) {
+      return config;
     }
+
+    const accessToken = localStorage.getItem("accessToken"); // Use accessToken
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    config.headers["ngrok-skip-browser-warning"] = true;
     return config;
   },
   (error) => Promise.reject(error),
@@ -30,33 +40,32 @@ api.interceptors.response.use(
       const originalRequest = error.config;
       const refreshToken = localStorage.getItem("refreshToken");
 
-      if (refreshToken) {
-        try {
-          const response = await axios.post(
-            `${API_BASE_URL}/auth/refresh-token`,
-            {
-              refreshToken,
-            },
-          );
+      if (!refreshToken) return Promise.reject(error);
 
-          //TODO get access tokens from response Authorization header
-          const newToken = response.data.data[0].refreshToken; // Expecting new access token
-          localStorage.setItem("refeshToken", newToken); // Store new Access Token
+      try {
+        const response = await axios.post(
+          `${API_BASE_URL}/auth/refresh-token`,
+          {
+            refreshToken,
+          },
+        );
 
-          const accessToken = response.headers["authorization"];
-          // Retry the original request with the new access token
-          originalRequest.headers["Authorization"] = accessToken;
-          return axios(originalRequest);
-        } catch (err) {
-          console.error("Error refreshing token:", err);
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          window.location.href = "/login";
-        }
+        const newToken = response.data.data[0].refreshToken; // Expecting new access token
+        const accessToken = response.data.data[0].accessToken; // Expecting new access token
+
+        localStorage.setItem("refeshToken", newToken); // Store new Access Token
+        localStorage.setItem("accessToken", accessToken); // Store new Access Token
+
+        // Retry the original request with the new access token
+        originalRequest.headers["Authorization"] = `Bearer ${accessToken}`;
+        return axios(originalRequest);
+      } catch (err) {
+        console.error("Error refreshing token:", err);
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+        window.location.href = "/login";
       }
     }
-
-    return Promise.reject(error);
   },
 );
 

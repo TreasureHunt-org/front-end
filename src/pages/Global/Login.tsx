@@ -39,7 +39,7 @@ const Login = () => {
         trimmedData,
       );
 
-      console.log("login successfu:", response.data);
+      console.log("login successfull:", response.data);
 
       // store both tokens
       localStorage.setItem("accessToken", response.data.data[0].accessToken);

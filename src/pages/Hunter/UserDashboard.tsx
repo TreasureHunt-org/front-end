@@ -16,8 +16,8 @@ const UserDashboard = () => {
     const fetchUserData = async () => {
       try {
         const response = await api.get("/auth/me");
-        const user = response.data[0];
-        console.log(response);
+        const user = response.data.data[0];
+        console.log(response.data);
         if (user) {
           setUserData(user);
           // setUserRole(user.roles?.[0] && user.roles?.[1]);
