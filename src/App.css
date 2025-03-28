@@ -2088,3 +2088,19 @@ Afnan Tamimi .bugfix-container {
 .rankingItem .points {
   color: #ffffff;
 }
+
+/* Navbar after login styles */
+.navbar .menu .user-info {
+  display: flex;
+  align-items: center;
+}
+
+.navbar .menu .user-info .avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  /* margin-right: 10px; */
+}
+.navbar .menu .user-info button {
+  margin-left: 40px;
+}

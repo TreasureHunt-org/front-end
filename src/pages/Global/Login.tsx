@@ -39,14 +39,14 @@ const Login = () => {
         trimmedData,
       );
 
-      console.log("login successfull:", response.data);
+      // console.log("login successfull:", response.data);
 
       // store both tokens
       localStorage.setItem("accessToken", response.data.data[0].accessToken);
       localStorage.setItem("refreshToken", response.data.data[0].refreshToken);
 
-      alert("Login successful!");
-      console.log("Navigating to user dashboard...");
+      // alert("Login successful!");
+      // console.log("Navigating to user dashboard...");
 
       navigate("/user-dashboard");
     } catch (error) {

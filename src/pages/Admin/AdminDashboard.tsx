@@ -19,8 +19,8 @@ const AdminDashboard = () => {
             { name: "View Submissions", path: "view-submissions" },
             { name: "View Feedback & Reports", path: "view-feedback" },
           ].map((item) => (
-            <div className="items">
-              <NavLink key={item.path} to={item.path} className="menu-item">
+            <div className="items" key={item.path}>
+              <NavLink to={item.path} className="menu-item">
                 {item.name}
                 <IoMdArrowDropright className="arrow" />
               </NavLink>
@@ -28,10 +28,10 @@ const AdminDashboard = () => {
           ))}
         </nav>
 
-        <button className="logout-btn">
+        {/* <button className="logout-btn">
           <FiLogOut className="logout-icon" />
           Logout
-        </button>
+        </button> */}
       </aside>
 
       <div className="main-content">
