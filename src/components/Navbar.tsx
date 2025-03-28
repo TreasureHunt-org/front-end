@@ -27,7 +27,7 @@ const Navbar = () => {
               className="avatar"
             />
             <span className="username">{user.username}</span>
-            <Link to="/profile">Me</Link>
+            <Link to="/user-dashboard">Me</Link>
             <button
               onClick={() => {
                 localStorage.removeItem("accessToken");
