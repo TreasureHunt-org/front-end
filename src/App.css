@@ -932,7 +932,7 @@ progress::-webkit-progress-value {
 /* __________________ HUNTS style_____________________________  */
 .container {
   padding: 10px;
-  font-family: "Sour Gummy", cursive;
+
   background-color: #1e1e1e;
   color: #ffffff;
   text-align: center;
@@ -942,7 +942,6 @@ progress::-webkit-progress-value {
 .title {
   text-align: center;
   color: #ffffff;
-  font-family: "Sour Gummy", cursive;
 }
 
 .section {
@@ -958,7 +957,6 @@ progress::-webkit-progress-value {
   color: #f39c12;
   border-bottom: 2px solid #444;
   padding-bottom: 10px;
-  font-family: "Sour Gummy", cursive;
   font-size: 24px;
 }
 
@@ -1009,7 +1007,6 @@ progress::-webkit-progress-value {
   background-color: #1e1e1e;
   color: white;
   padding: 20px;
-  font-family: "Sour Gummy", cursive;
   min-height: 100vh;
 }
 
@@ -1044,10 +1041,8 @@ progress::-webkit-progress-value {
 }
 .hunt-info h3 {
   color: #f39c12;
-  font-family: "Sour Gummy", cursive;
 }
 .hunts-selector {
-  font-family: "Sour Gummy", cursive;
   font-size: larger;
   color: #f3f4f3;
   text-align: left;
@@ -1059,7 +1054,6 @@ progress::-webkit-progress-value {
   gap: 10px;
   text-align: center;
   font-size: large;
-  font-family: "Sour Gummy", cursive;
 }
 
 .hunt-details p {
@@ -1127,7 +1121,6 @@ progress::-webkit-progress-value {
   height: 40px;
   padding: 8px;
   font-size: 16px;
-  font-family: "Sour Gummy", cursive;
   color: white;
   background-color: #1e1e1e;
   border: 2px solid #f39c12;
@@ -1161,7 +1154,6 @@ progress::-webkit-progress-value {
   height: 40px;
   padding: 8px;
   font-size: 16px;
-  font-family: "Sour Gummy", cursive;
   color: white;
   background-color: #1e1e1e;
   border: 2px solid #f39c12;
@@ -1217,7 +1209,6 @@ progress::-webkit-progress-value {
   width: 100%;
   height: 100px;
   padding: 10px;
-  font-family: "Sour Gummy", cursive;
   font-size: 16px;
   color: white;
   background-color: #1e1e1e;
@@ -1242,7 +1233,6 @@ progress::-webkit-progress-value {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-family: "Sour Gummy", cursive;
   font-size: 16px;
   transition: background-color 0.3s;
 }
@@ -1391,7 +1381,6 @@ progress::-webkit-progress-value {
 
 .contact-us {
   padding: 20px;
-  font-family: "Sour Gummy", cursive;
   background-color: #1e1e1e;
   color: #ffffff;
   text-align: left;
@@ -1942,7 +1931,6 @@ Afnan Tamimi .bugfix-container {
   color: white;
 }
 
-/* Use existing manage-users-table styles */
 .center {
   text-align: center;
 }
@@ -1982,7 +1970,6 @@ Afnan Tamimi .bugfix-container {
 /* global ranking */
 .container {
   padding: 20px;
-  font-family: "Arial", sans-serif;
   background-color: #1e1e1e;
   color: #ffffff;
   text-align: center;
@@ -1991,7 +1978,6 @@ Afnan Tamimi .bugfix-container {
 .title {
   text-align: center;
   color: #ffffff;
-  font-family: "Georgia", serif;
 }
 
 .section {
@@ -2007,7 +1993,6 @@ Afnan Tamimi .bugfix-container {
   color: #f39c12;
   border-bottom: 2px solid #444;
   padding-bottom: 10px;
-  font-family: "Georgia", serif;
   font-size: 24px;
 }
 

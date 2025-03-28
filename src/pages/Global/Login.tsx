@@ -3,6 +3,7 @@ import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../../constants/API_BASE_URL";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -34,12 +35,19 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://b965-92-253-108-63.ngrok-free.app/api/v1/treasure-hunt/auth/signin",
+        API_BASE_URL + "/auth/signin",
         trimmedData,
       );
 
       console.log("login successfu:", response.data);
+
+      // store both tokens
+      localStorage.setItem("accessToken", response.data.data[0].accessToken);
+      localStorage.setItem("refreshToken", response.data.data[0].refreshToken);
+
       alert("Login successful!");
+      console.log("Navigating to user dashboard...");
+
       navigate("/user-dashboard");
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {

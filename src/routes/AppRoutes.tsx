@@ -1,4 +1,3 @@
-// src/routes/AppRoutes.tsx
 import { Route, Routes } from "react-router-dom";
 import Home from "../pages/Global/Home";
 import Hunts from "../pages/Global/Hunts";
@@ -20,6 +19,10 @@ import ViewSubmissions from "../pages/Admin/ViewSubmissions";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
 import ViewFeedback from "../pages/Admin/ViewFeedback";
 import ReviewHunt from "../pages/Reviewer/ReviewHunt";
+import UserDashboard from "../pages/Hunter/UserDashboard";
+import ProtectedRoute from "../components/ProtectedRoute";
+import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
+
 const AppRoutes = () => {
   return (
     <>
@@ -32,11 +35,17 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/register" element={<Register />}></Route>
         <Route path="/selected-hunt" element={<SelectedHunt />}></Route>
-        <Route path="/hunt-map-pieces" element={<HuntMapPieces />}></Route>
         <Route path="/hunt-ranking" element={<HuntLeaderboard />}></Route>
 
         {/* Admin Routes */}
-        <Route path="admin-dashboard" element={<AdminDashboard />}>
+        <Route
+          path="/admin-dashboard"
+          element={
+            <ProtectedAdminRoute>
+              <AdminDashboard />
+            </ProtectedAdminRoute>
+          }
+        >
           <Route path="manage-users" element={<ManageUsers />} />
           <Route path="manage-hunts" element={<ManageHunts />} />
           <Route path="create-hunt" element={<CreateHunt />} />
@@ -46,6 +55,25 @@ const AppRoutes = () => {
           <Route path="view-submissions" element={<ViewSubmissions />} />
           <Route path="view-feedback" element={<ViewFeedback />} />
         </Route>
+
+        {/* Hunter Routes */}
+        <Route
+          path="/user-dashboard"
+          element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/hunt-map-pieces"
+          element={
+            <ProtectedRoute>
+              <HuntMapPieces />
+            </ProtectedRoute>
+          }
+        ></Route>
 
         {/* <Route path="reviewer-dashboard" element={<ReviewerDashboard />}> */}
 

@@ -3,6 +3,7 @@ import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import API_BASE_URL from "../../constants/API_BASE_URL";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -49,11 +50,13 @@ const Register = () => {
       setError("Passwords don't match!");
       return;
     }
+
     try {
       const response = await axios.post(
-        "https://b965-92-253-108-63.ngrok-free.app/api/v1/treasure-hunt/auth/signup",
+        API_BASE_URL + "/auth/signup",
         formData,
       );
+
       console.log("Response:", response.data);
       alert("Account created successfully!");
       navigate("/login");

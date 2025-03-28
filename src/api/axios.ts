@@ -1,7 +1,5 @@
 import axios from "axios";
-
-const API_BASE_URL =
-  "https://b965-92-253-108-63.ngrok-free.app/api/v1/treasure-hunt";
+import API_BASE_URL from "../constants/API_BASE_URL";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -10,55 +8,55 @@ const api = axios.create({
   },
 });
 
-// Interceptor for adding the token in each request
+// Interceptor for adding the Access Token in each request
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("refreshToken"); // Retrieve the refreshToken
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Add token to request
+    const accessToken = localStorage.getItem("accessToken"); // Use accessToken
+    if (accessToken) {
+      console.log("inside request interceptor =>" + accessToken);
+      config.headers.Authorization = accessToken;
     }
     return config;
   },
-  (error) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(error),
 );
 
-// Interceptor for handling responses, especially for expired tokens
+// Interceptor for handling expired Access Token and refreshing it
 api.interceptors.response.use(
-  (response) => response, // If the response is successful, return it
+  (response) => response,
   async (error) => {
     if (error.response?.status === 401) {
       // Token is likely expired, so attempt to refresh it
       const originalRequest = error.config;
+      const refreshToken = localStorage.getItem("refreshToken");
 
-      try {
-        const refreshToken = localStorage.getItem("refreshToken");
-
-        if (refreshToken) {
-          // Make a request to refresh the token
+      if (refreshToken) {
+        try {
           const response = await axios.post(
             `${API_BASE_URL}/auth/refresh-token`,
-            { refreshToken },
+            {
+              refreshToken,
+            },
           );
 
-          // If refresh is successful, store the new token
-          const newToken = response.data.data[0].refreshToken;
-          localStorage.setItem("refreshToken", newToken);
+          //TODO get access tokens from response Authorization header
+          const newToken = response.data.data[0].refreshToken; // Expecting new access token
+          localStorage.setItem("refeshToken", newToken); // Store new Access Token
 
-          // Retry the original request with the new token
-          originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-          return axios(originalRequest); // Retry the failed request
+          const accessToken = response.headers["authorization"];
+          // Retry the original request with the new access token
+          originalRequest.headers["Authorization"] = accessToken;
+          return axios(originalRequest);
+        } catch (err) {
+          console.error("Error refreshing token:", err);
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.href = "/login";
         }
-      } catch (err) {
-        console.error("Error refreshing token:", err);
-        // Redirect to login page if token refresh fails
-        localStorage.removeItem("refreshToken");
-        window.location.href = "/login";
       }
     }
 
-    return Promise.reject(error); // If it's not a 401 error, reject the promise
+    return Promise.reject(error);
   },
 );
 
