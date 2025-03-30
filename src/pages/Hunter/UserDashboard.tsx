@@ -74,7 +74,7 @@ const UserDashboard: React.FC = () => {
           {role === "REVIEWER" && <ReviewerDashboard />}
         </>
       ) : (
-        <p>No user data available</p>
+        <p>Wait a moment</p>
       )}
     </div>
   );

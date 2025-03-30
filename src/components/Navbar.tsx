@@ -30,23 +30,23 @@ const Navbar = () => {
 
         {isAuthenticated ? (
           <div className="user-info">
-            <div className="username">
-              <img
-                src={user?.avatar || Avatar}
-                alt="User Avatar"
-                className="avatar"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = Avatar;
-                }}
-              />
+            <img
+              src={user?.avatar || Avatar}
+              alt="Avatar"
+              className="avatar"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.src = Avatar;
+              }}
+            />
+
+            <div>
               <Link to="/user-dashboard" className="dashboard-link">
                 {user?.username || "User"}
                 {user?.id}
               </Link>
             </div>
-            <button className="logout-btn" onClick={logout}>
-              <FiLogOut className="logout-icon" />
+            <button className="login-btn" onClick={logout}>
               Logout
             </button>
           </div>

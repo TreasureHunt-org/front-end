@@ -141,7 +141,7 @@
   align-self: center;
   position: relative;
   top: 0.1rem;
-  left: 14rem;
+  left: 18rem;
   box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
   background-color: #333;
 }
@@ -506,10 +506,10 @@ progress::-webkit-progress-value {
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  margin-right: 10px;
+  /* margin-right: 10px; */
 }
 
 .score-bar {

@@ -65,7 +65,7 @@ const Login: React.FC = () => {
       // // const refreshToken = response.data.data[0].refreshToken;
       // localStorage.setItem("refreshToken", refreshToken);
 
-      alert("Login successful!");
+      // alert("Login successful!");
       console.log("Navigating to user dashboard...");
 
       // axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
@@ -82,6 +82,7 @@ const Login: React.FC = () => {
       navigate(
         roles?.includes("ADMIN") ? "/admin-dashboard" : "/user-dashboard",
       );
+      window.location.reload();
     } catch (error: any) {
       console.error("Login error:", error);
 
