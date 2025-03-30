@@ -2,11 +2,11 @@ import { Link } from "react-router-dom";
 import pirateFlag from "../assets/pirate-flag (2).png";
 import "../App.css";
 import Avatar from "/src/assets/user (1).png";
-import { FiLogOut } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
+  const roles = user?.roles;
 
   return (
     <nav className="navbar">
@@ -41,7 +41,16 @@ const Navbar = () => {
             />
 
             <div>
-              <Link to="/user-dashboard" className="dashboard-link">
+              <Link
+                to={
+                  roles?.includes("ADMIN")
+                    ? "/admin-dashboard"
+                    : roles?.includes("REVIEWER")
+                      ? "/reviewer-dashboard"
+                      : "/user-dashboard"
+                }
+                className="dashboard-link"
+              >
                 {user?.username || "User"}
                 {user?.id}
               </Link>

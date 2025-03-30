@@ -2,19 +2,28 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 // ProtectedRoute.tsx
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  inverted?: boolean; // If true, prevents access when logged in
+}
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
-  requiredRole,
+  inverted,
 }) => {
-  const { isAuthenticated, user } = useAuth();
+  const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+  if (inverted) {
+    if (isAuthenticated) {
+      console.log("User is authenticated, redirecting to home.");
 
-  // Check if user has required role (if specified)
-  if (requiredRole && !user?.roles?.includes(requiredRole)) {
-    return <Navigate to="/" replace />;
+      return <Navigate to="/" replace />;
+    }
+  } else {
+    if (!isAuthenticated) {
+      console.log("User is not authenticated, redirecting to login.");
+
+      return <Navigate to="/login" replace />;
+    }
   }
 
   return <>{children}</>;

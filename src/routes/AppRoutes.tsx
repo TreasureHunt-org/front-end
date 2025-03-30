@@ -1,8 +1,6 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Route, Routes } from "react-router-dom";
-import { AuthProvider } from "../context/AuthContext";
 import ProtectedRoute from "../components/ProtectedRoute";
-import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
 import { ROUTES } from "../constants/routes";
 
 // Lazy-loaded components
@@ -44,79 +42,88 @@ const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
 
 const AppRoutes: React.FC = () => {
   return (
-    <AuthProvider>
-      <Routes>
-        {/* Public Routes */}
-        <Route path={ROUTES.HOME} element={<Home />} />
-        <Route path={ROUTES.HUNTS} element={<Hunts />} />
-        <Route path={ROUTES.LEADERBOARD} element={<GlobalLeaderboard />} />
-        <Route path={ROUTES.ABOUT} element={<ContactUs />} />
-        <Route path={ROUTES.LOGIN} element={<Login />} />
-        <Route path={ROUTES.REGISTER} element={<Register />} />
-        <Route path={ROUTES.SELECTED_HUNT} element={<SelectedHunt />} />
-        <Route path={ROUTES.HUNT_RANKING} element={<HuntLeaderboard />} />
+    <Routes>
+      {/* Public Routes */}
+      <Route path={ROUTES.HOME} element={<Home />} />
+      <Route path={ROUTES.HUNTS} element={<Hunts />} />
+      <Route path={ROUTES.LEADERBOARD} element={<GlobalLeaderboard />} />
+      <Route path={ROUTES.ABOUT} element={<ContactUs />} />
+      {
+        // FIXME : Wrap the login and register routes with a ProtectedRoute to prevent access when logged in
+      }
+      <Route
+        path={ROUTES.LOGIN}
+        element={
+          <ProtectedRoute inverted>
+            <Login />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.REGISTER}
+        element={
+          <ProtectedRoute inverted>
+            <Register />
+          </ProtectedRoute>
+        }
+      />
+      <Route path={ROUTES.SELECTED_HUNT} element={<SelectedHunt />} />
+      <Route path={ROUTES.HUNT_RANKING} element={<HuntLeaderboard />} />
 
-        {/* Protected User Routes */}
+      {/* Protected User Routes */}
+      <Route
+        path={ROUTES.USER_DASHBOARD}
+        element={
+          <ProtectedRoute>
+            <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.HUNT_MAP_PIECES}
+        element={
+          <ProtectedRoute>
+            <HuntMapPieces />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Protected Admin Routes */}
+      <Route
+        path={ROUTES.ADMIN_DASHBOARD}
+        element={
+          // <ProtectedAdminRoute>
+          <AdminDashboard />
+          // </ProtectedAdminRoute>
+        }
+      >
+        <Route index element={<ManageHunts />} />
+        <Route path={ROUTES.MANAGE_USERS} element={<ManageUsers />} />
+        <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
+        <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
+        <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
         <Route
-          path={ROUTES.USER_DASHBOARD}
-          element={
-            <ProtectedRoute>
-              <UserDashboard />
-            </ProtectedRoute>
-          }
+          path={ROUTES.CREATE_REVIEWER}
+          element={<CreateReviewerAccount />}
         />
-        <Route
-          path={ROUTES.HUNT_MAP_PIECES}
-          element={
-            <ProtectedRoute>
-              <HuntMapPieces />
-            </ProtectedRoute>
-          }
-        />
+        <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
+        <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
+        <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
+      </Route>
 
-        {/* Protected Admin Routes */}
-        <Route
-          path={ROUTES.ADMIN_DASHBOARD}
-          element={
-            // <ProtectedAdminRoute>
-            <AdminDashboard />
-            // </ProtectedAdminRoute>
-          }
-        >
-          <Route index element={<ManageHunts />} />
-          <Route path={ROUTES.MANAGE_USERS} element={<ManageUsers />} />
-          <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
-          <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
-          <Route
-            path={ROUTES.SEND_ANNOUNCEMENT}
-            element={<SendAnnouncement />}
-          />
-          <Route
-            path={ROUTES.CREATE_REVIEWER}
-            element={<CreateReviewerAccount />}
-          />
-          <Route
-            path={ROUTES.CREATE_HUNTER}
-            element={<CreateHunterAccount />}
-          />
-          <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
-          <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
-        </Route>
+      {/* Protected Reviewer Route */}
+      <Route
+        path={ROUTES.REVIEW_HUNT}
+        element={
+          <ProtectedRoute requiredRole="REVIEWER">
+            <ReviewHunt />
+          </ProtectedRoute>
+        }
+      />
 
-        {/* Protected Reviewer Route */}
-        <Route
-          path={ROUTES.REVIEW_HUNT}
-          element={
-            <ProtectedRoute requiredRole="REVIEWER">
-              <ReviewHunt />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Catch-all Route */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </AuthProvider>
+      {/* Catch-all Route */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 };
 

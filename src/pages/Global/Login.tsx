@@ -79,9 +79,14 @@ const Login: React.FC = () => {
       //   primaryRole === "ADMIN" ? "/admin-dashboard" : "/user-dashboard",
       // );
 
-      navigate(
-        roles?.includes("ADMIN") ? "/admin-dashboard" : "/user-dashboard",
-      );
+      const role = roles?.includes("ADMIN")
+        ? "/admin-dashboard"
+        : roles?.includes("REVIEWER")
+          ? "/reviewer-dashboard"
+          : "/user-dashboard";
+      console.log("=====>Role<====:", role);
+
+      navigate(role);
       window.location.reload();
     } catch (error: any) {
       console.error("Login error:", error);

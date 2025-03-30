@@ -23,8 +23,25 @@ type userRoles = "ADMIN" | "HUNTER" | "ORGANIZER" | "REVIEWER" | "";
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    try {
+      const value = window.localStorage.getItem("user");
+      if (value) {
+        return JSON.parse(value);
+      } else {
+        window.localStorage.setItem("user", "");
+        return null;
+      }
+    } catch {
+      return null;
+    }
+  });
   const [role, setRole] = useState<userRoles>("");
+
+  const setUserState = (user: User | null) => {
+    setUser(user);
+    window.localStorage.setItem("user", !user ? "" : JSON.stringify(user));
+  };
 
   useEffect(() => {
     const initializeAuth = async () => {
@@ -40,7 +57,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
           const userData = response.data.data?.[0] || response.data;
 
           if (userData) {
-            setUser({
+            setUserState({
               id: userData.id,
               username: userData.username,
               email: userData.email,
@@ -76,7 +93,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     // const primaryRole = roles[0] || "HUNTER";
 
     // Update state
-    setUser({
+    setUserState({
       id: userInfo.id,
       username: userInfo.username,
       email: userInfo.email,
@@ -92,7 +109,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     delete api.defaults.headers.common["Authorization"];
-    setUser(null);
+    setUserState(null);
     setRole("");
     window.location.href = "/login";
   };

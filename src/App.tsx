@@ -1,10 +1,11 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import useClickSound from "./hooks/useClickSound";
 import { AuthProvider } from "./context/AuthContext";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { playClickSound } = useClickSound();
@@ -34,6 +35,12 @@ function App() {
           <AppRoutes />
         </BrowserRouter>
       </AuthProvider>
+      <Toaster
+        position="bottom-right"
+        toastOptions={{
+          duration: 3000,
+        }}
+      />
     </>
   );
 }
