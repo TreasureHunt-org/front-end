@@ -4,6 +4,7 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import useClickSound from "./hooks/useClickSound";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const { playClickSound } = useClickSound();
@@ -27,10 +28,12 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
-        <Navbar />
-        <AppRoutes />
-      </BrowserRouter>
+      <AuthProvider>
+        <BrowserRouter>
+          <Navbar />
+          <AppRoutes />
+        </BrowserRouter>
+      </AuthProvider>
     </>
   );
 }

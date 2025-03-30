@@ -1,14 +1,24 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const ProtectedAdminRoute = ({ children }) => {
-  const userRole = localStorage.getItem("role");
-  const token = localStorage.getItem("refreshToken");
+interface ProtectedAdminRouteProps {
+  children: React.ReactNode;
+}
 
-  if (!token || userRole !== "ADMIN") {
-    return <Navigate to="/login" />;
+const ProtectedAdminRoute: React.FC<ProtectedAdminRouteProps> = ({
+  children,
+}) => {
+  const { isAuthenticated, role } = useAuth();
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
-  return children;
+  if (role !== "ADMIN") {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedAdminRoute;

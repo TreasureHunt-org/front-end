@@ -1,88 +1,122 @@
+import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import Home from "../pages/Global/Home";
-import Hunts from "../pages/Global/Hunts";
-import GlobalLeaderboard from "../pages/Global/GlobalLeaderboard";
-import ContactUs from "../pages/Global/ContactUs";
-import Login from "../pages/Global/Login";
-import Register from "../pages/Global/Register";
-import NotFound from "../pages/Global/NotFound";
-import SelectedHunt from "../pages/Global/SelectedHunt";
-import HuntMapPieces from "../pages/Hunter/HuntMapPieces";
-import HuntLeaderboard from "../pages/Global/HuntLeaderboard";
-import CreateHunt from "../pages/Admin/CreateHunt";
-import CreateHunterAccount from "../pages/Admin/CreateHunterAccount";
-import ManageHunts from "../pages/Admin/ManageHunts";
-import CreateReviewerAccount from "../pages/Admin/CreateReviewerAccount";
-import ManageUsers from "../pages/Admin/ManageUsers";
-import SendAnnouncement from "../pages/Admin/SendAnnouncement";
-import ViewSubmissions from "../pages/Admin/ViewSubmissions";
-import AdminDashboard from "../pages/Admin/AdminDashboard";
-import ViewFeedback from "../pages/Admin/ViewFeedback";
-import ReviewHunt from "../pages/Reviewer/ReviewHunt";
-import UserDashboard from "../pages/Hunter/UserDashboard";
+import { AuthProvider } from "../context/AuthContext";
 import ProtectedRoute from "../components/ProtectedRoute";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute";
+import { ROUTES } from "../constants/routes";
 
-const AppRoutes = () => {
+// Lazy-loaded components
+const Home = React.lazy(() => import("../pages/Global/Home"));
+const Hunts = React.lazy(() => import("../pages/Global/Hunts"));
+const GlobalLeaderboard = React.lazy(
+  () => import("../pages/Global/GlobalLeaderboard"),
+);
+const ContactUs = React.lazy(() => import("../pages/Global/ContactUs"));
+const Login = React.lazy(() => import("../pages/Global/Login"));
+const Register = React.lazy(() => import("../pages/Global/Register"));
+const NotFound = React.lazy(() => import("../pages/Global/NotFound"));
+const SelectedHunt = React.lazy(() => import("../pages/Global/SelectedHunt"));
+const HuntLeaderboard = React.lazy(
+  () => import("../pages/Global/HuntLeaderboard"),
+);
+const UserDashboard = React.lazy(() => import("../pages/Hunter/UserDashboard"));
+const HuntMapPieces = React.lazy(() => import("../pages/Hunter/HuntMapPieces"));
+const AdminDashboard = React.lazy(
+  () => import("../pages/Admin/AdminDashboard"),
+);
+const ManageUsers = React.lazy(() => import("../pages/Admin/ManageUsers"));
+const ManageHunts = React.lazy(() => import("../pages/Admin/ManageHunts"));
+const CreateHunt = React.lazy(() => import("../pages/Admin/CreateHunt"));
+const SendAnnouncement = React.lazy(
+  () => import("../pages/Admin/SendAnnouncement"),
+);
+const CreateReviewerAccount = React.lazy(
+  () => import("../pages/Admin/CreateReviewerAccount"),
+);
+const CreateHunterAccount = React.lazy(
+  () => import("../pages/Admin/CreateHunterAccount"),
+);
+const ViewSubmissions = React.lazy(
+  () => import("../pages/Admin/ViewSubmissions"),
+);
+const ViewFeedback = React.lazy(() => import("../pages/Admin/ViewFeedback"));
+const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
+
+const AppRoutes: React.FC = () => {
   return (
-    <>
+    <AuthProvider>
       <Routes>
         {/* Public Routes */}
-        <Route path="/" element={<Home />} />
-        <Route path="/hunts" element={<Hunts />} />
-        <Route path="/leaderboard" element={<GlobalLeaderboard />} />
-        <Route path="/about" element={<ContactUs />} />
-        <Route path="/login" element={<Login />}></Route>
-        <Route path="/register" element={<Register />}></Route>
-        <Route path="/selected-hunt" element={<SelectedHunt />}></Route>
-        <Route path="/hunt-ranking" element={<HuntLeaderboard />}></Route>
+        <Route path={ROUTES.HOME} element={<Home />} />
+        <Route path={ROUTES.HUNTS} element={<Hunts />} />
+        <Route path={ROUTES.LEADERBOARD} element={<GlobalLeaderboard />} />
+        <Route path={ROUTES.ABOUT} element={<ContactUs />} />
+        <Route path={ROUTES.LOGIN} element={<Login />} />
+        <Route path={ROUTES.REGISTER} element={<Register />} />
+        <Route path={ROUTES.SELECTED_HUNT} element={<SelectedHunt />} />
+        <Route path={ROUTES.HUNT_RANKING} element={<HuntLeaderboard />} />
 
-        {/* Admin Routes */}
+        {/* Protected User Routes */}
         <Route
-          path="/admin-dashboard"
-          element={
-            <ProtectedAdminRoute>
-              <AdminDashboard />
-            </ProtectedAdminRoute>
-          }
-        >
-          <Route path="manage-users" element={<ManageUsers />} />
-          <Route path="manage-hunts" element={<ManageHunts />} />
-          <Route path="create-hunt" element={<CreateHunt />} />
-          <Route path="send-announcement" element={<SendAnnouncement />} />
-          <Route path="create-reviewer" element={<CreateReviewerAccount />} />
-          <Route path="create-hunter" element={<CreateHunterAccount />} />
-          <Route path="view-submissions" element={<ViewSubmissions />} />
-          <Route path="view-feedback" element={<ViewFeedback />} />
-        </Route>
-
-        {/* Hunter Routes */}
-        <Route
-          path="/user-dashboard"
+          path={ROUTES.USER_DASHBOARD}
           element={
             <ProtectedRoute>
               <UserDashboard />
             </ProtectedRoute>
           }
         />
-
         <Route
-          path="/hunt-map-pieces"
+          path={ROUTES.HUNT_MAP_PIECES}
           element={
             <ProtectedRoute>
               <HuntMapPieces />
             </ProtectedRoute>
           }
-        ></Route>
+        />
 
-        {/* <Route path="reviewer-dashboard" element={<ReviewerDashboard />}> */}
+        {/* Protected Admin Routes */}
+        <Route
+          path={ROUTES.ADMIN_DASHBOARD}
+          element={
+            // <ProtectedAdminRoute>
+            <AdminDashboard />
+            // </ProtectedAdminRoute>
+          }
+        >
+          <Route index element={<ManageHunts />} />
+          <Route path={ROUTES.MANAGE_USERS} element={<ManageUsers />} />
+          <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
+          <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
+          <Route
+            path={ROUTES.SEND_ANNOUNCEMENT}
+            element={<SendAnnouncement />}
+          />
+          <Route
+            path={ROUTES.CREATE_REVIEWER}
+            element={<CreateReviewerAccount />}
+          />
+          <Route
+            path={ROUTES.CREATE_HUNTER}
+            element={<CreateHunterAccount />}
+          />
+          <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
+          <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
+        </Route>
 
-        {/* </Route> */}
-        <Route path="review-hunt" element={<ReviewHunt />}></Route>
+        {/* Protected Reviewer Route */}
+        <Route
+          path={ROUTES.REVIEW_HUNT}
+          element={
+            <ProtectedRoute requiredRole="REVIEWER">
+              <ReviewHunt />
+            </ProtectedRoute>
+          }
+        />
 
-        <Route path="*" element={<NotFound />}></Route>
+        {/* Catch-all Route */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
-    </>
+    </AuthProvider>
   );
 };
 

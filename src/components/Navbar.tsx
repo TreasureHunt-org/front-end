@@ -2,10 +2,11 @@ import { Link } from "react-router-dom";
 import pirateFlag from "../assets/pirate-flag (2).png";
 import "../App.css";
 import Avatar from "/src/assets/user (1).png";
+import { FiLogOut } from "react-icons/fi";
+import { useAuth } from "../context/AuthContext";
 
 const Navbar = () => {
-  const isLoggedIn = localStorage.getItem("accessToken");
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const { user, logout, isAuthenticated } = useAuth();
 
   return (
     <nav className="navbar">
@@ -14,34 +15,44 @@ const Navbar = () => {
         <h1 className="title">Treasure Hunt</h1>
       </div>
       <div className="menu">
-        <Link to="/">Home</Link>
-        <Link to="/hunts">Hunts</Link>
-        <Link to="/leaderboard">Leaderboard</Link>
-        <Link to="/about">About</Link>
+        <Link to="/" className="menu-link">
+          Home
+        </Link>
+        <Link to="/hunts" className="menu-link">
+          Hunts
+        </Link>
+        <Link to="/leaderboard" className="menu-link">
+          Leaderboard
+        </Link>
+        <Link to="/about" className="menu-link">
+          About
+        </Link>
 
-        {isLoggedIn ? (
+        {isAuthenticated ? (
           <div className="user-info">
-            <img
-              src={user.avatar || Avatar}
-              alt="User Avatar"
-              className="avatar"
-            />
-            <span className="username">{user.username}</span>
-            <Link to="/user-dashboard">Me</Link>
-            <button
-              onClick={() => {
-                localStorage.removeItem("accessToken");
-                localStorage.removeItem("refreshToken");
-
-                window.location.replace("/login");
-              }}
-            >
-              LOGOUT
+            <div className="username">
+              <img
+                src={user?.avatar || Avatar}
+                alt="User Avatar"
+                className="avatar"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = Avatar;
+                }}
+              />
+              <Link to="/user-dashboard" className="dashboard-link">
+                {user?.username || "User"}
+                {user?.id}
+              </Link>
+            </div>
+            <button className="logout-btn" onClick={logout}>
+              <FiLogOut className="logout-icon" />
+              Logout
             </button>
           </div>
         ) : (
-          <Link to="/login">
-            <button>LOGIN</button>
+          <Link to="/login" className="login-link">
+            <button className="login-btn">LOGIN</button>
           </Link>
         )}
       </div>

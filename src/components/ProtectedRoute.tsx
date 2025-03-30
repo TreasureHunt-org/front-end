@@ -1,14 +1,23 @@
 import { Navigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
-const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
-  const token = localStorage.getItem("refreshToken"); // 👈 Check if token exists
+// ProtectedRoute.tsx
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
+  children,
+  requiredRole,
+}) => {
+  const { isAuthenticated, user } = useAuth();
 
-  if (!token) {
-    console.warn("Access denied! Redirecting to login...");
+  if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  return children;
+  // Check if user has required role (if specified)
+  if (requiredRole && !user?.roles?.includes(requiredRole)) {
+    return <Navigate to="/" replace />;
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

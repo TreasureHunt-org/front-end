@@ -1,40 +1,64 @@
-import { useEffect, useState } from "react";
-import api from "../../api/axios";
+import React, { useEffect, useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 import AdminDashboard from "../Admin/AdminDashboard";
-import HunterDashboard from "./HunterDashboard";
+import HunterDashboard from "../Hunter/HunterDashboard";
 import OrganizerDashboard from "../Organizer/OrganizerDashboard";
 import ReviewerDashboard from "../Reviewer/ReviewerDashboard";
+import api from "../../api/axios";
 
-const UserDashboard = () => {
-  interface UserData {
-    id: string;
-    username: string;
-    email: string;
-    roles: string[];
-  }
+interface UserData {
+  id: string;
+  username: string;
+  email: string;
+  roles: string[];
+}
 
-  type UserRole = ["ADMIN" | "HUNTER" | "ORGANIZER" | "REVIEWER"];
-
+const UserDashboard: React.FC = () => {
   const [userData, setUserData] = useState<UserData>();
-  const [userRole, setUserRole] = useState<UserRole>();
+  const { user, role } = useAuth();
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         const response = await api.get("/auth/me");
-        const user = response.data.data[0];
-        console.log(response.data);
-        if (user) {
-          setUserData(user);
-          setUserRole(user.roles);
+
+        console.log("API Response:", response);
+        console.log("Response Status:", response.status);
+
+        if (response.headers["content-type"].includes("text/html")) {
+          setError(
+            "Received an HTML error page. The API might be misconfigured.",
+          );
+          return;
+        }
+
+        if (!response.data || !response.data.data) {
+          setError("User data is not available");
+          return;
+        }
+
+        const user = response.data;
+        if (user.data.length > 0) {
+          setUserData({
+            id: user.data[0].id,
+            username: user.data[0].username,
+            email: user.data[0].email,
+            roles: user.data[0].roles,
+          });
+        } else {
+          setError("User data is empty");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
+        setError("Failed to load user data");
       }
     };
 
     fetchUserData();
-  }, []);
+  }, [user]);
+
+  if (error) return <p className="error">{error}</p>;
 
   return (
     <div className="dashboard">
@@ -42,72 +66,15 @@ const UserDashboard = () => {
         <>
           <h1>Welcome, {userData.username}!</h1>
           <p>Email: {userData.email}</p>
-          <p>Role: {userData.roles[1]}</p>
+          <p>Role: {userData.roles.join(", ")}</p>
 
-          {userRole?.includes("ADMIN") && <AdminDashboard />}
-          {userRole?.includes("HUNTER") && <HunterDashboard />}
-          {userRole?.includes("ORGANIZER") && <OrganizerDashboard />}
-          {userRole?.includes("REVIEWER") && <ReviewerDashboard />}
-
-          {/* {userRole === "ADMIN" && (
-            <>
-              <AdminDashboard />
-            </>
-          )}
-
-          {userRole === "HUNTER" && (
-            <>
-              <HunterDashboard />
-            </> */}
-
-          {/* // <div>
-            //   <h2>Active Hunts</h2>
-            //   {/* <ul>
-            //     {userData.activeHunts.map((hunt) => (
-            //       <li key={hunt.id}>
-            //         <span>{hunt.title}</span> - Status: {hunt.status}
-            //       </li>
-            //     ))}
-            //   </ul>
-            // </div>
-          )} */}
-
-          {/* {userRole === "ORGANIZER" && (
-            <>
-              <OrganizerDashboard />
-            </> }
-            // <div>
-            //   <h2>Your Created Hunts</h2>
-            //   {
-            //   <ul>
-            //     {userData.createdHunts.map((hunt) => (
-            //       <li key={hunt.id}>
-            //         <span>{hunt.title}</span> - Participants:{" "}
-            //         {hunt.participants.length}
-            //       </li>
-            //     ))}
-            //   </ul> }
-            // </div>
-          )}
-
-          {/* <div>
-            <h2>Notifications</h2>
-          </div> */}
-
-          {/* <button
-            className="btn"
-            onClick={() => {
-              localStorage.removeItem("accessToken");
-              localStorage.removeItem("refreshToken");
-
-              window.location.replace("/login");
-            }}
-          >
-            Logout
-          </button> */}
+          {role === "ADMIN" && <AdminDashboard />}
+          {role === "HUNTER" && <HunterDashboard />}
+          {role === "ORGANIZER" && <OrganizerDashboard />}
+          {role === "REVIEWER" && <ReviewerDashboard />}
         </>
       ) : (
-        <p>Loading user data...</p>
+        <p>No user data available</p>
       )}
     </div>
   );
