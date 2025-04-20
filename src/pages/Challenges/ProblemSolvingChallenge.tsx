@@ -1,13 +1,9 @@
 import React from "react";
-import Navbar2 from "../../components/Navbar2";
-import "./ProblemSolvingChallenge.css";
 import { Link } from "react-router-dom";
 
 const ProblemSolvingChallenge = () => {
   return (
     <div className="problem-solving-container">
-      <Navbar2 />
-
       <div className="top-bar">
         <Link to="/Challenges">Back to challenges</Link>
         <Link to="/submit">Submit</Link>

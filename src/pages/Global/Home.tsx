@@ -2,6 +2,7 @@ import pirateMap from "/src/assets/map.png";
 
 import "/src/App.css";
 import { Link } from "react-router-dom";
+import ProblemSolvingChallenge from "../Challenges/ProblemSolvingChallenge";
 
 const Home = () => {
   return (
@@ -24,6 +25,7 @@ const Home = () => {
       <Link to="/review-hunt">
         <button className="bt">Review Hunt</button>
       </Link> */}
+      {/* <ProblemSolvingChallenge /> */}
     </>
   );
 };
