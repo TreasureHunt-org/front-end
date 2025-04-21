@@ -19,7 +19,8 @@ export const ROUTES = {
   MANAGE_HUNTS: "manage-hunts",
   CREATE_HUNT: "create-hunt",
   VIEW_MY_HUNTS: "my-hunts",
-  Create_Challenges: "create-challenges",
+  CREATE_CHALLENGES: "create-challenges/:huntId",
+  // /admin-dashboard/create-challenges/:huntId
   SEND_ANNOUNCEMENT: "send-announcement",
   CREATE_REVIEWER: "create-reviewer",
   CREATE_HUNTER: "create-hunter",

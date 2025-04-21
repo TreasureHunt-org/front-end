@@ -27,6 +27,10 @@ const AdminDashboard = React.lazy(
 const ManageUsers = React.lazy(() => import("../pages/Admin/ManageUsers"));
 const ManageHunts = React.lazy(() => import("../pages/Admin/ManageHunts"));
 const CreateHunt = React.lazy(() => import("../pages/Admin/CreateHunt"));
+const CreateChallenges = React.lazy(
+  () => import("../pages/Admin/CreateChallenges"),
+);
+
 const SendAnnouncement = React.lazy(
   () => import("../pages/Admin/SendAnnouncement"),
 );
@@ -101,6 +105,7 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
 
         <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
+        <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
         <Route path={ROUTES.VIEW_MY_HUNTS} element={<ViewMyHunts />} />
         <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
         <Route
@@ -110,7 +115,8 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
         <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
         <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
-        <Route path={ROUTES.Create_Challenges} element={<CreateChallenges />} />
+        <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
+        {/* <Route path="admin/create-challenges/:huntId" element={<CreateChallenges />} /> */}
       </Route>
 
       {/* Protected Reviewer Route */}

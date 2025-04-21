@@ -3,6 +3,7 @@ import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import API_BASE_URL from "../../constants/API_BASE_URL";
 import { Link } from "react-router-dom";
+// import { ROUTES } from "../../constants/routes";
 // import { Outlet } from "react-router-dom";
 
 const CreateHunt: React.FC = () => {
@@ -87,7 +88,7 @@ const CreateHunt: React.FC = () => {
       {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
       <Link to="/admin-dashboard/my-hunts" className="menu-link">
         <button type="button" className="create-hunt-button">
-          View My Hunts
+          view my hunts
         </button>
       </Link>
 

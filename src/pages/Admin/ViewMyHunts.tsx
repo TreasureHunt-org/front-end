@@ -74,12 +74,12 @@ const ViewMyHunts: React.FC = () => {
     <div className="view-hunts-container">
       <h2 className="view-hunts-title">My Draft Hunts</h2>
 
-      <Link to={ROUTES.CREATE_HUNT}>
-        <button className="btn">Create New Hunt</button>
+      <Link to="/admin-dashboard/create-hunt">
+        <button className="btn">Back</button>
       </Link>
 
       {draftHunts.length === 0 ? (
-        <p>You have no draft hunts.</p>
+        <p>no draft hunts.</p>
       ) : (
         <ul className="hunts-list">
           {draftHunts.map((hunt) => (
@@ -110,8 +110,9 @@ const ViewMyHunts: React.FC = () => {
                 <strong>Location:</strong>
                 {hunt.location.latitude},{hunt.location.longitude}
               </p>
-
-              <button className="btn">Add Challenges</button>
+              <Link to={`/admin-dashboard/create-challenges/${hunt.id}`}>
+                <button className="btn">Add Challenges</button>
+              </Link>
             </li>
           ))}
         </ul>

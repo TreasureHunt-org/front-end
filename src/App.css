@@ -633,7 +633,6 @@ progress::-webkit-progress-value {
 .main-content {
   flex-grow: 1;
   padding: 2rem;
-  overflow-y: auto;
 }
 
 .search-bar {
@@ -686,7 +685,6 @@ progress::-webkit-progress-value {
   padding: 1.5rem;
   border-radius: 10px;
   height: calc(100% - 70px);
-  overflow-y: auto;
 }
 /* __________________MANAGE USERS TABLE style_____________________________  */
 /* __________________MANAGE USERS TABLE style_____________________________  */
@@ -2134,4 +2132,124 @@ Afnan Tamimi .bugfix-container {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* _________________create challenges _______________________ */
+.create-challenges-container {
+  background-color: #333;
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header .title {
+  font-size: 1.8rem;
+  color: #f39c12;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.challenge-form {
+  background-color: #444;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.challenge-form h3 {
+  color: #f39c12;
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+.form-label {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #444;
+  color: white;
+}
+
+.form-textarea {
+  height: 120px;
+  resize: none;
+}
+
+.test-cases-section {
+  margin-top: 1rem;
+}
+
+.test-case-inputs {
+  display: flex;
+  gap: 1rem;
+}
+
+.test-case-input {
+  width: 45%;
+  padding: 0.8rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #444;
+  color: white;
+}
+
+.add-test-case-btn,
+.add-challenge-btn,
+.submit-challenges-btn {
+  background-color: #f39c12;
+  color: white;
+  padding: 0.8rem 2rem;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  width: 100%;
+  max-width: 250px;
+  margin-top: 1rem;
+}
+
+.add-test-case-btn:hover,
+.add-challenge-btn:hover,
+.submit-challenges-btn:hover {
+  background-color: #e67e22;
+  transform: scale(1.05);
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+.challenge-preview-section {
+  margin-top: 2rem;
+}
+.challenge-preview-section div {
+  background-color: #444;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  color: white;
 }
