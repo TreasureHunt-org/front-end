@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROUTES } from "../constants/routes";
+import CreateChallenges from "../pages/Admin/CreateChallenges";
+import ViewMyHunts from "../pages/Admin/ViewMyHunts";
 
 // Lazy-loaded components
 const Home = React.lazy(() => import("../pages/Global/Home"));
@@ -48,9 +50,6 @@ const AppRoutes: React.FC = () => {
       <Route path={ROUTES.HUNTS} element={<Hunts />} />
       <Route path={ROUTES.LEADERBOARD} element={<GlobalLeaderboard />} />
       <Route path={ROUTES.ABOUT} element={<ContactUs />} />
-      {
-        // FIXME : Wrap the login and register routes with a ProtectedRoute to prevent access when logged in
-      }
       <Route
         path={ROUTES.LOGIN}
         element={
@@ -100,7 +99,9 @@ const AppRoutes: React.FC = () => {
         <Route index element={<ManageHunts />} />
         <Route path={ROUTES.MANAGE_USERS} element={<ManageUsers />} />
         <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
+
         <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
+        <Route path={ROUTES.VIEW_MY_HUNTS} element={<ViewMyHunts />} />
         <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
         <Route
           path={ROUTES.CREATE_REVIEWER}
@@ -109,6 +110,7 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
         <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
         <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
+        <Route path={ROUTES.Create_Challenges} element={<CreateChallenges />} />
       </Route>
 
       {/* Protected Reviewer Route */}

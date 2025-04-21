@@ -35,14 +35,14 @@ const AdminDashboard = () => {
       </aside>
 
       <div className="main-content">
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <FiSearch className="search-icon" />
           <input
             type="text"
             placeholder="Search users or hunts..."
             className="search-input"
           />
-        </div>
+        </div> */}
 
         {/* content */}
         <div className="content">

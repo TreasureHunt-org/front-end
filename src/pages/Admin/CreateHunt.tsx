@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import API_BASE_URL from "../../constants/API_BASE_URL";
+import { Link } from "react-router-dom";
+// import { Outlet } from "react-router-dom";
 
 const CreateHunt: React.FC = () => {
   const [huntTitle, setHuntTitle] = useState("");
@@ -82,6 +84,13 @@ const CreateHunt: React.FC = () => {
   return (
     <div className="create-hunt-container">
       <h2 className="create-hunt-title">Create Hunt</h2>
+      {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
+      <Link to="/admin-dashboard/my-hunts" className="menu-link">
+        <button type="button" className="create-hunt-button">
+          View My Hunts
+        </button>
+      </Link>
+
       <form onSubmit={handleCreateHunt} className="create-hunt-form">
         <div className="form-group">
           <label>Title</label>
@@ -166,6 +175,7 @@ const CreateHunt: React.FC = () => {
           Create Hunt
         </button>
       </form>
+      {/* <Outlet /> */}
     </div>
   );
 };
