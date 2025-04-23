@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROUTES } from "../constants/routes";
-import CreateChallenges from "../pages/Admin/CreateChallenges";
+// import CreateChallenges from "../pages/Admin/CreateChallenges";
 import ViewMyHunts from "../pages/Admin/ViewMyHunts";
 
 // Lazy-loaded components

@@ -11,17 +11,14 @@ function App() {
   const { playClickSound } = useClickSound();
 
   useEffect(() => {
-    // Event listener for button clicks to play the click sound
     const handleClick = (event: MouseEvent) => {
       if (event.target instanceof HTMLButtonElement) {
         playClickSound();
       }
     };
 
-    // Attach event listener
     document.addEventListener("click", handleClick);
 
-    // Clean up event listener when the component is unmounted
     return () => {
       document.removeEventListener("click", handleClick);
     };
