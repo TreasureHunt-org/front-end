@@ -2,23 +2,21 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
+import { ArrowLeft, Plus, Trash2 } from "lucide-react";
 
-const challengeTypes = ["CODING", "BUG_FIX", "MINI_GAME"];
+const challengeTypes = ["CODING", "BUGFIX", "GAME"];
 
-interface Location {
-  latitude: number;
-  longitude: number;
-}
-
-interface Hunt {
-  id: number;
+interface ChallengeInput {
+  challengeType: string;
   title: string;
   description: string;
-  organizerId: number;
-  startDate: string;
-  endDate: string;
-  huntStatus: string;
-  location: Location;
+  points: number;
+  challengeCodes: { language: string; code: string }[];
+  optimalSolutions?: { language: string; code: string }[];
+  externalGameUri: string;
+  testCases: { input: string; expectedOutput: string; order: number }[];
+  image: File | null;
+  imagePreview?: string;
 }
 
 const CreateChallenges: React.FC = () => {
@@ -26,61 +24,69 @@ const CreateChallenges: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [fetchedChallenges, setFetchedChallenges] = useState<any[]>([]);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [huntData, setHuntData] = useState<Hunt | null>(null);
-  const [challenges, setChallenges] = useState([
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [challenges, setChallenges] = useState<ChallengeInput[]>([
     {
       challengeType: "",
       title: "",
       description: "",
       points: 0,
-      challengeCode: { language: "JAVA", code: "" },
+      challengeCodes: [{ language: "JAVA", code: "" }],
+      optimalSolutions: [{ language: "JAVA", code: "" }],
       externalGameUri: "",
-      bugDescription: "",
-      expectedBehavior: "",
       testCases: [{ input: "", expectedOutput: "", order: 1 }],
-      image: null as File | null,
+      image: null,
     },
   ]);
+
   useEffect(() => {
-    const fetchChallenges = async () => {
+    const fetchData = async () => {
+      if (!huntId) return;
       try {
-        const response = await api.get(`/hunts/${huntId}/challenges`);
-        setFetchedChallenges(response.data);
+        // Optionally, fetch hunt details
+        // const huntRes = await api.get(`/hunts/${huntId}`);
+        // setHuntData(huntRes.data);
+
+        const challengesRes = await api.get(`/hunts/${huntId}/challenges`);
+        setFetchedChallenges(challengesRes.data || []);
       } catch (error) {
-        console.error("Failed to fetch challenges:", error);
+        console.error("Failed to fetch data:", error);
       }
     };
-
-    if (huntId) fetchChallenges();
+    fetchData();
   }, [huntId]);
 
   const handleAddChallenge = () => {
-    setChallenges([
-      ...challenges,
+    setChallenges((prev) => [
+      ...prev,
       {
         challengeType: "",
         title: "",
         description: "",
         points: 0,
-        challengeCode: { language: "JAVA", code: "" },
+        challengeCodes: [{ language: "JAVA", code: "" }],
+        optimalSolutions: [{ language: "JAVA", code: "" }],
         externalGameUri: "",
-        bugDescription: "",
-        expectedBehavior: "",
         testCases: [{ input: "", expectedOutput: "", order: 1 }],
         image: null,
       },
     ]);
   };
 
+  const handleRemoveChallenge = (index: number) => {
+    setChallenges((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const handleChangeChallengeData = (
     challengeIndex: number,
-    field: string,
+    field: keyof Omit<ChallengeInput, "testCases" | "image" | "imagePreview">,
     value: any,
   ) => {
-    const updatedChallenges = [...challenges];
-    updatedChallenges[challengeIndex][field] = value;
-    setChallenges(updatedChallenges);
+    setChallenges((prev) =>
+      prev.map((challenge, i) =>
+        i === challengeIndex ? { ...challenge, [field]: value } : challenge,
+      ),
+    );
   };
 
   const handleChangeTestCase = (
@@ -89,257 +95,598 @@ const CreateChallenges: React.FC = () => {
     field: "input" | "expectedOutput",
     value: string,
   ) => {
-    const updatedChallenges = [...challenges];
-    updatedChallenges[challengeIndex].testCases[testCaseIndex][field] = value;
-    setChallenges(updatedChallenges);
+    setChallenges((prev) =>
+      prev.map((challenge, i) => {
+        if (i === challengeIndex) {
+          const updatedTestCases = challenge.testCases.map((tc, tci) =>
+            tci === testCaseIndex ? { ...tc, [field]: value } : tc,
+          );
+          return { ...challenge, testCases: updatedTestCases };
+        }
+        return challenge;
+      }),
+    );
+  };
+
+  const handleRemoveTestCase = (
+    challengeIndex: number,
+    testCaseIndex: number,
+  ) => {
+    setChallenges((prev) =>
+      prev.map((challenge, i) => {
+        if (i === challengeIndex) {
+          const updatedTestCases = challenge.testCases
+            .filter((_, tci) => tci !== testCaseIndex)
+            .map((tc, newIndex) => ({ ...tc, order: newIndex + 1 }));
+          return { ...challenge, testCases: updatedTestCases };
+        }
+        return challenge;
+      }),
+    );
   };
 
   const handleAddTestCase = (challengeIndex: number) => {
-    const updatedChallenges = [...challenges];
-    updatedChallenges[challengeIndex].testCases.push({
-      input: "",
-      expectedOutput: "",
-      order: updatedChallenges[challengeIndex].testCases.length + 1,
-    });
-    setChallenges(updatedChallenges);
+    setChallenges((prev) =>
+      prev.map((challenge, i) => {
+        if (i === challengeIndex) {
+          const newTestCase = {
+            input: "",
+            expectedOutput: "",
+            order: challenge.testCases.length + 1,
+          };
+          return {
+            ...challenge,
+            testCases: [...challenge.testCases, newTestCase],
+          };
+        }
+        return challenge;
+      }),
+    );
   };
 
   const handleImageChange = (
     challengeIndex: number,
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
-    const updatedChallenges = [...challenges];
-    if (e.target.files) {
-      updatedChallenges[challengeIndex].image = e.target.files[0];
+    const file = e.target.files?.[0];
+    if (file) {
+      const previewUrl = URL.createObjectURL(file);
+      setChallenges((prev) =>
+        prev.map((challenge, i) =>
+          i === challengeIndex
+            ? { ...challenge, image: file, imagePreview: previewUrl }
+            : challenge,
+        ),
+      );
+      return () => URL.revokeObjectURL(previewUrl);
+    } else {
+      setChallenges((prev) =>
+        prev.map((challenge, i) =>
+          i === challengeIndex
+            ? { ...challenge, image: null, imagePreview: undefined }
+            : challenge,
+        ),
+      );
     }
-    setChallenges(updatedChallenges);
   };
 
   const handleSubmit = async () => {
     if (!isAuthenticated) return alert("Please log in first");
+    if (challenges.some((ch) => !ch.challengeType)) {
+      alert("Please select a challenge type for all challenges.");
+      return;
+    }
+    if (challenges.some((ch) => !ch.image)) {
+      alert("Please upload an image for all challenges.");
+      return;
+    }
 
+    // Validate required fields based on challenge type
+    for (const challenge of challenges) {
+      if (challenge.challengeType === "GAME" && !challenge.externalGameUri) {
+        alert("Please enter an external game URI for all GAME challenges.");
+        return;
+      }
+      if ((challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && 
+          (!challenge.challengeCodes || challenge.challengeCodes.length === 0 || !challenge.challengeCodes[0].code)) {
+        alert("Please enter challenge code for all CODING and BUGFIX challenges.");
+        return;
+      }
+      if (challenge.challengeType === "BUGFIX" && 
+          (!challenge.optimalSolutions || challenge.optimalSolutions.length === 0 || !challenge.optimalSolutions[0].code)) {
+        alert("Please enter optimal solution for all BUGFIX challenges.");
+        return;
+      }
+      if ((challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && 
+          (!challenge.testCases || challenge.testCases.length === 0 || !challenge.testCases[0].input || !challenge.testCases[0].expectedOutput)) {
+        alert("Please enter at least one test case for all CODING and BUGFIX challenges.");
+        return;
+      }
+    }
+
+    setIsSubmitting(true);
     const formData = new FormData();
-    challenges.forEach((challenge) => {
+
+    challenges.forEach((challenge, index) => {
+      // Create a copy of the challenge data
+      const challengeDataToSend = { ...challenge };
+
+      // Remove imagePreview as it's only for UI
+      delete challengeDataToSend.imagePreview;
+
+      // Format data based on challenge type
+      if (challenge.challengeType === "GAME") {
+        // For GAME, we only need externalGameUri
+        delete challengeDataToSend.challengeCodes;
+        delete challengeDataToSend.optimalSolutions;
+        delete challengeDataToSend.testCases;
+      } else if (challenge.challengeType === "CODING") {
+        // For CODING, we need challengeCodes and testCases
+        delete challengeDataToSend.optimalSolutions;
+        delete challengeDataToSend.externalGameUri;
+      } else if (challenge.challengeType === "BUGFIX") {
+        // For BUGFIX, we need challengeCodes, optimalSolutions, and testCases
+        delete challengeDataToSend.externalGameUri;
+      }
+
       formData.append(
-        "challengeData",
-        JSON.stringify({
-          ...challenge,
-          testCases: challenge.testCases,
-        }),
+        `challenges[${index}].challengeData`,
+        JSON.stringify(challengeDataToSend),
       );
-      formData.append("image", challenge.image as Blob);
+      if (challenge.image) {
+        formData.append(`challenges[${index}].image`, challenge.image);
+      }
     });
 
     try {
-      const response = await api.put(`/hunts/${huntId}/challenges`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      await api.put(`/hunts/${huntId}/challenges`, formData);
       alert("Challenges submitted successfully!");
-      setIsSubmitted(true);
-    } catch (error) {
+      // Reset state and refetch challenges
+      setChallenges([
+        {
+          challengeType: "",
+          title: "",
+          description: "",
+          points: 0,
+          challengeCodes: [{ language: "JAVA", code: "" }],
+          optimalSolutions: [{ language: "JAVA", code: "" }],
+          externalGameUri: "",
+          testCases: [{ input: "", expectedOutput: "", order: 1 }],
+          image: null,
+        },
+      ]);
+      const challengesRes = await api.get(`/hunts/${huntId}/challenges`);
+      setFetchedChallenges(challengesRes.data || []);
+    } catch (error: any) {
       console.error("Error adding challenges:", error);
+      alert(
+        `Submission failed: ${error.response?.data?.message || error.message}`,
+      );
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
+  // Cleanup image preview URL on unmount
+  useEffect(() => {
+    return () => {
+      challenges.forEach((challenge) => {
+        if (challenge.imagePreview) {
+          URL.revokeObjectURL(challenge.imagePreview);
+        }
+      });
+    };
+  }, [challenges]);
+
   return (
-    <div className="reviewer-account-container">
-      <div className="reviewer-header">
-        <h2 className="reviewer-title">Create Challenges for Hunt #{huntId}</h2>
-        <button onClick={() => navigate(-1)} className="send-btn">
-          ← Back to Hunt
+    <div className="pb-10">
+      {/* Header */}
+      <div className="mb-6 flex items-center justify-between border-b border-gray-300 pb-4">
+        <h2 className="view-hunts-title">
+          Create Challenges for Hunt #{huntId}
+        </h2>
+        <button
+          onClick={() => navigate(-1)}
+          className="add-btn flex items-center justify-center"
+        >
+          <ArrowLeft size={16} className="mr-2" />
+          Back
         </button>
       </div>
 
-      {huntData && (
-        <div className="hunt-details">
-          <h3>Hunt Details</h3>
-          <p>
-            <strong>Title:</strong> {huntData.title}
-          </p>
-          <p>
-            <strong>Description:</strong> {huntData.description}
-          </p>
-          <p>
-            <strong>Status:</strong> {huntData.huntStatus}
-          </p>
-          <p>
-            <strong>Start Date:</strong>{" "}
-            {new Date(huntData.startDate).toLocaleString()}
-          </p>
-          <p>
-            <strong>End Date:</strong>{" "}
-            {new Date(huntData.endDate).toLocaleString()}
-          </p>
-          <p>
-            <strong>Location:</strong> {huntData.location.latitude},{" "}
-            {huntData.location.longitude}
-          </p>
-        </div>
-      )}
-
-      {challenges.map((challenge, index) => (
-        <form
-          className="reviewer-form"
-          key={index}
-          onSubmit={(e) => e.preventDefault()}
-        >
-          <label htmlFor={`challengeType-${index}`}>Challenge Type</label>
-          <select
-            id={`challengeType-${index}`}
-            value={challenge.challengeType}
-            onChange={(e) =>
-              handleChangeChallengeData(index, "challengeType", e.target.value)
-            }
-            className="reviewer-form-input"
-          >
-            <option value="">Select Challenge Type</option>
-            {challengeTypes.map((type) => (
-              <option key={type} value={type}>
-                {type}
-              </option>
-            ))}
-          </select>
-
-          {challenge.challengeType === "CODING" && (
-            <>
-              <label htmlFor={`title-${index}`}>Challenge Title</label>
-              <input
-                id={`title-${index}`}
-                type="text"
-                value={challenge.title}
-                onChange={(e) =>
-                  handleChangeChallengeData(index, "title", e.target.value)
-                }
-                className="reviewer-form-input"
-              />
-
-              <label htmlFor={`description-${index}`}>
-                Challenge Description
-              </label>
-              <textarea
-                id={`description-${index}`}
-                value={challenge.description}
-                onChange={(e) =>
-                  handleChangeChallengeData(
-                    index,
-                    "description",
-                    e.target.value,
-                  )
-                }
-                className="announcement-textarea"
-                required
-              />
-
-              <label htmlFor={`points-${index}`}>Points</label>
-              <input
-                id={`points-${index}`}
-                type="number"
-                value={challenge.points}
-                onChange={(e) =>
-                  handleChangeChallengeData(index, "points", +e.target.value)
-                }
-                className="reviewer-form-input"
-              />
-
-              <label htmlFor={`challengeCode-${index}`}>Challenge Code</label>
-              <textarea
-                id={`challengeCode-${index}`}
-                value={challenge.challengeCode.code}
-                onChange={(e) =>
-                  handleChangeChallengeData(index, "challengeCode", {
-                    ...challenge.challengeCode,
-                    code: e.target.value,
-                  })
-                }
-                className="announcement-textarea"
-              />
-
-              <label htmlFor={`testCases-${index}`}>Test Cases</label>
-              {challenge.testCases.map((tc, idx) => (
-                <div key={idx} style={{ display: "flex", gap: "1rem" }}>
-                  <input
-                    type="text"
-                    placeholder="Test Case Input"
-                    value={tc.input}
-                    onChange={(e) =>
-                      handleChangeTestCase(index, idx, "input", e.target.value)
-                    }
-                    className="reviewer-form-input"
-                    required
-                  />
-                  <input
-                    type="text"
-                    placeholder="Expected Output"
-                    value={tc.expectedOutput}
-                    onChange={(e) =>
-                      handleChangeTestCase(
-                        index,
-                        idx,
-                        "expectedOutput",
-                        e.target.value,
-                      )
-                    }
-                    className="reviewer-form-input"
-                    required
-                  />
-                </div>
-              ))}
-              <button
-                type="button"
-                onClick={() => handleAddTestCase(index)}
-                className="send-btn"
-              >
-                + Add Test Case
-              </button>
-            </>
-          )}
-
-          {/* {challenge.challengeType === "BUG_FIX" && <></>} */}
-
-          {/* {challenge.challengeType === "MINI_GAME" && (
-            <>
-            </>
-          )} */}
-
-          <label htmlFor={`image-${index}`}>Challenge Image</label>
-          <input
-            id={`image-${index}`}
-            type="file"
-            onChange={(e) => handleImageChange(index, e)}
-            className="reviewer-form-input"
-            required
-          />
-        </form>
-      ))}
-
-      <button type="button" onClick={handleAddChallenge} className="send-btn">
-        + Add Another Challenge
-      </button>
-
-      <button
-        type="button"
-        onClick={handleSubmit}
-        disabled={isSubmitted || challenges.some((ch) => !ch.challengeType)}
-        className="send-btn"
-      >
-        Submit for Review
-      </button>
-
+      {/* Existing Challenges */}
       {fetchedChallenges.length > 0 && (
-        <div className="existing-challenges">
-          <h3>Existing Challenges</h3>
-          <ul>
+        <div className="mb-8 rounded-lg bg-[#333] p-4 text-white shadow">
+          <h3 className="mb-3 text-lg font-semibold">Existing Challenges</h3>
+          <ul className="list-inside list-disc space-y-1">
             {fetchedChallenges.map((ch, index) => (
               <li key={ch.challengeId || index}>
-                <strong>{ch.challengeType}</strong>: {ch.title} - {ch.points}{" "}
-                pts
+                <span className="font-medium">{ch.challengeType}</span>:{" "}
+                {ch.title} ({ch.points} pts)
               </li>
             ))}
           </ul>
         </div>
       )}
+
+      {/* Challenge Forms */}
+      <div className="space-y-6">
+        {challenges.map((challenge, index) => (
+          <div
+            key={index}
+            className="relative rounded-lg border border-gray-600 bg-[#333] p-6 text-white shadow"
+          >
+            {challenges.length > 1 && (
+              <button
+                type="button"
+                onClick={() => handleRemoveChallenge(index)}
+                className="delete-btn absolute top-3 right-3 p-1"
+                aria-label="Remove challenge"
+              >
+                <Trash2 size={16} className="delete-icon" />
+              </button>
+            )}
+            <div className="grid grid-cols-1 gap-4">
+              {/* Challenge Type */}
+              <div className="flex flex-col">
+                <label className="mb-1 text-sm font-semibold">
+                  Challenge Type
+                </label>
+                <select
+                  value={challenge.challengeType}
+                  onChange={(e) =>
+                    handleChangeChallengeData(
+                      index,
+                      "challengeType",
+                      e.target.value,
+                    )
+                  }
+                  className="filter-select rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                >
+                  <option value="">Select Type</option>
+                  {challengeTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Title */}
+              <div className="flex flex-col">
+                <label className="mb-1 text-sm font-semibold">Title</label>
+                <input
+                  type="text"
+                  value={challenge.title}
+                  onChange={(e) =>
+                    handleChangeChallengeData(index, "title", e.target.value)
+                  }
+                  className="rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                  placeholder="Enter challenge title"
+                />
+              </div>
+
+              {/* Description */}
+              <div className="flex flex-col">
+                <label className="mb-1 text-sm font-semibold">
+                  Description
+                </label>
+                <textarea
+                  value={challenge.description}
+                  onChange={(e) =>
+                    handleChangeChallengeData(
+                      index,
+                      "description",
+                      e.target.value,
+                    )
+                  }
+                  className="rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                  placeholder="Enter challenge description"
+                />
+              </div>
+
+              {/* Points */}
+              <div className="flex flex-col">
+                <label className="mb-1 text-sm font-semibold">Points</label>
+                <input
+                  type="number"
+                  value={challenge.points}
+                  onChange={(e) =>
+                    handleChangeChallengeData(
+                      index,
+                      "points",
+                      Number(e.target.value),
+                    )
+                  }
+                  className="rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                  placeholder="0"
+                />
+              </div>
+
+              {/* Conditional fields based on challenge type */}
+              {challenge.challengeType === "GAME" && (
+                <div className="flex flex-col">
+                  <label className="mb-1 text-sm font-semibold">
+                    External Game URI
+                  </label>
+                  <input
+                    type="text"
+                    value={challenge.externalGameUri}
+                    onChange={(e) =>
+                      handleChangeChallengeData(
+                        index,
+                        "externalGameUri",
+                        e.target.value,
+                      )
+                    }
+                    className="rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                    placeholder="Enter external game URI"
+                  />
+                </div>
+              )}
+
+              {(challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && (
+                <div className="flex flex-col">
+                  <label className="mb-1 text-sm font-semibold">
+                    Challenge Code
+                  </label>
+                  {challenge.challengeCodes.map((code, codeIndex) => (
+                    <div key={codeIndex} className="mb-2">
+                      <select
+                        value={code.language}
+                        onChange={(e) => {
+                          const newChallengeCodes = [...challenge.challengeCodes];
+                          newChallengeCodes[codeIndex] = {
+                            ...newChallengeCodes[codeIndex],
+                            language: e.target.value,
+                          };
+                          handleChangeChallengeData(
+                            index,
+                            "challengeCodes",
+                            newChallengeCodes,
+                          );
+                        }}
+                        className="mb-2 w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                      >
+                        <option value="JAVA">Java</option>
+                        <option value="PYTHON">Python</option>
+                        <option value="JAVASCRIPT">JavaScript</option>
+                      </select>
+                      <textarea
+                        value={code.code}
+                        onChange={(e) => {
+                          const newChallengeCodes = [...challenge.challengeCodes];
+                          newChallengeCodes[codeIndex] = {
+                            ...newChallengeCodes[codeIndex],
+                            code: e.target.value,
+                          };
+                          handleChangeChallengeData(
+                            index,
+                            "challengeCodes",
+                            newChallengeCodes,
+                          );
+                        }}
+                        className="w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                        placeholder="Enter code"
+                        rows={5}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {challenge.challengeType === "BUGFIX" && (
+                <div className="flex flex-col">
+                  <label className="mb-1 text-sm font-semibold">
+                    Optimal Solution
+                  </label>
+                  {challenge.optimalSolutions?.map((solution, solutionIndex) => (
+                    <div key={solutionIndex} className="mb-2">
+                      <select
+                        value={solution.language}
+                        onChange={(e) => {
+                          const newOptimalSolutions = [...(challenge.optimalSolutions || [])];
+                          newOptimalSolutions[solutionIndex] = {
+                            ...newOptimalSolutions[solutionIndex],
+                            language: e.target.value,
+                          };
+                          handleChangeChallengeData(
+                            index,
+                            "optimalSolutions",
+                            newOptimalSolutions,
+                          );
+                        }}
+                        className="mb-2 w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                      >
+                        <option value="JAVA">Java</option>
+                        <option value="PYTHON">Python</option>
+                        <option value="JAVASCRIPT">JavaScript</option>
+                      </select>
+                      <textarea
+                        value={solution.code}
+                        onChange={(e) => {
+                          const newOptimalSolutions = [...(challenge.optimalSolutions || [])];
+                          newOptimalSolutions[solutionIndex] = {
+                            ...newOptimalSolutions[solutionIndex],
+                            code: e.target.value,
+                          };
+                          handleChangeChallengeData(
+                            index,
+                            "optimalSolutions",
+                            newOptimalSolutions,
+                          );
+                        }}
+                        className="w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                        placeholder="Enter optimal solution code"
+                        rows={5}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Test Cases - Only show for CODING and BUGFIX */}
+              {(challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && (
+                <div className="w-full">
+                  <h4 className="mb-2 text-sm font-semibold">Test Cases</h4>
+                  {challenge.testCases.map((tc, tcIndex) => (
+                    <div key={tcIndex} className="mb-2 flex items-center gap-3">
+                      <input
+                        type="text"
+                        value={tc.input}
+                        onChange={(e) =>
+                          handleChangeTestCase(
+                            index,
+                            tcIndex,
+                            "input",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="Input"
+                        className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                      />
+                      <input
+                        type="text"
+                        value={tc.expectedOutput}
+                        onChange={(e) =>
+                          handleChangeTestCase(
+                            index,
+                            tcIndex,
+                            "expectedOutput",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="Expected Output"
+                        className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                      />
+                      {challenge.testCases.length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveTestCase(index, tcIndex)}
+                          className="delete-btn p-1"
+                          aria-label="Remove test case"
+                        >
+                          <Trash2 size={16} className="delete-icon" />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                  <div>
+                    <button
+                      type="button"
+                      onClick={() => handleAddTestCase(index)}
+                      className="flex p-2 rounded-full items-center justify-start bg-[#f39c12]"
+                    >
+                      <Plus size={16}  />
+                      Add Test Case
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* File Upload for Image */}
+              <div className="flex flex-col">
+                <label className="mb-1 text-sm font-semibold">
+                  Upload Image
+                </label>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleImageChange(index, e)}
+                  className="rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                />
+                {challenge.imagePreview && (
+                  <img
+                    src={challenge.imagePreview}
+                    alt="Preview"
+                    className="mt-2 h-24 rounded object-cover"
+                  />
+                )}
+              </div>
+
+              {/* Test Cases */}
+              <div className="w-full">
+                <h4 className="mb-2 text-sm font-semibold">Test Cases</h4>
+                {challenge.testCases.map((tc, tcIndex) => (
+                  <div key={tcIndex} className="mb-2 flex items-center gap-3">
+                    <input
+                      type="text"
+                      value={tc.input}
+                      onChange={(e) =>
+                        handleChangeTestCase(
+                          index,
+                          tcIndex,
+                          "input",
+                          e.target.value,
+                        )
+                      }
+                      placeholder="Input"
+                      className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                    />
+                    <input
+                      type="text"
+                      value={tc.expectedOutput}
+                      onChange={(e) =>
+                        handleChangeTestCase(
+                          index,
+                          tcIndex,
+                          "expectedOutput",
+                          e.target.value,
+                        )
+                      }
+                      placeholder="Expected Output"
+                      className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                    />
+                    {challenge.testCases.length > 1 && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveTestCase(index, tcIndex)}
+                        className="delete-btn p-1"
+                        aria-label="Remove test case"
+                      >
+                        <Trash2 size={16} className="delete-icon" />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                <div>
+                  <button
+                    type="button"
+                    onClick={() => handleAddTestCase(index)}
+                    className="flex p-2 rounded-full items-center justify-start bg-[#f39c12]"
+                  >
+                    <Plus size={16}  />
+                    Add Test Case
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        {/* Add New Challenge Button */}
+        <div className="w-full flex justify-between">
+
+        <button
+          type="button"
+          onClick={handleAddChallenge}
+          className="add-btn inline-flex items-center"
+        >
+          <Plus size={16} className="mr-2" />
+          Add Challenge
+        </button>
+
+          <button
+            type="button"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            className="add-btn w-full py-3 text-lg font-bold disabled:opacity-50"
+          >
+            {isSubmitting ? "Submitting..." : "Submit All Challenges"}
+          </button>
+        </div>
+      </div>
+
     </div>
   );
 };

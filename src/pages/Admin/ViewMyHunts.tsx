@@ -3,51 +3,46 @@ import api from "../../api/axios";
 import { useAuth } from "../../context/AuthContext";
 import API_BASE_URL from "../../constants/API_BASE_URL";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
+import { FaEdit } from "react-icons/fa";
+import { Hunt, PageResponse } from "../../types.ts";
 
-interface Location {
-  latitude: number;
-  longitude: number;
-}
-
-interface Hunt {
-  id: number;
-  title: string;
-  description: string;
-  organizerId: number;
-  startDate: string;
-  endDate: string;
-  huntStatus: string;
-  location: Location;
-}
 
 const ViewMyHunts: React.FC = () => {
-  const [draftHunts, setDraftHunts] = useState<Hunt[]>([]);
+  const [hunts, setHunts] = useState<Hunt[]>([]);
+  const [pageData, setPageData] = useState<PageResponse | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(10);
+  const [sortDirection, setSortDirection] = useState<string>("ASC");
+  const [status, setStatus] = useState<string>("DRAFT");
 
   const { isAuthenticated } = useAuth();
 
   const accessToken = localStorage.getItem("accessToken");
 
+  const fetchMyHunts = async () => {
+    if (!isAuthenticated || !accessToken) return;
+
+    try {
+      api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+      const response = await api.get(API_BASE_URL + "/hunts/me", {
+        params: {
+          page: currentPage,
+          size: pageSize,
+          direction: sortDirection,
+          status: status
+        }
+      });
+
+      setPageData(response.data);
+      setHunts(response.data.content || []);
+    } catch (err) {
+      console.error("Error fetching hunts:", err);
+    }
+  };
+
   useEffect(() => {
-    const fetchMyHunts = async () => {
-      if (!isAuthenticated || !accessToken) return;
-
-      try {
-        api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-        const response = await api.get(API_BASE_URL + "/hunts/me");
-
-        const allHunts: Hunt[] = response.data.content || [];
-        const draftOnly = allHunts.filter(
-          (hunt) => hunt.huntStatus === "DRAFT",
-        );
-        setDraftHunts(draftOnly);
-      } catch (err) {
-        console.error("Error fetching hunts:", err);
-      }
-    };
-
     fetchMyHunts();
-  }, [isAuthenticated, accessToken]);
+  }, [isAuthenticated, accessToken, currentPage, pageSize, sortDirection, status]);
 
   if (!isAuthenticated) {
     return <div>Please log in to view your hunts</div>;
@@ -67,55 +62,129 @@ const ViewMyHunts: React.FC = () => {
     if (hours > 0) parts.push(`${hours} hour${hours > 1 ? "s" : ""}`);
     if (minutes > 0) parts.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
 
-    return parts.length > 0 ? parts.join(", ") : "0 minutes";
+    return parts.length > 0 ? parts.join(", ") : "N/A";
+  };
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStatus(e.target.value);
+    setCurrentPage(0); // Reset to first page when changing status
+  };
+
+  const handleDirectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortDirection(e.target.value);
+    setCurrentPage(0); // Reset to first page when changing sort direction
+  };
+
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 0 && (!pageData || newPage < pageData.totalPages)) {
+      setCurrentPage(newPage);
+    }
   };
 
   return (
-    <div className="view-hunts-container">
-      <h2 className="view-hunts-title">My Draft Hunts</h2>
+    <div className="table-container">
+      {/*<h2 className="view-hunts-title">My Hunts</h2>*/}
 
-      <Link to="/admin-dashboard/create-hunt">
-        <button className="btn">Back</button>
-      </Link>
+      <div className="filters-container">
+        <div className="filter-group">
+          <label htmlFor="status-filter">Status:</label>
+          <select 
+            id="status-filter" 
+            value={status} 
+            onChange={handleStatusChange}
+            className="filter-select"
+          >
+            <option value="DRAFT">Draft</option>
+            <option value="UNDER_REVIEW">Under Review</option>
+            <option value="LIVE">Live</option>
+            <option value="FINISHED">Finished</option>
+            <option value="TERMINATED">Terminated</option>
+          </select>
+        </div>
 
-      {draftHunts.length === 0 ? (
-        <p>no draft hunts.</p>
+        <div className="filter-group">
+          <label htmlFor="sort-direction">Sort Direction:</label>
+          <select 
+            id="sort-direction" 
+            value={sortDirection} 
+            onChange={handleDirectionChange}
+            className="filter-select"
+          >
+            <option value="ASC">Ascending</option>
+            <option value="DESC">Descending</option>
+          </select>
+        </div>
+
+        <div style={{ marginLeft: 'auto' }}>
+          <Link to="/admin-dashboard/create-hunt">
+            <button className="add-btn">Create New Hunt</button>
+          </Link>
+        </div>
+      </div>
+
+      {hunts.length === 0 ? (
+        <p>No hunts found with the selected filters.</p>
       ) : (
-        <ul className="hunts-list">
-          {draftHunts.map((hunt) => (
-            <li key={hunt.id} className="hunt-item">
-              <h3>
-                <strong>Title:</strong>
-                {hunt.title}
-              </h3>
-              <p>
-                <strong>Description:</strong> {hunt.description}
-              </p>
-              <p>
-                <strong>Start:</strong>{" "}
-                {new Date(hunt.startDate).toLocaleString()}
-              </p>
-              <p>
-                <strong>End:</strong> {new Date(hunt.endDate).toLocaleString()}
-              </p>
-              <p>
-                <strong>Duration:</strong>{" "}
-                {calculateDuration(hunt.startDate, hunt.endDate)}
-              </p>
+        <table className="manage-users-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Duration</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {hunts.map((hunt, index) => (
+              <tr key={hunt.id}>
+                <td>{index + 1}</td>
+                <td>{hunt.title}</td>
+                <td>{hunt.description.length > 50 ? 
+                  `${hunt.description.substring(0, 50)}...` : 
+                  hunt.description}
+                </td>
+                <td>{hunt.startDate ? new Date(hunt.startDate).toLocaleString(): 'N/A'}</td>
+                <td>{hunt.endDate ? new Date(hunt.endDate).toLocaleString(): 'N/A'}</td>
+                <td>{calculateDuration(hunt.startDate, hunt.endDate)}</td>
+                <td >
+                  {hunt.huntStatus.replace('_', ' ')}
+                </td>
+                <td className="control-btns">
+                  <button className="edit-btn">
+                    <FaEdit className="edit-icon" />
+                  </button>
+                  <Link to={`/admin-dashboard/create-challenges/${hunt.id}`}>
+                    <button className="manage-button">Add Challenges</button>
+                  </Link>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
 
-              <p>
-                <strong>Status:</strong> {hunt.huntStatus}
-              </p>
-              <p>
-                <strong>Location:</strong>
-                {hunt.location.latitude},{hunt.location.longitude}
-              </p>
-              <Link to={`/admin-dashboard/create-challenges/${hunt.id}`}>
-                <button className="btn">Add Challenges</button>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      {pageData && (
+        <div className="pagination">
+          <button 
+            onClick={() => handlePageChange(currentPage - 1)} 
+            disabled={currentPage === 0}
+          >
+            Prev
+          </button>
+          <span>
+            Page {currentPage + 1} of {pageData.totalPages || 1}
+          </span>
+          <button 
+            onClick={() => handlePageChange(currentPage + 1)} 
+            disabled={pageData.last}
+          >
+            Next
+          </button>
+        </div>
       )}
     </div>
   );

@@ -44,6 +44,15 @@ const ViewSubmissions = React.lazy(
   () => import("../pages/Admin/ViewSubmissions"),
 );
 const ViewFeedback = React.lazy(() => import("../pages/Admin/ViewFeedback"));
+const OrganizerDashboard = React.lazy(
+  () => import("../pages/Organizer/OrganizerDashboard"),
+);
+const OrganizerCreateHunt = React.lazy(
+  () => import("../pages/Organizer/CreateHunt"),
+);
+const OrganizerViewMyHunts = React.lazy(
+  () => import("../pages/Organizer/ViewMyHunts"),
+);
 const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
 
 const AppRoutes: React.FC = () => {
@@ -119,11 +128,25 @@ const AppRoutes: React.FC = () => {
         {/* <Route path="admin/create-challenges/:huntId" element={<CreateChallenges />} /> */}
       </Route>
 
+      {/* Protected Organizer Routes */}
+      <Route
+        path={ROUTES.ORGANIZER_DASHBOARD}
+        element={
+          <ProtectedRoute>
+            <OrganizerDashboard />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<OrganizerCreateHunt />} />
+        <Route path={ROUTES.ORGANIZER_CREATE_HUNT} element={<OrganizerCreateHunt />} />
+        <Route path={ROUTES.ORGANIZER_VIEW_MY_HUNTS} element={<OrganizerViewMyHunts />} />
+      </Route>
+
       {/* Protected Reviewer Route */}
       <Route
         path={ROUTES.REVIEW_HUNT}
         element={
-          <ProtectedRoute requiredRole="REVIEWER">
+          <ProtectedRoute >
             <ReviewHunt />
           </ProtectedRoute>
         }

@@ -27,6 +27,11 @@ export const ROUTES = {
   VIEW_SUBMISSIONS: "view-submissions/:huntId",
   VIEW_FEEDBACK: "view-feedback",
 
+  // Organizer routes
+  ORGANIZER_DASHBOARD: "/organizer-dashboard",
+  ORGANIZER_CREATE_HUNT: "create-hunt",
+  ORGANIZER_VIEW_MY_HUNTS: "my-hunts",
+
   // Reviewer routes
   REVIEW_HUNT: "/review-hunt/:submissionId",
 };

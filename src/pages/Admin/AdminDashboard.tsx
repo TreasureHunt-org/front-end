@@ -1,5 +1,4 @@
 import { NavLink, Outlet } from "react-router-dom";
-import { FiLogOut, FiSearch } from "react-icons/fi";
 import { IoMdArrowDropright } from "react-icons/io";
 
 const AdminDashboard = () => {
@@ -12,6 +11,7 @@ const AdminDashboard = () => {
           {[
             { name: "Manage Users", path: "manage-users" },
             { name: "Manage Hunts", path: "manage-hunts" },
+            { name: "My Hunts", path: "my-hunts" },
             { name: "Create a Hunt", path: "create-hunt" },
             { name: "Send Announcement", path: "send-announcement" },
             { name: "Create Reviewer Account", path: "create-reviewer" },
@@ -45,9 +45,9 @@ const AdminDashboard = () => {
         </div> */}
 
         {/* content */}
-        <div className="content">
+        {/*<div className="content">*/}
           <Outlet />
-        </div>
+        {/*</div>*/}
       </div>
     </div>
   );
