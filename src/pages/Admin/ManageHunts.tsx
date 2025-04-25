@@ -40,39 +40,43 @@ const ManageHunts = () => {
     fetchMyHunts();
   }, [isAuthenticated, currentPage, pageSize, sortDirection, status]);
 
+  const handleEditButtonClick = () => {
+    // TODO navigate the edit page with the hunt id
+
+  }
+
   return (
     <div className="table-container">
       <table className="manage-users-table">
-        <thead>
-          <tr>
+        <thead className={'w-full'}>
+          <tr className={'text-left'}>
             <th>#</th>
             <th>Title</th>
             <th>Status</th>
-            <th>Participants</th>
             <th>Start Date</th>
             <th>End Date</th>
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className={'w-full'}>
           {hunts.map((item, index) => (
-            <tr key={item.id}>
+            <tr key={item.id} className={'text-left'}>
               <td>{index + 1}</td>
               <td>{item.title}</td>
               <td >
                 {item.huntStatus}
               </td>
-              <td>{item.startDate}</td>
-              <td>{item.endDate}</td>
+              <td>{item.startDate ?? "N/A"}</td>
+              <td>{item.endDate ?? "N/A"}</td>
               <td className="control-btns">
-                <button className="edit-btn">
+                <button className="edit-btn" onClick={handleEditButtonClick}>
                   <FaEdit className="edit-icon" />
                 </button>
                 {/* <button className="delete-btn">
                   <FaTrash className="delete-icon" />
                 </button> */}
-                <button className="manage-button">Submissions</button>
-                <button className="manage-button">Terminate</button>
+                {/*<button className="manage-button">Submissions</button>*/}
+                {/*<button className="manage-button">Terminate</button>*/}
               </td>
             </tr>
           ))}

@@ -230,11 +230,11 @@ const CreateChallenges: React.FC = () => {
       }
 
       formData.append(
-        `challenges[${index}].challengeData`,
+        `challengeData`,
         JSON.stringify(challengeDataToSend),
       );
       if (challenge.image) {
-        formData.append(`challenges[${index}].image`, challenge.image);
+        formData.append(`image`, challenge.image);
       }
     });
 
@@ -278,6 +278,19 @@ const CreateChallenges: React.FC = () => {
     };
   }, [challenges]);
 
+
+  const handleSubmitForReview = async () => {
+    // this should be a POST request to submit the hunt for review
+    // huntId
+    const resp = await api.put(`/hunts/${huntId}`)
+    if(resp.status === 200) {
+      alert("Hunt submitted for review");
+    }
+    else{
+      alert("Error submitting hunt for review");
+    }
+  }
+
   return (
     <div className="pb-10">
       {/* Header */}
@@ -285,13 +298,13 @@ const CreateChallenges: React.FC = () => {
         <h2 className="view-hunts-title">
           Create Challenges for Hunt #{huntId}
         </h2>
-        <button
-          onClick={() => navigate(-1)}
-          className="add-btn flex items-center justify-center"
-        >
-          <ArrowLeft size={16} className="mr-2" />
-          Back
-        </button>
+        {/*<button*/}
+        {/*  onClick={() => navigate(-1)}*/}
+        {/*  className="add-btn flex items-center justify-center"*/}
+        {/*>*/}
+        {/*  <ArrowLeft size={16} className="mr-2" />*/}
+        {/*  Back*/}
+        {/*</button>*/}
       </div>
 
       {/* Existing Challenges */}
@@ -599,66 +612,9 @@ const CreateChallenges: React.FC = () => {
                   <img
                     src={challenge.imagePreview}
                     alt="Preview"
-                    className="mt-2 h-24 rounded object-cover"
+                    className="mt-2 h-52 rounded object-contain"
                   />
                 )}
-              </div>
-
-              {/* Test Cases */}
-              <div className="w-full">
-                <h4 className="mb-2 text-sm font-semibold">Test Cases</h4>
-                {challenge.testCases.map((tc, tcIndex) => (
-                  <div key={tcIndex} className="mb-2 flex items-center gap-3">
-                    <input
-                      type="text"
-                      value={tc.input}
-                      onChange={(e) =>
-                        handleChangeTestCase(
-                          index,
-                          tcIndex,
-                          "input",
-                          e.target.value,
-                        )
-                      }
-                      placeholder="Input"
-                      className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
-                    />
-                    <input
-                      type="text"
-                      value={tc.expectedOutput}
-                      onChange={(e) =>
-                        handleChangeTestCase(
-                          index,
-                          tcIndex,
-                          "expectedOutput",
-                          e.target.value,
-                        )
-                      }
-                      placeholder="Expected Output"
-                      className="flex-1 rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
-                    />
-                    {challenge.testCases.length > 1 && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveTestCase(index, tcIndex)}
-                        className="delete-btn p-1"
-                        aria-label="Remove test case"
-                      >
-                        <Trash2 size={16} className="delete-icon" />
-                      </button>
-                    )}
-                  </div>
-                ))}
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => handleAddTestCase(index)}
-                    className="flex p-2 rounded-full items-center justify-start bg-[#f39c12]"
-                  >
-                    <Plus size={16}  />
-                    Add Test Case
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -682,7 +638,15 @@ const CreateChallenges: React.FC = () => {
             disabled={isSubmitting}
             className="add-btn w-full py-3 text-lg font-bold disabled:opacity-50"
           >
-            {isSubmitting ? "Submitting..." : "Submit All Challenges"}
+            {isSubmitting ? "Saving..." : "Save Challenges"}
+          </button>
+          <button
+            type="button"
+            onClick={handleSubmitForReview}
+            disabled={isSubmitting}
+            className="add-btn w-full py-3 text-lg font-bold disabled:opacity-50"
+          >
+            {isSubmitting ? "Submitting..." : "Submit for review"}
           </button>
         </div>
       </div>

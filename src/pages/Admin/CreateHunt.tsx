@@ -91,7 +91,7 @@ const CreateHunt: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center">
+    <div className="w-full flex flex-col justify-center items-center pb-10">
       <h2 className="create-hunt-title">Create Hunt</h2>
       {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
       {

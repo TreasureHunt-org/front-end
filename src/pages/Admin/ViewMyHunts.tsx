@@ -143,8 +143,8 @@ const ViewMyHunts: React.FC = () => {
               <tr key={hunt.id}>
                 <td>{index + 1}</td>
                 <td>{hunt.title}</td>
-                <td>{hunt.description.length > 50 ? 
-                  `${hunt.description.substring(0, 50)}...` : 
+                <td>{hunt.description.length > 20 ?
+                  `${hunt.description.substring(0, 20)}...` :
                   hunt.description}
                 </td>
                 <td>{hunt.startDate ? new Date(hunt.startDate).toLocaleString(): 'N/A'}</td>
