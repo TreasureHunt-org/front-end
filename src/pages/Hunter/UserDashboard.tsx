@@ -18,14 +18,6 @@ const UserDashboard: React.FC = () => {
   const { user, role } = useAuth();
   const [error, setError] = useState("");
 
-  // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     window.location.reload();
-  //   }, 2000);
-
-  //   return () => clearTimeout(timeoutId);
-  // }, []);
-
   useEffect(() => {
     const fetchUserData = async () => {
       try {
