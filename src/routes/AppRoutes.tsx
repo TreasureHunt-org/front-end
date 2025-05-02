@@ -53,7 +53,7 @@ const OrganizerCreateHunt = React.lazy(
 const OrganizerViewMyHunts = React.lazy(
   () => import("../pages/Organizer/ViewMyHunts"),
 );
-const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
+// const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
 
 const AppRoutes: React.FC = () => {
   return (
@@ -143,14 +143,14 @@ const AppRoutes: React.FC = () => {
       </Route>
 
       {/* Protected Reviewer Route */}
-      <Route
-        path={ROUTES.REVIEW_HUNT}
-        element={
-          <ProtectedRoute >
-            <ReviewHunt />
-          </ProtectedRoute>
-        }
-      />
+      {/*<Route*/}
+      {/*  path={ROUTES.REVIEW_HUNT}*/}
+      {/*  element={*/}
+      {/*    <ProtectedRoute >*/}
+      {/*      <ReviewHunt />*/}
+      {/*    </ProtectedRoute>*/}
+      {/*  }*/}
+      {/*/>*/}
 
       {/* Catch-all Route */}
       <Route path="*" element={<NotFound />} />

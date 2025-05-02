@@ -81,8 +81,8 @@ const Login: React.FC = () => {
 
       const role = roles?.includes("ADMIN")
         ? "/admin-dashboard"
-        : roles?.includes("REVIEWER")
-          ? "/reviewer-dashboard"
+        // : roles?.includes("REVIEWER")
+        //   ? "/reviewer-dashboard"
           : "/user-dashboard";
       console.log("=====>Role<====:", role);
 

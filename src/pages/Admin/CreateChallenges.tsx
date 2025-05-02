@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import api from "../../api/axios";
-import { ArrowLeft, Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 
 const challengeTypes = ["CODING", "BUGFIX", "GAME"];
 
@@ -21,7 +21,6 @@ interface ChallengeInput {
 
 const CreateChallenges: React.FC = () => {
   const { huntId } = useParams<{ huntId: string }>();
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [fetchedChallenges, setFetchedChallenges] = useState<any[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -207,7 +206,7 @@ const CreateChallenges: React.FC = () => {
     setIsSubmitting(true);
     const formData = new FormData();
 
-    challenges.forEach((challenge, index) => {
+    challenges.forEach((challenge) => {
       // Create a copy of the challenge data
       const challengeDataToSend = { ...challenge };
 
@@ -217,15 +216,23 @@ const CreateChallenges: React.FC = () => {
       // Format data based on challenge type
       if (challenge.challengeType === "GAME") {
         // For GAME, we only need externalGameUri
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         delete challengeDataToSend.challengeCodes;
         delete challengeDataToSend.optimalSolutions;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         delete challengeDataToSend.testCases;
       } else if (challenge.challengeType === "CODING") {
         // For CODING, we need challengeCodes and testCases
         delete challengeDataToSend.optimalSolutions;
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         delete challengeDataToSend.externalGameUri;
       } else if (challenge.challengeType === "BUGFIX") {
         // For BUGFIX, we need challengeCodes, optimalSolutions, and testCases
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
         delete challengeDataToSend.externalGameUri;
       }
 
