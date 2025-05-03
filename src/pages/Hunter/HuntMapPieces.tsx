@@ -7,6 +7,11 @@ const HuntMapPieces = () => {
   const unlockedPieces = 3;
   const pointsCollected = unlockedPieces * 50;
 
+  //check if it is live or not
+  //{
+
+  //}
+
   return (
     <div className="map-pieces-container">
       {/* Timer */}

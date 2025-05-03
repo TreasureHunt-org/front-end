@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { Hunt, PageResponse } from "../../types.ts";
 
-
 const ViewMyHunts: React.FC = () => {
   const [hunts, setHunts] = useState<Hunt[]>([]);
   const [pageData, setPageData] = useState<PageResponse | null>(null);
@@ -29,8 +28,8 @@ const ViewMyHunts: React.FC = () => {
           page: currentPage,
           size: pageSize,
           direction: sortDirection,
-          status: status
-        }
+          status: status,
+        },
       });
 
       setPageData(response.data);
@@ -42,7 +41,14 @@ const ViewMyHunts: React.FC = () => {
 
   useEffect(() => {
     fetchMyHunts();
-  }, [isAuthenticated, accessToken, currentPage, pageSize, sortDirection, status]);
+  }, [
+    isAuthenticated,
+    accessToken,
+    currentPage,
+    pageSize,
+    sortDirection,
+    status,
+  ]);
 
   if (!isAuthenticated) {
     return <div>Please log in to view your hunts</div>;
@@ -88,9 +94,9 @@ const ViewMyHunts: React.FC = () => {
       <div className="filters-container">
         <div className="filter-group">
           <label htmlFor="status-filter">Status:</label>
-          <select 
-            id="status-filter" 
-            value={status} 
+          <select
+            id="status-filter"
+            value={status}
             onChange={handleStatusChange}
             className="filter-select"
           >
@@ -104,9 +110,9 @@ const ViewMyHunts: React.FC = () => {
 
         <div className="filter-group">
           <label htmlFor="sort-direction">Sort Direction:</label>
-          <select 
-            id="sort-direction" 
-            value={sortDirection} 
+          <select
+            id="sort-direction"
+            value={sortDirection}
             onChange={handleDirectionChange}
             className="filter-select"
           >
@@ -115,7 +121,7 @@ const ViewMyHunts: React.FC = () => {
           </select>
         </div>
 
-        <div style={{ marginLeft: 'auto' }}>
+        <div style={{ marginLeft: "auto" }}>
           <Link to="/organizer-dashboard/create-hunt">
             <button className="add-btn">Create New Hunt</button>
           </Link>
@@ -143,21 +149,30 @@ const ViewMyHunts: React.FC = () => {
               <tr key={hunt.id}>
                 <td>{index + 1}</td>
                 <td>{hunt.title}</td>
-                <td>{hunt.description.length > 20 ?
-                  `${hunt.description.substring(0, 20)}...` :
-                  hunt.description}
+                <td>
+                  {hunt.description.length > 20
+                    ? `${hunt.description.substring(0, 20)}...`
+                    : hunt.description}
                 </td>
-                <td>{hunt.startDate ? new Date(hunt.startDate).toLocaleString(): 'N/A'}</td>
-                <td>{hunt.endDate ? new Date(hunt.endDate).toLocaleString(): 'N/A'}</td>
+                <td>
+                  {hunt.startDate
+                    ? new Date(hunt.startDate).toLocaleString()
+                    : "N/A"}
+                </td>
+                <td>
+                  {hunt.endDate
+                    ? new Date(hunt.endDate).toLocaleString()
+                    : "N/A"}
+                </td>
                 <td>{calculateDuration(hunt.startDate, hunt.endDate)}</td>
-                <td >
-                  {hunt.huntStatus.replace('_', ' ')}
-                </td>
+                <td>{hunt.huntStatus.replace("_", " ")}</td>
                 <td className="control-btns">
                   <button className="edit-btn">
                     <FaEdit className="edit-icon" />
                   </button>
-                  <Link to={`/organizer-dashboard/create-challenges/${hunt.id}`}>
+                  <Link
+                    to={`/organizer-dashboard/create-challenges/${hunt.id}`}
+                  >
                     <button className="manage-button">Add Challenges</button>
                   </Link>
                 </td>
@@ -169,8 +184,8 @@ const ViewMyHunts: React.FC = () => {
 
       {pageData && (
         <div className="pagination">
-          <button 
-            onClick={() => handlePageChange(currentPage - 1)} 
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 0}
           >
             Prev
@@ -178,8 +193,8 @@ const ViewMyHunts: React.FC = () => {
           <span>
             Page {currentPage + 1} of {pageData.totalPages || 1}
           </span>
-          <button 
-            onClick={() => handlePageChange(currentPage + 1)} 
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
             disabled={pageData.last}
           >
             Next

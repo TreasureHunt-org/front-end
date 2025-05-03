@@ -118,6 +118,7 @@ const AppRoutes: React.FC = () => {
           path={ROUTES.CREATE_REVIEWER}
           element={<CreateReviewerAccount />}
         />
+
         <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
         <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
         <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />

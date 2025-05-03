@@ -11,7 +11,11 @@ const AdminDashboard = () => {
           {[
             { name: "Manage Users", path: "manage-users" },
             { name: "Manage Hunts", path: "manage-hunts" },
-            { name: "My Hunts", path: "my-hunts" },
+            {
+              name: "My Hunts",
+              path: "/organizer-dashboard/my-hunts",
+              absolute: true,
+            },
             { name: "Create a Hunt", path: "create-hunt" },
             { name: "Send Announcement", path: "send-announcement" },
             { name: "Create Reviewer Account", path: "create-reviewer" },
@@ -20,7 +24,10 @@ const AdminDashboard = () => {
             { name: "View Feedback & Reports", path: "view-feedback" },
           ].map((item) => (
             <div className="items" key={item.path}>
-              <NavLink to={item.path} className="menu-item">
+              <NavLink
+                to={item.absolute ? { pathname: item.path } : item.path}
+                className="menu-item"
+              >
                 {item.name}
                 <IoMdArrowDropright className="arrow" />
               </NavLink>
@@ -46,7 +53,7 @@ const AdminDashboard = () => {
 
         {/* content */}
         {/*<div className="content">*/}
-          <Outlet />
+        <Outlet />
         {/*</div>*/}
       </div>
     </div>
