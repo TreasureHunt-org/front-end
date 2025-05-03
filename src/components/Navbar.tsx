@@ -45,9 +45,7 @@ const Navbar = () => {
                 to={
                   roles?.includes("ADMIN")
                     ? "/admin-dashboard"
-                    : roles?.includes("REVIEWER")
-                      ? "/reviewer-dashboard"
-                      : "/user-dashboard"
+                    : "/user-dashboard"
                 }
                 className="dashboard-link"
               >

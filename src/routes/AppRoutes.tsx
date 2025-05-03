@@ -3,7 +3,9 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoute";
 import { ROUTES } from "../constants/routes";
 // import CreateChallenges from "../pages/Admin/CreateChallenges";
-import ViewMyHunts from "../pages/Admin/ViewMyHunts";
+import ViewMyHunts from "../pages/Organizer/ViewMyHunts.tsx";
+import ProtectedAdminRoute from "../components/ProtectedAdminRoute.tsx";
+import ProtectedOrganizerRoute from "../components/ProtectedOrganizerRoute.tsx";
 
 // Lazy-loaded components
 const Home = React.lazy(() => import("../pages/Global/Home"));
@@ -28,7 +30,7 @@ const ManageUsers = React.lazy(() => import("../pages/Admin/ManageUsers"));
 const ManageHunts = React.lazy(() => import("../pages/Admin/ManageHunts"));
 const CreateHunt = React.lazy(() => import("../pages/Admin/CreateHunt"));
 const CreateChallenges = React.lazy(
-  () => import("../pages/Admin/CreateChallenges"),
+  () => import("../pages/Organizer/CreateChallenges"),
 );
 
 const SendAnnouncement = React.lazy(
@@ -47,12 +49,9 @@ const ViewFeedback = React.lazy(() => import("../pages/Admin/ViewFeedback"));
 const OrganizerDashboard = React.lazy(
   () => import("../pages/Organizer/OrganizerDashboard"),
 );
-const OrganizerCreateHunt = React.lazy(
-  () => import("../pages/Organizer/CreateHunt"),
-);
-const OrganizerViewMyHunts = React.lazy(
-  () => import("../pages/Organizer/ViewMyHunts"),
-);
+// const OrganizerViewMyHunts = React.lazy(
+//   () => import("../pages/Organizer/ViewMyHunts"),
+// );
 // const ReviewHunt = React.lazy(() => import("../pages/Reviewer/ReviewHunt"));
 
 const AppRoutes: React.FC = () => {
@@ -104,9 +103,9 @@ const AppRoutes: React.FC = () => {
       <Route
         path={ROUTES.ADMIN_DASHBOARD}
         element={
-          // <ProtectedAdminRoute>
-          <AdminDashboard />
-          // </ProtectedAdminRoute>
+          <ProtectedAdminRoute>
+            <AdminDashboard />
+          </ProtectedAdminRoute>
         }
       >
         <Route index element={<ManageHunts />} />
@@ -114,8 +113,6 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.MANAGE_HUNTS} element={<ManageHunts />} />
 
         <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
-        <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
-        <Route path={ROUTES.VIEW_MY_HUNTS} element={<ViewMyHunts />} />
         <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
         <Route
           path={ROUTES.CREATE_REVIEWER}
@@ -124,22 +121,25 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
         <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
         <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
-        <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
-        {/* <Route path="admin/create-challenges/:huntId" element={<CreateChallenges />} /> */}
       </Route>
 
       {/* Protected Organizer Routes */}
       <Route
         path={ROUTES.ORGANIZER_DASHBOARD}
         element={
-          <ProtectedRoute>
+          <ProtectedOrganizerRoute>
             <OrganizerDashboard />
-          </ProtectedRoute>
+          </ProtectedOrganizerRoute>
         }
       >
-        <Route index element={<OrganizerCreateHunt />} />
-        <Route path={ROUTES.ORGANIZER_CREATE_HUNT} element={<OrganizerCreateHunt />} />
-        <Route path={ROUTES.ORGANIZER_VIEW_MY_HUNTS} element={<OrganizerViewMyHunts />} />
+        {/*<Route index element={<OrganizerCreateHunt />} />*/}
+        <Route
+          index
+          path={ROUTES.ORGANIZER_CREATE_HUNT}
+          element={<CreateHunt />}
+        />
+        <Route path={ROUTES.VIEW_MY_HUNTS} element={<ViewMyHunts />} />
+        <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
       </Route>
 
       {/* Protected Reviewer Route */}

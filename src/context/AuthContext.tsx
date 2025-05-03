@@ -10,7 +10,7 @@ interface User {
 
 interface AuthContextType {
   user: User | null;
-  role: string | null;
+  roles: string[] | null;
   login: (accessToken: string, refreshToken: string, userData: any) => string;
   logout: () => void;
   isAuthenticated: boolean;
@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       return null;
     }
   });
-  const [role, setRole] = useState<userRoles>("");
+  const [roles, setRoles] = useState<userRoles[]>([]);
 
   const setUserState = (user: User | null) => {
     setUser(user);
@@ -63,7 +63,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
               email: userData.email,
               roles: userData.roles || ["HUNTER"],
             });
-            setRole(userData.roles?.[0] || "HUNTER");
+            setRoles(userData.roles ?? ["HUNTER"]);
           }
         } catch (error) {
           console.error("Failed to validate token:", error);
@@ -99,7 +99,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       email: userInfo.email,
       roles: roles,
     });
-    setRole(roles);
+    setRoles(roles);
 
     return roles;
   };
@@ -110,7 +110,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     localStorage.removeItem("refreshToken");
     delete api.defaults.headers.common["Authorization"];
     setUserState(null);
-    setRole("");
+    setRoles([]);
     window.location.href = "/login";
   };
 
@@ -118,7 +118,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const value = {
     user,
-    role,
+    roles,
     login,
     logout,
     isAuthenticated,

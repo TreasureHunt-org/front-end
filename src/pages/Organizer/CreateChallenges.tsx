@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import api from "../../api/axios";
+import { useAuth } from "../../context/AuthContext.tsx";
+import api from "../../api/axios.ts";
 import { Plus, Trash2 } from "lucide-react";
 
 const challengeTypes = ["CODING", "BUGFIX", "GAME"];
@@ -299,7 +299,7 @@ const CreateChallenges: React.FC = () => {
   }
 
   return (
-    <div className="pb-10">
+    <div className="pb-10 px-20">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between border-b border-gray-300 pb-4">
         <h2 className="view-hunts-title">

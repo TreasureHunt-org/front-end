@@ -19,7 +19,6 @@ export const ROUTES = {
   MANAGE_HUNTS: "manage-hunts",
   CREATE_HUNT: "create-hunt",
   VIEW_MY_HUNTS: "my-hunts",
-  CREATE_CHALLENGES: "create-challenges/:huntId",
   // /admin-dashboard/create-challenges/:huntId
   SEND_ANNOUNCEMENT: "send-announcement",
   CREATE_REVIEWER: "create-reviewer",
@@ -31,6 +30,7 @@ export const ROUTES = {
   ORGANIZER_DASHBOARD: "/organizer-dashboard",
   ORGANIZER_CREATE_HUNT: "create-hunt",
   ORGANIZER_VIEW_MY_HUNTS: "my-hunts",
+  CREATE_CHALLENGES: "create-challenges/:huntId",
 
   // Reviewer routes
   REVIEW_HUNT: "/review-hunt/:submissionId",

@@ -47,7 +47,7 @@ const CreateHunt: React.FC = () => {
       return alert("Please select images");
     }
 
-    if(huntTitle.trim() === ""){
+    if (huntTitle.trim() === "") {
       return alert("Please enter a valid title");
     }
 
@@ -83,7 +83,7 @@ const CreateHunt: React.FC = () => {
 
       console.log("Created:", data);
       // alert("Hunt created!");
-      navigate("/admin-dashboard/my-hunts");
+      navigate("/organizer-dashboard/my-hunts");
     } catch (err: any) {
       console.error(err.response?.data || err.message);
       alert("Bad request: " + (err.response?.data?.message || err.message));
@@ -91,7 +91,7 @@ const CreateHunt: React.FC = () => {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center pb-10">
+    <div className="flex w-full flex-col items-center justify-center px-40 pb-10">
       <h2 className="create-hunt-title">Create Hunt</h2>
       {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
       {

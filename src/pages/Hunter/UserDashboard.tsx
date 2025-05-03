@@ -15,7 +15,7 @@ interface UserData {
 
 const UserDashboard: React.FC = () => {
   const [userData, setUserData] = useState<UserData>();
-  const { user, role } = useAuth();
+  const { user, roles } = useAuth();
   const [error, setError] = useState("");
 
   useEffect(() => {
@@ -68,10 +68,10 @@ const UserDashboard: React.FC = () => {
           <p>Email: {userData.email}</p>
           <p>Role: {userData.roles.join(", ")}</p>
 
-          {role === "ADMIN" && <AdminDashboard />}
-          {role === "HUNTER" && <HunterDashboard />}
-          {role === "ORGANIZER" && <OrganizerDashboard />}
-          {role === "REVIEWER" && <ReviewerDashboard />}
+          {roles?.includes("ADMIN") && <AdminDashboard />}
+          {roles?.includes("HUNTER") && <HunterDashboard />}
+          {roles?.includes("ORGANIZER") && <OrganizerDashboard />}
+          {roles?.includes( "REVIEWER") && <ReviewerDashboard />}
         </>
       ) : (
         <p>Wait a moment</p>
