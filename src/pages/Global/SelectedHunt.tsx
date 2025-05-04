@@ -5,6 +5,7 @@ import user from "/src/assets/user (1).png";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../api/axios.ts";
+import API_BASE_URL from "../../constants/API_BASE_URL.ts";
 
 interface HuntDetails {
   id: number;
@@ -32,7 +33,7 @@ const SelectedHunt = () => {
 
   const handleJoin = async () => {
     try {
-      const res = await api.post(`/hunts/${huntId}/join`);
+      const res = await api.post(`${API_BASE_URL}/hunts/${huntId}/join`);
       if (res.status !== 200) {
         alert("error");
       } else {
@@ -46,7 +47,9 @@ const SelectedHunt = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await api.get(`/hunts/${huntId}/statistics`);
+        const response = await api.get(
+          `${API_BASE_URL}/hunts/${huntId}/statistics`,
+        );
         setHuntStats(response.data);
         setNumberOfParticipants(huntStats?.numberOfParticipants ?? 0);
         setnumberOfChallenges(huntStats?.numberOfChallenges ?? 0);
@@ -57,7 +60,7 @@ const SelectedHunt = () => {
 
     const fetchHunt = async () => {
       try {
-        const res = await api.get(`/hunts/${huntId}`);
+        const res = await api.get(`${API_BASE_URL}/hunts/${huntId}`);
         setHunt(res.data);
       } catch (err) {
         console.error("Failed to fetch hunt details", err);
@@ -65,7 +68,7 @@ const SelectedHunt = () => {
     };
     const fetchImage = async () => {
       try {
-        const res = await api.get(`/hunts/${huntId}/images/bg`, {
+        const res = await api.get(`${API_BASE_URL}/hunts/${huntId}/images/bg`, {
           responseType: "blob",
         });
         const imageUrl = URL.createObjectURL(res.data);

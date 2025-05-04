@@ -6,6 +6,7 @@ import { ROUTES } from "../constants/routes";
 import ViewMyHunts from "../pages/Organizer/ViewMyHunts.tsx";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute.tsx";
 import ProtectedOrganizerRoute from "../components/ProtectedOrganizerRoute.tsx";
+import Challenge from "../pages/Organizer/Challenge.tsx";
 
 // Lazy-loaded components
 const Home = React.lazy(() => import("../pages/Global/Home"));
@@ -95,6 +96,14 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <HuntMapPieces />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.CHALLENGE}
+        element={
+          <ProtectedRoute>
+            <Challenge />
           </ProtectedRoute>
         }
       />

@@ -12,6 +12,7 @@ export const ROUTES = {
   // User routes
   USER_DASHBOARD: "/user-dashboard",
   HUNT_MAP_PIECES: "/hunt-map-pieces/:huntId",
+  CHALLENGE: "/challenge/:challengeId",
 
   // Admin routes
   ADMIN_DASHBOARD: "/admin-dashboard",

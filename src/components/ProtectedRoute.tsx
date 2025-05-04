@@ -4,7 +4,7 @@ import { useAuth } from "../context/AuthContext";
 // ProtectedRoute.tsx
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  inverted?: boolean; // If true, prevents access when logged in
+  inverted?: boolean;
 }
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
@@ -14,7 +14,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
 
   if (inverted) {
     if (isAuthenticated) {
-      console.log("User is authenticated, redirecting to home.");
+      console.log("User is authenticated");
 
       return <Navigate to="/" replace />;
     }

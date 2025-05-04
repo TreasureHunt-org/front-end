@@ -102,6 +102,7 @@ const ViewMyHunts: React.FC = () => {
           >
             <option value="DRAFT">Draft</option>
             <option value="UNDER_REVIEW">Under Review</option>
+            <option value="APPROVED">Approved</option>
             <option value="LIVE">Live</option>
             <option value="FINISHED">Finished</option>
             <option value="TERMINATED">Terminated</option>
