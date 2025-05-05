@@ -41,8 +41,11 @@ const Challenge = () => {
     fetchChallenge();
   }, [challengeId]);
 
-  if (!challenge) return <p>Challenge is not found</p>;
-
+  if (!challenge) {
+    return (
+      <div className="mt-8 text-center text-gray-500">Loading Challenge...</div>
+    );
+  }
   switch (challenge.challengeType) {
     case "BUGFIX": {
       console.log(challenge.challengeType);
