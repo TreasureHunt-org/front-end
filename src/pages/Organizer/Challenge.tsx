@@ -21,24 +21,25 @@ interface Challenge {
 }
 
 const Challenge = () => {
-  const { id } = useParams<{ id: string }>();
+  const { challengeId } = useParams<{ challengeId: string }>();
   const [challenge, setChallenge] = useState<Challenge | null>(null);
 
   useEffect(() => {
     const fetchChallenge = async () => {
       try {
         const response = await api.get(
-          `${API_BASE_URL}/hunts/challenges/${id}`,
+          `${API_BASE_URL}/hunts/challenges/${challengeId}`,
         );
         setChallenge(response.data);
-        alert("challenge found");
+
+        // alert("challenge found");
         console.log(response.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchChallenge();
-  }, [id]);
+  }, [challengeId]);
 
   if (!challenge) return <p>Challenge is not found</p>;
 

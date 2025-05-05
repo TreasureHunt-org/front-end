@@ -186,19 +186,38 @@ const CreateChallenges: React.FC = () => {
         alert("Please enter an external game URI for all GAME challenges.");
         return;
       }
-      if ((challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && 
-          (!challenge.challengeCodes || challenge.challengeCodes.length === 0 || !challenge.challengeCodes[0].code)) {
-        alert("Please enter challenge code for all CODING and BUGFIX challenges.");
+      if (
+        (challenge.challengeType === "CODING" ||
+          challenge.challengeType === "BUGFIX") &&
+        (!challenge.challengeCodes ||
+          challenge.challengeCodes.length === 0 ||
+          !challenge.challengeCodes[0].code)
+      ) {
+        alert(
+          "Please enter challenge code for all CODING and BUGFIX challenges.",
+        );
         return;
       }
-      if (challenge.challengeType === "BUGFIX" && 
-          (!challenge.optimalSolutions || challenge.optimalSolutions.length === 0 || !challenge.optimalSolutions[0].code)) {
+      if (
+        challenge.challengeType === "BUGFIX" &&
+        (!challenge.optimalSolutions ||
+          challenge.optimalSolutions.length === 0 ||
+          !challenge.optimalSolutions[0].code)
+      ) {
         alert("Please enter optimal solution for all BUGFIX challenges.");
         return;
       }
-      if ((challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && 
-          (!challenge.testCases || challenge.testCases.length === 0 || !challenge.testCases[0].input || !challenge.testCases[0].expectedOutput)) {
-        alert("Please enter at least one test case for all CODING and BUGFIX challenges.");
+      if (
+        (challenge.challengeType === "CODING" ||
+          challenge.challengeType === "BUGFIX") &&
+        (!challenge.testCases ||
+          challenge.testCases.length === 0 ||
+          !challenge.testCases[0].input ||
+          !challenge.testCases[0].expectedOutput)
+      ) {
+        alert(
+          "Please enter at least one test case for all CODING and BUGFIX challenges.",
+        );
         return;
       }
     }
@@ -236,10 +255,7 @@ const CreateChallenges: React.FC = () => {
         delete challengeDataToSend.externalGameUri;
       }
 
-      formData.append(
-        `challengeData`,
-        JSON.stringify(challengeDataToSend),
-      );
+      formData.append(`challengeData`, JSON.stringify(challengeDataToSend));
       if (challenge.image) {
         formData.append(`image`, challenge.image);
       }
@@ -285,21 +301,19 @@ const CreateChallenges: React.FC = () => {
     };
   }, [challenges]);
 
-
   const handleSubmitForReview = async () => {
     // this should be a POST request to submit the hunt for review
     // huntId
-    const resp = await api.put(`/hunts/${huntId}`)
-    if(resp.status === 200) {
+    const resp = await api.put(`/hunts/${huntId}`);
+    if (resp.status === 200) {
       alert("Hunt submitted for review");
-    }
-    else{
+    } else {
       alert("Error submitting hunt for review");
     }
-  }
+  };
 
   return (
-    <div className="pb-10 px-20">
+    <div className="px-20 pb-10">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between border-b border-gray-300 pb-4">
         <h2 className="view-hunts-title">
@@ -445,7 +459,8 @@ const CreateChallenges: React.FC = () => {
                 </div>
               )}
 
-              {(challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && (
+              {(challenge.challengeType === "CODING" ||
+                challenge.challengeType === "BUGFIX") && (
                 <div className="flex flex-col">
                   <label className="mb-1 text-sm font-semibold">
                     Challenge Code
@@ -455,7 +470,9 @@ const CreateChallenges: React.FC = () => {
                       <select
                         value={code.language}
                         onChange={(e) => {
-                          const newChallengeCodes = [...challenge.challengeCodes];
+                          const newChallengeCodes = [
+                            ...challenge.challengeCodes,
+                          ];
                           newChallengeCodes[codeIndex] = {
                             ...newChallengeCodes[codeIndex],
                             language: e.target.value,
@@ -475,7 +492,9 @@ const CreateChallenges: React.FC = () => {
                       <textarea
                         value={code.code}
                         onChange={(e) => {
-                          const newChallengeCodes = [...challenge.challengeCodes];
+                          const newChallengeCodes = [
+                            ...challenge.challengeCodes,
+                          ];
                           newChallengeCodes[codeIndex] = {
                             ...newChallengeCodes[codeIndex],
                             code: e.target.value,
@@ -500,53 +519,60 @@ const CreateChallenges: React.FC = () => {
                   <label className="mb-1 text-sm font-semibold">
                     Optimal Solution
                   </label>
-                  {challenge.optimalSolutions?.map((solution, solutionIndex) => (
-                    <div key={solutionIndex} className="mb-2">
-                      <select
-                        value={solution.language}
-                        onChange={(e) => {
-                          const newOptimalSolutions = [...(challenge.optimalSolutions || [])];
-                          newOptimalSolutions[solutionIndex] = {
-                            ...newOptimalSolutions[solutionIndex],
-                            language: e.target.value,
-                          };
-                          handleChangeChallengeData(
-                            index,
-                            "optimalSolutions",
-                            newOptimalSolutions,
-                          );
-                        }}
-                        className="mb-2 w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
-                      >
-                        <option value="JAVA">Java</option>
-                        <option value="PYTHON">Python</option>
-                        <option value="JAVASCRIPT">JavaScript</option>
-                      </select>
-                      <textarea
-                        value={solution.code}
-                        onChange={(e) => {
-                          const newOptimalSolutions = [...(challenge.optimalSolutions || [])];
-                          newOptimalSolutions[solutionIndex] = {
-                            ...newOptimalSolutions[solutionIndex],
-                            code: e.target.value,
-                          };
-                          handleChangeChallengeData(
-                            index,
-                            "optimalSolutions",
-                            newOptimalSolutions,
-                          );
-                        }}
-                        className="w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
-                        placeholder="Enter optimal solution code"
-                        rows={5}
-                      />
-                    </div>
-                  ))}
+                  {challenge.optimalSolutions?.map(
+                    (solution, solutionIndex) => (
+                      <div key={solutionIndex} className="mb-2">
+                        <select
+                          value={solution.language}
+                          onChange={(e) => {
+                            const newOptimalSolutions = [
+                              ...(challenge.optimalSolutions || []),
+                            ];
+                            newOptimalSolutions[solutionIndex] = {
+                              ...newOptimalSolutions[solutionIndex],
+                              language: e.target.value,
+                            };
+                            handleChangeChallengeData(
+                              index,
+                              "optimalSolutions",
+                              newOptimalSolutions,
+                            );
+                          }}
+                          className="mb-2 w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                        >
+                          <option value="JAVA">Java</option>
+                          <option value="PYTHON">Python</option>
+                          <option value="JAVASCRIPT">JavaScript</option>
+                        </select>
+                        <textarea
+                          value={solution.code}
+                          onChange={(e) => {
+                            const newOptimalSolutions = [
+                              ...(challenge.optimalSolutions || []),
+                            ];
+                            newOptimalSolutions[solutionIndex] = {
+                              ...newOptimalSolutions[solutionIndex],
+                              code: e.target.value,
+                            };
+                            handleChangeChallengeData(
+                              index,
+                              "optimalSolutions",
+                              newOptimalSolutions,
+                            );
+                          }}
+                          className="w-full rounded border border-gray-600 bg-[#444] px-3 py-2 text-white focus:border-[#f39c12] focus:outline-none"
+                          placeholder="Enter optimal solution code"
+                          rows={5}
+                        />
+                      </div>
+                    ),
+                  )}
                 </div>
               )}
 
               {/* Test Cases - Only show for CODING and BUGFIX */}
-              {(challenge.challengeType === "CODING" || challenge.challengeType === "BUGFIX") && (
+              {(challenge.challengeType === "CODING" ||
+                challenge.challengeType === "BUGFIX") && (
                 <div className="w-full">
                   <h4 className="mb-2 text-sm font-semibold">Test Cases</h4>
                   {challenge.testCases.map((tc, tcIndex) => (
@@ -595,9 +621,9 @@ const CreateChallenges: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => handleAddTestCase(index)}
-                      className="flex p-2 rounded-full items-center justify-start bg-[#f39c12]"
+                      className="flex items-center justify-start rounded-full bg-[#f39c12] p-2"
                     >
-                      <Plus size={16}  />
+                      <Plus size={16} />
                       Add Test Case
                     </button>
                   </div>
@@ -628,16 +654,15 @@ const CreateChallenges: React.FC = () => {
         ))}
 
         {/* Add New Challenge Button */}
-        <div className="w-full flex justify-between">
-
-        <button
-          type="button"
-          onClick={handleAddChallenge}
-          className="add-btn inline-flex items-center"
-        >
-          <Plus size={16} className="mr-2" />
-          Add Challenge
-        </button>
+        <div className="flex w-full justify-between">
+          <button
+            type="button"
+            onClick={handleAddChallenge}
+            className="add-btn inline-flex items-center"
+          >
+            <Plus size={16} className="mr-2" />
+            Add Challenge
+          </button>
 
           <button
             type="button"
@@ -657,7 +682,6 @@ const CreateChallenges: React.FC = () => {
           </button>
         </div>
       </div>
-
     </div>
   );
 };

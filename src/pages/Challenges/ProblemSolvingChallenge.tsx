@@ -1,5 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import CodeEditor from "../../components/CodeEditor";
+import AceEditor from "react-ace";
 
 interface Challenge {
   challengeId: number;
@@ -60,6 +62,9 @@ const ProblemSolvingChallenge = ({ challenge }: { challenge: Challenge }) => {
             </tbody>
           </table>
         ))}
+      </div>
+      <div>
+        <CodeEditor language="java" height="1000px" readonly={false} />
       </div>
     </div>
   );

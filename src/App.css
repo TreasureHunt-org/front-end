@@ -1349,7 +1349,7 @@ progress::-webkit-progress-value {
 .top-bar {
   background-color: #1e1e1e;
   width: 100%;
-  padding: 10px 20px;
+  padding: 20px 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
