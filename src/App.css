@@ -1632,6 +1632,27 @@ Afnan Tamimi .bugfix-container {
   /* margin-top: 20px; */
 }
 
+.fixed-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fixed-button {
+  background-color: #f39c12;
+  border: none;
+  color: white;
+  font-size: 16px;
+  height: 35px;
+  width: 150px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bolder;
+}
+.flex {
+  justify-content: space-between;
+}
+
 .submit-button {
   background-color: #f39c12;
   border: none;
