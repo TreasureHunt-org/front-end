@@ -64,9 +64,9 @@ const UserDashboard: React.FC = () => {
     <div className="dashboard">
       {userData ? (
         <>
-          <h1>Welcome, {userData.username}!</h1>
-          <p>Email: {userData.email}</p>
-          <p>Role: {userData.roles.join(", ")}</p>
+          {/*<h1>Welcome, {userData.username}!</h1>*/}
+          {/*<p>Email: {userData.email}</p>*/}
+          {/*<p>Role: {userData.roles.join(", ")}</p>*/}
 
           {roles?.includes("ADMIN") && <AdminDashboard />}
           {roles?.includes("HUNTER") && <HunterDashboard />}
@@ -74,7 +74,9 @@ const UserDashboard: React.FC = () => {
           {roles?.includes( "REVIEWER") && <ReviewerDashboard />}
         </>
       ) : (
-        <p>Wait a moment</p>
+        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-50">
+          <span className="h-10 w-10 animate-spin rounded-full border-t-4 border-b-4 border-amber-500"></span>
+        </div>
       )}
     </div>
   );

@@ -75,6 +75,19 @@
 /* __________________HOME style_____________________________  */
 /* __________________HOME style_____________________________  */
 /* __________________HOME style_____________________________  */
+
+/* Wave animation for the ocean effect */
+@keyframes wave {
+  0% {
+    transform: translateX(-25%) translateY(10%);
+  }
+  50% {
+    transform: translateX(0%) translateY(0%);
+  }
+  100% {
+    transform: translateX(25%) translateY(15%);
+  }
+}
 .map-img {
   width: 350px;
   height: 350px;
@@ -2195,9 +2208,11 @@ Afnan Tamimi .bugfix-container {
 }
 
 .navbar .menu .user-info .avatar {
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
+  object-fit: cover;
+  margin: 10px;
   /* margin-right: 10px; */
 }
 .navbar .menu .user-info button {

@@ -7,6 +7,7 @@ import ViewMyHunts from "../pages/Organizer/ViewMyHunts.tsx";
 import ProtectedAdminRoute from "../components/ProtectedAdminRoute.tsx";
 import ProtectedOrganizerRoute from "../components/ProtectedOrganizerRoute.tsx";
 import Challenge from "../pages/Organizer/Challenge.tsx";
+import UserProfile from "../pages/User/UserProfile";
 
 // Lazy-loaded components
 const Home = React.lazy(() => import("../pages/Global/Home"));
@@ -88,6 +89,14 @@ const AppRoutes: React.FC = () => {
         element={
           <ProtectedRoute>
             <UserDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path={ROUTES.USER_PROFILE}
+        element={
+          <ProtectedRoute>
+            <UserProfile />
           </ProtectedRoute>
         }
       />
