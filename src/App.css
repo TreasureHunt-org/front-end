@@ -2234,6 +2234,7 @@ Afnan Tamimi .bugfix-container {
 .topRankingItem .profileImage {
   border-radius: 50%;
   margin: 10px 0;
+  object-fit: cover;
 }
 
 .topRankingItem .username {
