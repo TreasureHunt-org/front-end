@@ -8,6 +8,7 @@ import ProtectedAdminRoute from "../components/ProtectedRoutes/ProtectedAdminRou
 import ProtectedOrganizerRoute from "../components/ProtectedRoutes/ProtectedOrganizerRoute.tsx";
 import Challenge from "../pages/Organizer/Challenge.tsx";
 import UserProfile from "../pages/User/UserProfile";
+import CreateAccounts from "../pages/Admin/CreateAccounts/CreateAccounts.tsx";
 
 // Lazy-loaded components
 const Home = React.lazy(() => import("../pages/Global/Home"));
@@ -44,13 +45,13 @@ const CreateChallenges = React.lazy(
 const SendAnnouncement = React.lazy(
   () => import("../pages/Admin/SendAnnouncement/SendAnnouncement.tsx"),
 );
-const CreateReviewerAccount = React.lazy(
-  () =>
-    import("../pages/Admin/CreateReviewerAccount/CreateReviewerAccount.tsx"),
-);
-const CreateHunterAccount = React.lazy(
-  () => import("../pages/Admin/CreateHunterAccount/CreateHunterAccount.tsx"),
-);
+// const CreateReviewerAccount = React.lazy(
+//   () =>
+//     // import("../pages/Admin/CreateReviewerAccount/CreateReviewerAccount.tsx"),
+// );
+// const CreateHunterAccount = React.lazy(
+//   () => import("../pages/Admin/CreateAccounts/CreateAccounts.tsx"),
+// );
 const ViewSubmissions = React.lazy(
   () => import("../pages/Admin/ViewSubmissions/ViewSubmissions.tsx"),
 );
@@ -141,12 +142,12 @@ const AppRoutes: React.FC = () => {
 
         <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
         <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
-        <Route
+        {/* <Route
           path={ROUTES.CREATE_REVIEWER}
           element={<CreateReviewerAccount />}
-        />
+        /> */}
 
-        <Route path={ROUTES.CREATE_HUNTER} element={<CreateHunterAccount />} />
+        <Route path={ROUTES.CREATE_ACCOUNTS} element={<CreateAccounts />} />
         <Route path={ROUTES.VIEW_SUBMISSIONS} element={<ViewSubmissions />} />
         <Route path={ROUTES.VIEW_FEEDBACK} element={<ViewFeedback />} />
       </Route>
@@ -156,7 +157,7 @@ const AppRoutes: React.FC = () => {
         path={ROUTES.ORGANIZER_DASHBOARD}
         element={
           <ProtectedOrganizerRoute>
-            <OrganizerDashboard/>
+            <OrganizerDashboard />
           </ProtectedOrganizerRoute>
         }
       >

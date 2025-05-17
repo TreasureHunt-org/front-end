@@ -23,7 +23,7 @@ export const ROUTES = {
   VIEW_MY_HUNTS: "my-hunts",
   SEND_ANNOUNCEMENT: "send-announcement",
   CREATE_REVIEWER: "create-reviewer",
-  CREATE_HUNTER: "create-hunter",
+  CREATE_ACCOUNTS: "create-accounts",
   VIEW_SUBMISSIONS: "view-submissions/:huntId",
   VIEW_FEEDBACK: "view-feedback",
 

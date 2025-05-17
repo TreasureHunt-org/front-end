@@ -18,8 +18,7 @@ const AdminDashboard = () => {
             },
             { name: "Create a Hunt", path: "create-hunt" },
             { name: "Send Announcement", path: "send-announcement" },
-            { name: "Create Reviewer Account", path: "create-reviewer" },
-            { name: "Create Hunter/Organizer Account", path: "create-hunter" },
+            { name: "Create Accounts", path: "create-accounts" },
             { name: "View Submissions", path: "view-submissions" },
             { name: "View Feedback & Reports", path: "view-feedback" },
           ].map((item) => (
