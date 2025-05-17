@@ -40,35 +40,53 @@ const Navbar = () => {
   }, [user?.id]);
 
   return (
-    <nav className="bg-gray-900 text-white shadow-lg border-b-2 border-yellow-600 sticky top-0 z-50 px-4 py-3">
-      <div className="container mx-auto flex justify-between items-center">
+    <nav className="sticky top-0 z-50 w-full border-b-2 border-yellow-600 px-2 py-3 text-white shadow-lg backdrop-blur-lg">
+      <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-3">
-          <img className="h-16 w-auto transform hover:rotate-12 transition-transform duration-300" src={pirateFlag} alt="Pirate Flag" />
-          <h1 className="text-3xl text-left font-bold text-yellow-500 tracking-wider">Treasure Hunt</h1>
+          <img
+            className="h-16 w-auto transform transition-transform duration-300 hover:rotate-12"
+            src={pirateFlag}
+            alt="Pirate Flag"
+          />
+          <h1 className="text-left text-3xl font-bold tracking-wider text-yellow-500">
+            Treasure Hunt
+          </h1>
         </div>
 
         <div className="flex items-center space-x-8">
-          <Link to={ROUTES.HOME} className="text-yellow-300 hover:text-yellow-400 transition-colors duration-200 font-medium">
+          <Link
+            to={ROUTES.HOME}
+            className="font-medium text-yellow-300 transition-colors duration-200 hover:text-yellow-400"
+          >
             Home
           </Link>
-          <Link to={ROUTES.HUNTS} className="text-yellow-300 hover:text-yellow-400 transition-colors duration-200 font-medium">
+          <Link
+            to={ROUTES.HUNTS}
+            className="font-medium text-yellow-300 transition-colors duration-200 hover:text-yellow-400"
+          >
             Hunts
           </Link>
-          <Link to={ROUTES.LEADERBOARD} className="text-yellow-300 hover:text-yellow-400 transition-colors duration-200 font-medium">
+          <Link
+            to={ROUTES.LEADERBOARD}
+            className="font-medium text-yellow-300 transition-colors duration-200 hover:text-yellow-400"
+          >
             Leaderboard
           </Link>
-          <Link to={ROUTES.ABOUT} className="text-yellow-300 hover:text-yellow-400 transition-colors duration-200 font-medium">
+          <Link
+            to={ROUTES.ABOUT}
+            className="font-medium text-yellow-300 transition-colors duration-200 hover:text-yellow-400"
+          >
             About
           </Link>
 
           {isAuthenticated ? (
             <div className="flex items-center space-x-4">
               <Link to={ROUTES.USER_PROFILE} className="group">
-                <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-yellow-600 group-hover:border-yellow-400 transition-all duration-200 shadow-md">
+                <div className="h-12 w-12 overflow-hidden rounded-full border-2 border-yellow-600 shadow-md transition-all duration-200 group-hover:border-yellow-400">
                   <img
                     src={userImage || Avatar}
                     alt="Avatar"
-                    className="w-full h-full object-cover"
+                    className="h-full w-full object-cover"
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = Avatar;
@@ -80,13 +98,13 @@ const Navbar = () => {
               <div className="flex flex-col">
                 <Link
                   to={ROUTES.USER_PROFILE}
-                  className="text-yellow-400 hover:text-yellow-300 font-bold transition-colors duration-200"
+                  className="font-bold text-yellow-400 transition-colors duration-200 hover:text-yellow-300"
                 >
                   {user?.username || "Captain"}
                 </Link>
               </div>
-              <button 
-                className="bg-yellow-800 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg font-bold shadow-md transform hover:scale-105 transition-all duration-200 border border-yellow-600"
+              <button
+                className="transform rounded-lg border border-yellow-600 bg-yellow-800 px-4 py-2 font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-yellow-700"
                 onClick={logout}
               >
                 Abandon Ship
@@ -94,8 +112,8 @@ const Navbar = () => {
             </div>
           ) : (
             <Link to={ROUTES.LOGIN}>
-              <button className="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-2 rounded-lg font-bold shadow-md transform hover:scale-105 transition-all duration-200">
-                BOARD SHIP
+              <button className="transform rounded-lg bg-yellow-600 px-6 py-2 font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-yellow-500">
+                LOGIN
               </button>
             </Link>
           )}
