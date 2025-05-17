@@ -1,5 +1,13 @@
 export type UserRole = "HUNTER" | "ORGANIZER" | "ADMIN" | "REVIEWER";
 
+export type HuntStatus =
+  | "DRAFT"
+  | "UNDER_REVIEW"
+  | "LIVE"
+  | "FINISHED"
+  | "TERMINATED"
+  | "APPROVED";
+
 export interface User {
   id: string;
   username: string;
