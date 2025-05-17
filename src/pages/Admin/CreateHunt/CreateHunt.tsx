@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import api from "../../api/axios";
-import { useAuth } from "../../context/AuthContext";
-import API_BASE_URL from "../../constants/API_BASE_URL";
+import api from "../../../api/axios";
+import { useAuth } from "../../../context/AuthContext";
+import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
 import { useNavigate } from "react-router-dom";
+import "../CreateHunt/CreateHunt.css";
+
 // import { Link } from "react-router-dom";
 // import { ROUTES } from "../../constants/routes";
 // import { Outlet } from "react-router-dom";
@@ -91,7 +93,7 @@ const CreateHunt: React.FC = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center justify-center px-40 pb-10">
+    <div className="create-hunt-container">
       <h2 className="create-hunt-title">Create Hunt</h2>
       {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
       {

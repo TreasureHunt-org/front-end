@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../api/axios";
 import square from "/src/assets/square.jpg";
-import API_BASE_URL from "../../constants/API_BASE_URL";
+import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
 import Challenge from "../Organizer/Challenge";
 
 interface Challenge {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../constants/routes";
+import { ROUTES } from "../../constants/app routes/routes";
 
 const OrganizerDashboard: React.FC = () => {
   return (
@@ -14,12 +14,18 @@ const OrganizerDashboard: React.FC = () => {
           <nav className="dashboard-nav">
             <ul className="dashboard-menu">
               <li className="dashboard-menu-item">
-                <Link to={`${ROUTES.ORGANIZER_DASHBOARD}/${ROUTES.ORGANIZER_CREATE_HUNT}`} className="dashboard-menu-link">
+                <Link
+                  to={`${ROUTES.ORGANIZER_DASHBOARD}/${ROUTES.ORGANIZER_CREATE_HUNT}`}
+                  className="dashboard-menu-link"
+                >
                   Create Hunt
                 </Link>
               </li>
               <li className="dashboard-menu-item">
-                <Link to={`${ROUTES.ORGANIZER_DASHBOARD}/${ROUTES.ORGANIZER_VIEW_MY_HUNTS}`} className="dashboard-menu-link">
+                <Link
+                  to={`${ROUTES.ORGANIZER_DASHBOARD}/${ROUTES.ORGANIZER_VIEW_MY_HUNTS}`}
+                  className="dashboard-menu-link"
+                >
                   My Hunts
                 </Link>
               </li>

@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 import { IoMdArrowDropright } from "react-icons/io";
-
+import "../AdminDashboard/AdminDashboard.css";
 const AdminDashboard = () => {
   return (
     <div className="admin-dashboard">

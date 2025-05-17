@@ -1,5 +1,6 @@
 import React from "react";
-import pirateFlag from "../assets/pirate-flag_2.png";
+import pirateFlag from "../../assets/pirate-flag_2.png";
+import "../Footer/Footer.css";
 
 const Footer: React.FC = () => {
   return (

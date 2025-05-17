@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CodeEditor from "../../components/CodeEditor";
-import api from "../../api/axios";
-import API_BASE_URL from "../../constants/API_BASE_URL";
+import CodeEditor from "../../../components/CodeEditor/CodeEditor";
+import api from "../../../api/axios";
+import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
 
 interface Challenge {
   challengeId: number;

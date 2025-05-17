@@ -1,11 +1,11 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import ProtectedRoute from "../components/ProtectedRoute";
-import { ROUTES } from "../constants/routes";
+import ProtectedRoute from "../components/ProtectedRoutes/ProtectedRoute";
+import { ROUTES } from "../constants/app routes/routes.ts";
 // import CreateChallenges from "../pages/Admin/CreateChallenges";
 import ViewMyHunts from "../pages/Organizer/ViewMyHunts.tsx";
-import ProtectedAdminRoute from "../components/ProtectedAdminRoute.tsx";
-import ProtectedOrganizerRoute from "../components/ProtectedOrganizerRoute.tsx";
+import ProtectedAdminRoute from "../components/ProtectedRoutes/ProtectedAdminRoute.tsx";
+import ProtectedOrganizerRoute from "../components/ProtectedRoutes/ProtectedOrganizerRoute.tsx";
 import Challenge from "../pages/Organizer/Challenge.tsx";
 import UserProfile from "../pages/User/UserProfile";
 
@@ -26,28 +26,37 @@ const HuntLeaderboard = React.lazy(
 const UserDashboard = React.lazy(() => import("../pages/Hunter/UserDashboard"));
 const HuntMapPieces = React.lazy(() => import("../pages/Hunter/HuntMapPieces"));
 const AdminDashboard = React.lazy(
-  () => import("../pages/Admin/AdminDashboard"),
+  () => import("../pages/Admin/AdminDashboard/AdminDashboard.tsx"),
 );
-const ManageUsers = React.lazy(() => import("../pages/Admin/ManageUsers"));
-const ManageHunts = React.lazy(() => import("../pages/Admin/ManageHunts"));
-const CreateHunt = React.lazy(() => import("../pages/Admin/CreateHunt"));
+const ManageUsers = React.lazy(
+  () => import("../pages/Admin/ManageUsers/ManageUsers.tsx"),
+);
+const ManageHunts = React.lazy(
+  () => import("../pages/Admin/ManageHunts/ManageHunts.tsx"),
+);
+const CreateHunt = React.lazy(
+  () => import("../pages/Admin/CreateHunt/CreateHunt.tsx"),
+);
 const CreateChallenges = React.lazy(
   () => import("../pages/Organizer/CreateChallenges"),
 );
 
 const SendAnnouncement = React.lazy(
-  () => import("../pages/Admin/SendAnnouncement"),
+  () => import("../pages/Admin/SendAnnouncement/SendAnnouncement.tsx"),
 );
 const CreateReviewerAccount = React.lazy(
-  () => import("../pages/Admin/CreateReviewerAccount"),
+  () =>
+    import("../pages/Admin/CreateReviewerAccount/CreateReviewerAccount.tsx"),
 );
 const CreateHunterAccount = React.lazy(
-  () => import("../pages/Admin/CreateHunterAccount"),
+  () => import("../pages/Admin/CreateHunterAccount/CreateHunterAccount.tsx"),
 );
 const ViewSubmissions = React.lazy(
-  () => import("../pages/Admin/ViewSubmissions"),
+  () => import("../pages/Admin/ViewSubmissions/ViewSubmissions.tsx"),
 );
-const ViewFeedback = React.lazy(() => import("../pages/Admin/ViewFeedback"));
+const ViewFeedback = React.lazy(
+  () => import("../pages/Admin/ViewFeedback/ViewFeedback.tsx"),
+);
 const OrganizerDashboard = React.lazy(
   () => import("../pages/Organizer/OrganizerDashboard"),
 );

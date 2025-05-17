@@ -1,0 +1,111 @@
+.reviewer-account-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  width: 800px;
+  background-color: #333;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.reviewer-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  justify-content: center;
+}
+
+.reviewer-icon {
+  height: 25px;
+  width: 25px;
+}
+
+.reviewer-title {
+  font-size: 1.5rem;
+  color: #f39c12;
+  text-align: center;
+}
+
+.reviewer-form {
+  display: grid;
+  gap: 1rem;
+  width: 70%;
+  position: relative;
+  left: 110px;
+}
+
+.reviewer-form label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: white;
+  text-align: left;
+}
+
+.reviewer-form input {
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 50%;
+  background-color: #444;
+  color: white;
+}
+
+.create-btn {
+  border-radius: 20px;
+  padding: 0.6rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 1rem;
+  font-weight: bold;
+  width: 200px;
+  text-align: center;
+  position: relative;
+  left: 35px;
+}
+
+.create-btn:hover {
+  background-color: #e67e22;
+  transform: scale(1.05);
+}
+
+.is-organizer-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 40%;
+}
+
+/* .is-organizer-checkbox input {
+  display: none;
+} */
+
+.is-organizer-container input {
+  display: inline-block;
+  width: 150px;
+  height: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+  margin: 0;
+}
+
+.is-organizer-container label {
+  font-size: 1rem;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-left: 5px;
+  width: 100%;
+}

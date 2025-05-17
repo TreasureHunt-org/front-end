@@ -1,0 +1,98 @@
+.manage-users-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem auto;
+  background-color: #333;
+  color: white;
+  text-align: left;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.manage-users-table thead {
+  background-color: #f39c12;
+}
+
+.manage-users-table th,
+.manage-users-table td {
+  padding: 1rem;
+  border-bottom: 1px solid #555;
+}
+
+.manage-users-table th {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.manage-users-table tbody tr:hover {
+  background-color: #444;
+}
+
+.control-btns {
+/* display: flex; */
+ gap: 0.5rem;
+}
+
+.edit-btn,
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.edit-btn:hover {
+  color: #f39c12;
+  transform: scale(1.1);
+}
+
+.delete-btn:hover {
+  color: #e74c3c;
+  transform: scale(1.1);
+}
+
+.edit-icon,
+.delete-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.add-btn {
+  border-radius: 20px;
+  padding: 0.5rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 1rem;
+  font-weight: bold; */
+position: relative;
+  top: 0.1rem;
+  left: 75px;
+width: 10rem;
+  text-align: center;
+}
+.manage-button {
+  border-radius: 20px;
+  padding: 0.9rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+  font-size: 0.8rem;
+  font-weight: bold;
+  width: 6rem;
+  text-align: center;
+}
+
+.manage-button:hover {
+  background-color: #e67e22;
+  transform: scale(1.1);
+}

@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
-import api from "../../api/axios.ts";
-import API_BASE_URL from "../../constants/API_BASE_URL.ts";
-import { useAuth } from "../../context/AuthContext.tsx";
-import { Hunt, PageResponse } from "../../types.ts";
+import api from "../../../api/axios.ts";
+import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL.ts";
+import { useAuth } from "../../../context/AuthContext.tsx";
+import { Hunt, PageResponse } from "../../../types.ts";
+import "../ManageHunts/ManageHunts.css";
 
 const ManageHunts = () => {
   const [hunts, setHunts] = useState<Hunt[]>([]);
@@ -25,8 +26,8 @@ const ManageHunts = () => {
           page: currentPage,
           size: pageSize,
           direction: sortDirection,
-          status: status
-        }
+          status: status,
+        },
       });
 
       setPageData(response.data);
@@ -42,14 +43,13 @@ const ManageHunts = () => {
 
   const handleEditButtonClick = () => {
     // TODO navigate the edit page with the hunt id
-
-  }
+  };
 
   return (
     <div className="table-container">
       <table className="manage-users-table">
-        <thead className={'w-full'}>
-          <tr className={'text-left'}>
+        <thead className={"w-full"}>
+          <tr className={"text-left"}>
             <th>#</th>
             <th>Title</th>
             <th>Status</th>
@@ -58,14 +58,12 @@ const ManageHunts = () => {
             <th>Actions</th>
           </tr>
         </thead>
-        <tbody className={'w-full'}>
+        <tbody className={"w-full"}>
           {hunts.map((item, index) => (
-            <tr key={item.id} className={'text-left'}>
+            <tr key={item.id} className={"text-left"}>
               <td>{index + 1}</td>
               <td>{item.title}</td>
-              <td >
-                {item.huntStatus}
-              </td>
+              <td>{item.huntStatus}</td>
               <td>{item.startDate ?? "N/A"}</td>
               <td>{item.endDate ?? "N/A"}</td>
               <td className="control-btns">

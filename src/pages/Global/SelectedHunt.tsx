@@ -5,7 +5,7 @@ import user from "/src/assets/user (1).png";
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../api/axios.ts";
-import API_BASE_URL from "../../constants/API_BASE_URL.ts";
+import API_BASE_URL from "../../constants/apiURL/API_BASE_URL.ts";
 
 interface HuntDetails {
   id: number;

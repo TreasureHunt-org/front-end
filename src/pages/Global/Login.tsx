@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import API_BASE_URL from "../../constants/API_BASE_URL";
+import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
 import user from "/src/assets/user (1).png";
 import "/src/App.css";
 
@@ -81,9 +81,9 @@ const Login: React.FC = () => {
 
       const role = roles?.includes("ADMIN")
         ? "/admin-dashboard"
-        // : roles?.includes("REVIEWER")
-        //   ? "/reviewer-dashboard"
-          : "/user-dashboard";
+        : // : roles?.includes("REVIEWER")
+          //   ? "/reviewer-dashboard"
+          "/user-dashboard";
       console.log("=====>Role<====:", role);
 
       navigate(role);

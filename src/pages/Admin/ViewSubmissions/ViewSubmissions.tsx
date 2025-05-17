@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../ViewSubmissions/ViewSubmissions.css";
 
 const hunts = [
   {

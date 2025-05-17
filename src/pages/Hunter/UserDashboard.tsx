@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import AdminDashboard from "../Admin/AdminDashboard";
+import AdminDashboard from "../Admin/AdminDashboard/AdminDashboard";
 import HunterDashboard from "../Hunter/HunterDashboard";
 import OrganizerDashboard from "../Organizer/OrganizerDashboard";
 import ReviewerDashboard from "../Reviewer/ReviewerDashboard";
@@ -71,10 +71,10 @@ const UserDashboard: React.FC = () => {
           {roles?.includes("ADMIN") && <AdminDashboard />}
           {roles?.includes("HUNTER") && <HunterDashboard />}
           {roles?.includes("ORGANIZER") && <OrganizerDashboard />}
-          {roles?.includes( "REVIEWER") && <ReviewerDashboard />}
+          {roles?.includes("REVIEWER") && <ReviewerDashboard />}
         </>
       ) : (
-        <div className="absolute top-20 left-1/2 transform -translate-x-1/2 z-50">
+        <div className="absolute top-20 left-1/2 z-50 -translate-x-1/2 transform">
           <span className="h-10 w-10 animate-spin rounded-full border-t-4 border-b-4 border-amber-500"></span>
         </div>
       )}

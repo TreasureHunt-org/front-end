@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import pirateFlag from "../assets/pirate-flag (2).png";
-import "../App.css";
+import pirateFlag from "../../assets/pirate-flag (2).png";
+import "../Navbar/Navbar.css";
 import Avatar from "/src/assets/user (1).png";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();

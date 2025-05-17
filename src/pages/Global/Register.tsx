@@ -3,7 +3,7 @@ import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import API_BASE_URL from "../../constants/API_BASE_URL";
+import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
 
 const Register = () => {
   const [formData, setFormData] = useState({

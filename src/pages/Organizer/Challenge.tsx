@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import api from "../../api/axios";
-import API_BASE_URL from "../../constants/API_BASE_URL";
-import BugFixChallenge from "../Challenges/BugFixChallenge";
-import ProblemSolvingChallenge from "../Challenges/ProblemSolvingChallenge";
-import MinigameChallenge from "../Challenges/MinigameChallenge";
+import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
+import BugFixChallenge from "../Challenges/BugFixChallenge/BugFixChallenge";
+import ProblemSolvingChallenge from "../Challenges/ProblemSolvingChallenge/ProblemSolvingChallenge";
+import MinigameChallenge from "../Challenges/MinigameChallenge/MinigameChallenge";
 
 interface Challenge {
   challengeId: number;

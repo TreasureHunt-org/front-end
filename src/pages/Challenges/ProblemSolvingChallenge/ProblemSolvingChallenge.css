@@ -1,0 +1,303 @@
+.bugfix-container {
+  background-color: #1e1e1e;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: white;
+}
+
+.top-bar {
+  background-color: #1e1e1e;
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 2px solid #f39c12;
+}
+
+.top-bar a {
+  color: #f39c12;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 16px;
+}
+
+.top-bar a:hover {
+  color: #e67e22;
+}
+
+.content {
+  background-color: #1e1e1e;
+  margin-top: 20px;
+  text-align: left;
+  padding: 20px;
+  width: 100%;
+}
+
+.content h2 {
+  text-align: left;
+  color: #f39c12;
+}
+
+.content h3 {
+  text-align: left;
+  color: #f39c12;
+}
+
+.content p strong {
+  color: #f39c12;
+}
+
+.code-box {
+  background-color: #827776;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 20px 0;
+  color: white;
+}
+
+.code-box pre {
+  margin: 0;
+}
+
+.limits {
+  margin: 20px 0;
+}
+
+.limits p {
+  margin: 5px 0;
+}
+
+.test-cases {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.test-cases th,
+.test-cases td {
+  border: 1px solid #f39c12;
+  padding: 10px;
+  text-align: center;
+}
+
+.test-cases th {
+  background-color: #4e4b47;
+  color: #f39c12;
+}
+
+.test-cases td {
+  background-color: #827776;
+  color: white;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  color: #f39c12;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.copy-button:hover {
+  color: #e67e22;
+}
+.custom-hr {
+  border: none;
+  height: 2px;
+  background-color: #f39c12;
+}
+.next-button {
+  background-color: #f39c12;
+  color: #1e1e1e;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+.next-button:hover {
+  background-color: #e67e22;
+}
+.problem-solving-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+.submit-button-container {
+  display: flex;
+  justify-content: center;
+  /* margin-top: 20px; */
+}
+
+.fixed-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.fixed-button {
+  background-color: #f39c12;
+  border: none;
+  color: white;
+  font-size: 16px;
+  height: 35px;
+  width: 150px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bolder;
+}
+.flex {
+  justify-content: space-between;
+}
+
+.submit-button {
+  background-color: #f39c12;
+  border: none;
+  color: white;
+  font-size: 16px;
+  height: 35px;
+  width: 150px;
+  border-radius: 5px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: bolder;
+}
+
+.submit-button:hover {
+  background-color: #e67e22;
+}
+.top-bar {
+  background-color: #1e1e1e;
+  width: 100%;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 2px solid #f39c12;
+}
+
+.top-bar a {
+  color: #f39c12;
+  text-decoration: none;
+  margin-right: 20px;
+  font-size: 16px;
+}
+
+.top-bar a:hover {
+  color: #e67e22;
+}
+
+.main-content {
+  display: flex;
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  padding: 1rem;
+  margin-top: 10px;
+}
+
+.code-editor-container {
+  flex-basis: 65%;
+  /* padding: 1rem; */
+  background-color: #f39c12;
+  overflow-y: auto;
+}
+
+.question-panel {
+  flex-basis: 40%;
+  padding: 1rem;
+  background-color: #333;
+  overflow-y: auto;
+  word-wrap: break-word;
+  white-space: normal;
+}
+
+.question-panel h1 {
+  margin-top: 0;
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.question-panel h3,
+.question-panel h4 {
+  margin-top: 0;
+  color: white;
+  font-weight: 600;
+}
+
+.question-panel p {
+  white-space: pre-wrap;
+  word-break: break-word;
+  margin-bottom: 1rem;
+}
+.language-select-container {
+  margin: 0.5rem 0 1rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-select-container label {
+  color: #f39c12;
+  font-weight: 600;
+}
+
+.language-select-container select {
+  background-color: #1e1e1e;
+  color: #fff;
+  border: 1px solid #f39c12;
+  border-radius: 5px;
+  padding: 0.3rem 0.6rem;
+  font-size: 1rem;
+  outline: none;
+}
+
+.language-select-container select:hover {
+  border-color: #e67e22;
+}
+
+.custom-hr {
+  border: none;
+  height: 1px;
+  background-color: #333;
+  margin: 0.6rem 0;
+}
+
+/* Test Cases Table */
+.test-cases {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 0.3rem;
+  background-color: #333;
+  color: #e67e22;
+}
+
+.test-cases th,
+.test-cases td {
+  padding: 0.3rem;
+  border: 1px solid#333;
+  text-align: left;
+  vertical-align: top;
+}
+
+.copy-button {
+  margin-left: 0.5rem;
+  background-color: transparent;
+  border: none;
+  color: #f39c12;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.copy-button:hover {
+  color: #e67e22;
+}

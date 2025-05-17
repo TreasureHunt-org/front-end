@@ -1,7 +1,7 @@
 import { BrowserRouter } from "react-router-dom";
 import { useEffect } from "react";
 import "./App.css";
-import Navbar from "./components/Navbar";
+import Navbar from "./components/Navbar/Navbar";
 import AppRoutes from "./routes/AppRoutes";
 import useClickSound from "./hooks/useClickSound";
 import { AuthProvider } from "./context/AuthContext";

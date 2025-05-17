@@ -1,5 +1,5 @@
 import { FiEdit, FiTrash2 } from "react-icons/fi";
-
+import "../ManageUsers/ManageUsers.css";
 interface IUser {
   id: number;
   username: string;

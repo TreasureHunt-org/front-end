@@ -1,6 +1,5 @@
 import user from "/src/assets/user (1).png";
-import "/src/App.css";
-
+import "../CreateHunterAccount/CreateHunterAccount.css";
 const CreateHunterAccount = () => {
   return (
     <div className="reviewer-account-container">

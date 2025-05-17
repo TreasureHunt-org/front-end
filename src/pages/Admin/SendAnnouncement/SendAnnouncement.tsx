@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../SendAnnouncement/SendAnnouncement.css";
 
 const hunts = [
   {
