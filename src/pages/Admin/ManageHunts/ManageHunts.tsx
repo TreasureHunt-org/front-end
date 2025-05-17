@@ -88,6 +88,17 @@ const ManageHunts = () => {
     }
   };
 
+  const handleDeleteHunt = async (huntId: number) => {
+    if (!window.confirm("Are you sure you want to delete this hunt?")) return;
+
+    try {
+      await api.delete(`${API_BASE_URL}/hunts/admin/${huntId}`);
+      fetchMyHunts();
+    } catch (error) {
+      console.error("Failed to delete hunt:", error);
+    }
+  };
+
   return (
     <div className="table-container">
       <table className="manage-users-table">
@@ -116,7 +127,10 @@ const ManageHunts = () => {
                 >
                   <FaEdit className="edit-icon" />
                 </button>
-                <button className="delete-btn">
+                <button
+                  className="delete-btn"
+                  onClick={() => handleDeleteHunt(item.id)}
+                >
                   <FaTrash className="delete-icon" />
                 </button>
                 <button className="manage-button">Submissions</button>
