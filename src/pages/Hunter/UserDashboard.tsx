@@ -5,6 +5,7 @@ import HunterDashboard from "../Hunter/HunterDashboard";
 import OrganizerDashboard from "../Organizer/OrganizerDashboard";
 import ReviewerDashboard from "../Reviewer/ReviewerDashboard";
 import api from "../../api/axios";
+import { useNavigate } from "react-router-dom";
 
 interface UserData {
   id: string;
@@ -17,6 +18,7 @@ const UserDashboard: React.FC = () => {
   const [userData, setUserData] = useState<UserData>();
   const { user, roles } = useAuth();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -54,6 +56,21 @@ const UserDashboard: React.FC = () => {
         setError("Failed to load user data");
       }
     };
+    if(roles?.includes("ADMIN")){
+      navigate("/admin-dashboard");
+      return;
+    }
+    if(roles?.includes("HUNTER")){
+      navigate("/hunter-dashboard");
+      return;
+    }
+    if(roles?.includes("ORGANIZER")){
+      navigate("/organizer-dashboard");
+    }
+    // {roles?.includes("ADMIN") && <AdminDashboard />}
+    // {roles?.includes("HUNTER") && <HunterDashboard />}
+    // {roles?.includes("ORGANIZER") && <OrganizerDashboard />}
+    // {roles?.includes( "REVIEWER") && <ReviewerDashboard />}
 
     fetchUserData();
   }, [user]);

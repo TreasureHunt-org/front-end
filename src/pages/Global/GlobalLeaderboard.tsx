@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import user from "/src/assets/user (1).png";
+import React, { useState, useEffect, useRef } from "react";
 import api from "../../api/axios";
 import Avatar from "/src/assets/user (1).png";
 
@@ -28,33 +27,103 @@ const GlobalLeaderboard: React.FC = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
+  // Ref to track image URLs for cleanup
+  const imageUrlsRef = useRef<string[]>([]);
+
   // Fetch leaderboard data
   const fetchLeaderboard = async (page: number) => {
     setLoading(true);
     try {
       // API Comment: The leaderboard endpoint should be:
-      // GET /leaderboard?page={page}&size={size}
+      // GET /users/leaderboard?page={page}&size={size}
       // Response should include:
-      // - content: array of users with id, username, points, profileImage
+      // - content: array of users with id, username, points
       // - totalPages: total number of pages
       // - totalElements: total number of users
       // - size: page size
       // - number: current page number (0-based)
+      //{
+      //   "content": [
+      //     {
+      //       "id": 9007199254740991,
+      //       "username": "string",
+      //       "points": 1073741824
+      //     }
+      //   ],
+      //   "totalPages": 1073741824,
+      //   "totalElements": 9007199254740991,
+      //   "size": 1073741824,
+      //   "number": 1073741824
+      // }
 
-      // Mock API call with fake data
-      // In production, this would be:
-      // const response = await api.get(`/leaderboard?page=${page}&size=10`);
-      // const data: LeaderboardResponse = response.data;
+      // Make the API call to get leaderboard data
+      const response = await api.get(`/users/leaderboard?page=${page}&size=10`);
+      const data: LeaderboardResponse = response.data;
 
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      // Clean up previous object URLs
+      imageUrlsRef.current.forEach(url => {
+        URL.revokeObjectURL(url);
+      });
+      imageUrlsRef.current = [];
 
-      // Generate fake data
-      const fakeData: LeaderboardResponse = generateFakeData(page);
+      // Fetch user images in parallel using Promise.all
+      const usersWithImages = await Promise.all(
+        data.content.map(async (user) => {
+          try {
+            // Fetch the user's image from the /users/{id}/image endpoint
+            const imageResponse = await api.get(`/users/${user.id}/image`, {
+              responseType: 'arraybuffer'
+            });
 
-      // Update state with fake data
+            // Convert the binary data to a blob
+            const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
+
+            // Create a URL for the blob
+            const imageUrl = URL.createObjectURL(blob);
+
+            // Store the URL for cleanup
+            imageUrlsRef.current.push(imageUrl);
+
+            // Return the user with the image URL
+            return {
+              ...user,
+              profileImage: imageUrl
+            };
+          } catch (error) {
+            console.error(`Error fetching image for user ${user.id}:`, error);
+            // Return the user without an image if there was an error
+            return user;
+          }
+        })
+      );
+
+      // Update state with the data including images
       if (page === 0) {
         // First page includes top 3 users
+        setTopUsers(usersWithImages.slice(0, 3));
+        setUsers(usersWithImages.slice(3));
+      } else {
+        setUsers(usersWithImages);
+      }
+
+      setTotalPages(data.totalPages);
+      setCurrentPage(data.number);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching leaderboard:", error);
+      setLoading(false);
+
+      // Fallback to mock data if API call fails
+      console.log("Falling back to mock data due to API error");
+      const fakeData: LeaderboardResponse = generateFakeData(page);
+
+      // Clean up any URLs that might have been created before the error
+      imageUrlsRef.current.forEach(url => {
+        URL.revokeObjectURL(url);
+      });
+      imageUrlsRef.current = [];
+
+      if (page === 0) {
         setTopUsers(fakeData.content.slice(0, 3));
         setUsers(fakeData.content.slice(3));
       } else {
@@ -63,10 +132,6 @@ const GlobalLeaderboard: React.FC = () => {
 
       setTotalPages(fakeData.totalPages);
       setCurrentPage(fakeData.number);
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching leaderboard:", error);
-      setLoading(false);
     }
   };
 
@@ -122,6 +187,14 @@ const GlobalLeaderboard: React.FC = () => {
   // Load initial data
   useEffect(() => {
     fetchLeaderboard(0);
+
+    // Cleanup function to revoke object URLs when component unmounts
+    return () => {
+      imageUrlsRef.current.forEach(url => {
+        URL.revokeObjectURL(url);
+      });
+      imageUrlsRef.current = [];
+    };
   }, []);
 
   // Handle page change
@@ -238,7 +311,7 @@ const GlobalLeaderboard: React.FC = () => {
             {/* Second place */}
             <div className="topRankingItem">
               <span className="rank">2</span>
-              <img src={user} alt="Profile" className="profileImage" />
+              <img src={topUsers[1]?.profileImage || Avatar} alt="Profile" className="profileImage" />
               <span className="username">{topUsers[1]?.username || "Aya"}</span>
               <span className="points">{topUsers[1]?.points || 1980} pt</span>
             </div>
@@ -246,7 +319,7 @@ const GlobalLeaderboard: React.FC = () => {
             {/* First place (center, larger) */}
             <div className="topRankingItem">
               <span className="rank">1</span>
-              <img src={user} alt="Profile" className="profileImage" />
+              <img src={topUsers[0]?.profileImage || Avatar} alt="Profile" className="profileImage" />
               <span className="username">{topUsers[0]?.username || "Hamza23"}</span>
               <span className="points">{topUsers[0]?.points || 2000} pt</span>
             </div>
@@ -254,7 +327,7 @@ const GlobalLeaderboard: React.FC = () => {
             {/* Third place */}
             <div className="topRankingItem">
               <span className="rank">3</span>
-              <img src={user} alt="Profile" className="profileImage" />
+              <img src={topUsers[2]?.profileImage || Avatar} alt="Profile" className="profileImage" />
               <span className="username">{topUsers[2]?.username || "monsters"}</span>
               <span className="points">{topUsers[2]?.points || 1950} pt</span>
             </div>

@@ -185,9 +185,11 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
-        <button type="submit" className="create-hunt-button">
-          Create Hunt
-        </button>
+        <div className="form-group">
+          <button type="submit" className="create-hunt-button">
+            Create Hunt
+          </button>
+        </div>
       </form>
       {/* <Outlet /> */}
     </div>
