@@ -147,7 +147,7 @@ const AppRoutes: React.FC = () => {
         path={ROUTES.ORGANIZER_DASHBOARD}
         element={
           <ProtectedOrganizerRoute>
-            <OrganizerDashboard />
+            <OrganizerDashboard/>
           </ProtectedOrganizerRoute>
         }
       >
