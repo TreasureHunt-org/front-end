@@ -606,16 +606,16 @@ progress::-webkit-progress-value {
 .admin-dashboard {
   display: flex;
   /*height: 100vh;*/
-  background-color: #222;
-  color: white;
-  position: relative;
-  top: 10px;
-}
+/*  background-color: #222;*/
+/*  color: white;*/
+/*  position: relative;*/
+/*  top: 10px;*/
+/*}*/
 
-.sidebar {
-  width: 300px;
-  height: 100vh;
-  background-color: #333;
+/*.sidebar {*/
+/*  width: 300px;*/
+/*  height: 100vh;*/
+/*  background-color: #333;*/
   /* padding: 0rem; */
 /* padding-right: 1rem;
   display: flex;
@@ -1904,14 +1904,14 @@ progress::-webkit-progress-value {
   align-items: center;
   gap: 1rem;
   /*height: 100vh;*/
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 100%;
-  background-color: #333;
-  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
+/*  padding: 1rem;*/
+/*  border: 1px solid #ddd;*/
+/*  border-radius: 10px;*/
+/*  width: 100%;*/
+/*  background-color: #333;*/
+/*  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);*/
+/*  overflow: hidden;*/
+/*}*/
 
 .reviewer-header {
   display: flex;
