@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import user from "/src/assets/user (1).png";
 import api from "../../api/axios";
 import Avatar from "/src/assets/user (1).png";
 
