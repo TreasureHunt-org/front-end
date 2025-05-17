@@ -2087,6 +2087,92 @@ Afnan Tamimi .bugfix-container {
   text-align: center;
 }
 
+/* Skeleton loaders */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #333 25%, #444 50%, #333 75%);
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.5s infinite linear;
+  border-radius: 4px;
+}
+
+.skeleton-topRankingItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #444;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 30%;
+}
+
+.skeleton-rank {
+  width: 30px;
+  height: 30px;
+  margin-top: 10px;
+}
+
+.skeleton-profileImage {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin: 10px 0;
+}
+
+.skeleton-profileImage-large {
+  width: 120px;
+  height: 120px;
+}
+
+.skeleton-username {
+  width: 80%;
+  height: 18px;
+  margin-top: 10px;
+}
+
+.skeleton-points {
+  width: 60%;
+  height: 16px;
+  margin-top: 5px;
+}
+
+.skeleton-rankingItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.skeleton-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  align-items: center;
+}
+
+.skeleton-button {
+  width: 80px;
+  height: 36px;
+  border-radius: 5px;
+}
+
+.skeleton-text {
+  width: 120px;
+  height: 16px;
+}
+
 .title {
   text-align: center;
   color: #ffffff;
