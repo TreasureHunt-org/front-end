@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../components/ProtectedRoutes/ProtectedRoute";
 import { ROUTES } from "../constants/app routes/routes.ts";
 // import CreateChallenges from "../pages/Admin/CreateChallenges";
-import ViewMyHunts from "../pages/Organizer/ViewMyHunts.tsx";
+import ViewMyHunts from "../pages/Organizer/ViewMyHunts/ViewMyHunts.tsx";
 import ProtectedAdminRoute from "../components/ProtectedRoutes/ProtectedAdminRoute.tsx";
 import ProtectedOrganizerRoute from "../components/ProtectedRoutes/ProtectedOrganizerRoute.tsx";
 import Challenge from "../pages/Organizer/Challenge.tsx";

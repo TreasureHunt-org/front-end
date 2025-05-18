@@ -16,7 +16,7 @@ const AdminDashboard = () => {
               path: "/organizer-dashboard/my-hunts",
               absolute: true,
             },
-            { name: "Create a Hunt", path: "create-hunt" },
+            // { name: "Create a Hunt", path: "create-hunt" },
             { name: "Send Announcement", path: "send-announcement" },
             { name: "Create Accounts", path: "create-accounts" },
             { name: "View Submissions", path: "view-submissions" },
