@@ -81,8 +81,18 @@ const ManageHunts = () => {
         `${API_BASE_URL}/hunts/admin/${editedHunt.id}`,
         updatedHunt,
       );
+
+      setHunts((prev) =>
+        prev.map((hunt) =>
+          hunt.id === updatedHunt.id ? { ...hunt, ...updatedHunt } : hunt,
+        ),
+      );
+
       closeModal();
-      fetchMyHunts();
+      // fetchMyHunts();
+      console.log("edited hunt:" + editedHunt.huntStatus);
+
+      console.log("updated hunt:" + updatedHunt.huntStatus);
     } catch (error) {
       console.error("Failed to update hunt:", error);
     }
@@ -169,7 +179,6 @@ const ManageHunts = () => {
               >
                 <option value="DRAFT">DRAFT</option>
                 <option value="UNDER_REVIEW">UNDER_REVIEW</option>
-
                 <option value="LIVE">LIVE</option>
                 <option value="FINISHED">FINISHED</option>
                 <option value="TERMINATED">TERMINATED</option>
