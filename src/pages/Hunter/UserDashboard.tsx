@@ -25,8 +25,8 @@ const UserDashboard: React.FC = () => {
       try {
         const response = await api.get("/auth/me");
 
-        console.log("API Response:", response);
-        console.log("Response Status:", response.status);
+        // console.log("API Response:", response);
+        // console.log("Response Status:", response.status);
 
         if (response.headers["content-type"].includes("text/html")) {
           setError(
@@ -56,15 +56,15 @@ const UserDashboard: React.FC = () => {
         setError("Failed to load user data");
       }
     };
-    if(roles?.includes("ADMIN")){
+    if (roles?.includes("ADMIN")) {
       navigate("/admin-dashboard");
       return;
     }
-    if(roles?.includes("HUNTER")){
+    if (roles?.includes("HUNTER")) {
       navigate("/hunter-dashboard");
       return;
     }
-    if(roles?.includes("ORGANIZER")){
+    if (roles?.includes("ORGANIZER")) {
       navigate("/organizer-dashboard");
     }
     // {roles?.includes("ADMIN") && <AdminDashboard />}

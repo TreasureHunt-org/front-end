@@ -19,8 +19,7 @@ const hunts = [
   },
 ];
 
-interface IProps {}
-const ViewSubmissions = ({}: IProps) => {
+const ViewSubmissions = () => {
   const [selectedHunt, setSelectedHunt] = useState<string>("");
 
   const handlePickHunt = (huntName: string) => {

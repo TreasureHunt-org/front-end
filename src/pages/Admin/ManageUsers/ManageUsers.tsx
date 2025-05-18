@@ -19,7 +19,7 @@ const ManageUsers = () => {
   // State for pagination
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(11);
 
   // State for sorting
   const [sortBy, setSortBy] = useState<string>("id");
@@ -217,10 +217,8 @@ const ManageUsers = () => {
                 <td>
                   <td>
                     <div className="control-btns">
-                      <div
-                        className="skeleton"
-                      />
-                      <div className="skeleton"/>
+                      <div className="skeleton" />
+                      <div className="skeleton" />
                     </div>
                   </td>
                 </td>
@@ -338,7 +336,7 @@ const ManageUsers = () => {
 
   return (
     <div className={"w-full"}>
-      <div className="flex justify-center items-center mb-4">
+      <div className="mb-.1 flex items-center justify-center">
         <div className="search-container">
           <input
             type="text"
@@ -354,15 +352,32 @@ const ManageUsers = () => {
             <FiSearch size={16} />
           </button>
         </div>
-        <div>
-          <button className="add-btn">Add new user</button>
+        <div className="pagination">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 0 || loading}
+          >
+            Previous
+          </button>
+          <span>
+            {currentPage + 1} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages - 1 || loading}
+          >
+            Next
+          </button>
         </div>
+        {/* <div>
+          <button className="add-btn">Add new user</button>
+        </div> */}
       </div>
 
       {loading ? (
         renderSkeletonLoader()
       ) : (
-        <div className={"w-full min-h-screen"}>
+        <div className={"min-h-screen w-full"}>
           <table className="manage-users-table min-h-screen">
             <thead>
               <tr>
@@ -384,11 +399,17 @@ const ManageUsers = () => {
                     <td>{user.email}</td>
                     <td>
                       {user.currentHunt ? (
-                        <a href={user.currentHunt} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={user.currentHunt}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
                           {user.currentHunt}
                         </a>
                       ) : (
-                        <a href="#" className="default-hunt">No active hunt</a>
+                        <a href="#" className="default-hunt">
+                          No active hunt
+                        </a>
                       )}
                     </td>
                     <td>
@@ -418,24 +439,6 @@ const ManageUsers = () => {
               )}
             </tbody>
           </table>
-
-          <div className="pagination">
-            <button
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 0 || loading}
-            >
-              Previous
-            </button>
-            <span>
-              Page {currentPage + 1} of {totalPages}
-            </span>
-            <button
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages - 1 || loading}
-            >
-              Next
-            </button>
-          </div>
         </div>
       )}
 
