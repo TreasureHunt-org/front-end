@@ -5,14 +5,8 @@ import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
 import { useNavigate } from "react-router-dom";
 import "../CreateHunt/CreateHunt.css";
 
-// import { Link } from "react-router-dom";
-// import { ROUTES } from "../../constants/routes";
-// import { Outlet } from "react-router-dom";
-
 const CreateHunt: React.FC = () => {
   const [huntTitle, setHuntTitle] = useState("");
-  // const [startDate, setStartDate] = useState("");
-  // const [endDate, setEndDate] = useState("");
   const [description, setDescription] = useState("");
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
@@ -25,9 +19,11 @@ const CreateHunt: React.FC = () => {
   if (!isAuthenticated) {
     return <div>Please log in to create a hunt.</div>;
   }
+
   const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) setBackground(e.target.files[0]);
   };
+
   const handleMapImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) setMapImage(e.target.files[0]);
   };
@@ -36,9 +32,7 @@ const CreateHunt: React.FC = () => {
     e.preventDefault();
     const accessToken = localStorage.getItem("accessToken");
 
-    if (!accessToken) {
-      return;
-    }
+    if (!accessToken) return;
 
     const lat = parseFloat(latitude);
     const lng = parseFloat(longitude);
@@ -48,21 +42,13 @@ const CreateHunt: React.FC = () => {
     if (!background || !mapImage) {
       return alert("Please select images");
     }
-
     if (huntTitle.trim() === "") {
       return alert("Please enter a valid title");
     }
 
-    // const toISOStringWithSeconds = (localDate: string) => {
-    //   const date = new Date(localDate);
-    //   return date.toISOString();
-    // };
-
     const huntData = {
       title: huntTitle,
       description,
-      // startDate: toISOStringWithSeconds(startDate),
-      // endDate: toISOStringWithSeconds(endDate),
       location: { latitude: lat, longitude: lng },
     };
 
@@ -70,10 +56,6 @@ const CreateHunt: React.FC = () => {
     formData.append("background", background);
     formData.append("map", mapImage);
     formData.append("huntData", JSON.stringify(huntData));
-
-    // for (let [key, val] of formData.entries()) {
-    //   console.log(key, val);
-    // }
 
     try {
       const { data } = await api.post(API_BASE_URL + "/hunts", formData, {
@@ -84,7 +66,6 @@ const CreateHunt: React.FC = () => {
       });
 
       console.log("Created:", data);
-      // alert("Hunt created!");
       navigate("/organizer-dashboard/my-hunts");
     } catch (err: any) {
       console.error(err.response?.data || err.message);
@@ -95,20 +76,12 @@ const CreateHunt: React.FC = () => {
   return (
     <div className="create-hunt-container">
       <h2 className="create-hunt-title">Create Hunt</h2>
-      {/* <Link to={ROUTES.Create_Challenges} className="menu-link"> */}
-      {
-        // TODO Move this button to hunts
-      }
-      {/*<Link to="/admin-dashboard/my-hunts" className="menu-link">*/}
-      {/*  <button type="button" className="create-hunt-button">*/}
-      {/*    view my hunts*/}
-      {/*  </button>*/}
-      {/*</Link>*/}
 
       <form onSubmit={handleCreateHunt} className="create-hunt-form">
         <div className="form-group">
-          <label>Title</label>
+          <label htmlFor="title">Title</label>
           <input
+            id="title"
             className="create-hunt-input"
             type="text"
             value={huntTitle}
@@ -116,38 +89,22 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label>Description</label>
+          <label htmlFor="description">Description</label>
           <textarea
+            id="description"
             className="create-hunt-textarea"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
           />
         </div>
-        {/*<div className="form-group">*/}
-        {/*  <label>Start Date (UTC)</label>*/}
-        {/*  <input*/}
-        {/*    className="create-hunt-input"*/}
-        {/*    type="datetime-local"*/}
-        {/*    value={startDate}*/}
-        {/*    onChange={(e) => setStartDate(e.target.value)}*/}
-        {/*    required*/}
-        {/*  />*/}
-        {/*</div>*/}
-        {/*<div className="form-group">*/}
-        {/*  <label>End Date (UTC)</label>*/}
-        {/*  <input*/}
-        {/*    className="create-hunt-input"*/}
-        {/*    type="datetime-local"*/}
-        {/*    value={endDate}*/}
-        {/*    onChange={(e) => setEndDate(e.target.value)}*/}
-        {/*    required*/}
-        {/*  />*/}
-        {/*</div>*/}
+
         <div className="form-group">
-          <label>Latitude</label>
+          <label htmlFor="latitude">Latitude</label>
           <input
+            id="latitude"
             className="create-hunt-input"
             type="text"
             value={latitude}
@@ -155,9 +112,11 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label>Longitude</label>
+          <label htmlFor="longitude">Longitude</label>
           <input
+            id="longitude"
             className="create-hunt-input"
             type="text"
             value={longitude}
@@ -165,9 +124,11 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label>Background Image</label>
+          <label htmlFor="background">Background Image</label>
           <input
+            id="background"
             className="create-hunt-input"
             type="file"
             accept="image/*"
@@ -175,9 +136,11 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
-          <label>Map Image</label>
+          <label htmlFor="map">Map Image</label>
           <input
+            id="map"
             className="create-hunt-input"
             type="file"
             accept="image/*"
@@ -185,13 +148,13 @@ const CreateHunt: React.FC = () => {
             required
           />
         </div>
+
         <div className="form-group">
           <button type="submit" className="create-hunt-button">
             Create Hunt
           </button>
         </div>
       </form>
-      {/* <Outlet /> */}
     </div>
   );
 };

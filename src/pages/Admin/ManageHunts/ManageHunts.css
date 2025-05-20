@@ -105,6 +105,35 @@
 .search-container button:hover {
   background-color: #e67e22;
 }
+/* 
+/* Pagination 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
+  gap: 0.5rem;
+}
+
+.pagination button {
+  padding: 0.3rem 0.6rem;
+  background-color: #f39c12;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background-color 0.3s;
+}
+
+.pagination span {
+  color: white;
+  font-size: 0.85rem;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #e67e22;
+/* } */
 
 /* Pagination */
 .pagination {
@@ -139,7 +168,6 @@
   background-color: #777;
   cursor: not-allowed;
 }
-
 /* Modal */
 .modal-overlay {
   position: fixed;

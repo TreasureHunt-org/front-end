@@ -7,6 +7,7 @@ import { useAuth } from "../../../context/AuthContext.tsx";
 import { PageResponse } from "../../../types.ts";
 import Modal from "../../../components/Modal/Modal";
 import "../ManageHunts/ManageHunts.css";
+
 interface Hunt {
   id: number;
   title: string;
@@ -18,11 +19,12 @@ interface Hunt {
 const ManageHunts = () => {
   const [hunts, setHunts] = useState<Hunt[]>([]);
   const [pageData, setPageData] = useState<PageResponse | null>(null);
-  const [sortDirection, setSortDirection] = useState<string>("ASC");
-  const [status, setStatus] = useState<string>("DRAFT");
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(7);
+  const [sortDirection, setSortDirection] = useState<string>("ASC");
+  const [status, setStatus] = useState<string | null>(null);
+
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(11);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [selectedHunt, setSelectedHunt] = useState<Hunt | null>(null);
   const [editedHunt, setEditedHunt] = useState<Hunt | null>(null);
@@ -51,15 +53,15 @@ const ManageHunts = () => {
     try {
       const response = await api.get(API_BASE_URL + `/hunts`, {
         params: {
-          page: currentPage,
-          size: pageSize,
+          page: 0,
+          size: 1000, // fetch all for client-side filtering and pagination
           direction: sortDirection,
-          status,
+          ...(status ? { status } : {}),
         },
       });
-      setPageData(response.data);
-      setHunts(response.data.content || []);
-      setTotalPages(response.data.totalPages || 1);
+      const fullList = response.data.content || [];
+      setHunts(fullList);
+      setTotalPages(Math.ceil(fullList.length / pageSize));
     } catch (err) {
       console.error("Error fetching hunts:", err);
     } finally {
@@ -69,7 +71,7 @@ const ManageHunts = () => {
 
   useEffect(() => {
     fetchMyHunts();
-  }, [isAuthenticated, currentPage, pageSize, sortDirection, status]);
+  }, [isAuthenticated, sortDirection, status]);
 
   const handlePageChange = (page: number) => {
     if (page >= 0 && page < totalPages) {
@@ -92,20 +94,19 @@ const ManageHunts = () => {
   const handleSaveChanges = async () => {
     if (!editedHunt) return;
     try {
+      const { id, title, startDate, endDate, huntStatus } = editedHunt;
       const updatedHunt = {
-        ...editedHunt,
-        startDate: toISOStringWithTime(editedHunt.startDate),
-        endDate: toISOStringWithTime(editedHunt.endDate),
+        title,
+        startDate: toISOStringWithTime(startDate),
+        endDate: toISOStringWithTime(endDate),
       };
-      await api.put(
-        `${API_BASE_URL}/hunts/admin/${editedHunt.id}`,
-        updatedHunt,
-      );
-      setHunts((prev) =>
-        prev.map((hunt) =>
-          hunt.id === updatedHunt.id ? { ...hunt, ...updatedHunt } : hunt,
-        ),
-      );
+
+      await api.put(`${API_BASE_URL}/hunts/admin/${id}`, updatedHunt);
+      await api.put(`${API_BASE_URL}/hunts/admin/${id}/status`, null, {
+        params: { status: huntStatus },
+      });
+
+      await fetchMyHunts();
       closeModal();
     } catch (error) {
       console.error("Failed to update hunt:", error);
@@ -173,6 +174,25 @@ const ManageHunts = () => {
     );
   };
 
+  // Filter and paginate client-side
+  const filteredHunts = hunts.filter(
+    (hunt) =>
+      hunt.title.toLowerCase().includes(search.toLowerCase()) ||
+      hunt.huntStatus.toLowerCase().includes(search.toLowerCase()),
+  );
+
+  const paginatedHunts = filteredHunts.slice(
+    currentPage * pageSize,
+    currentPage * pageSize + pageSize,
+  );
+
+  useEffect(() => {
+    setTotalPages(Math.ceil(filteredHunts.length / pageSize));
+    if (currentPage >= Math.ceil(filteredHunts.length / pageSize)) {
+      setCurrentPage(0); // Reset to first page if out of bounds
+    }
+  }, [filteredHunts.length, pageSize]);
+
   return (
     <div className={"w-full"}>
       <div className="mb-.1 flex items-center justify-center">
@@ -187,23 +207,26 @@ const ManageHunts = () => {
             <FiSearch size={16} />
           </button>
         </div>
-        <div className="pagination">
-          <button
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 0 || loading}
-          >
-            Previous
-          </button>
-          <span>
-            {currentPage + 1} of {totalPages}
-          </span>
-          <button
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage >= totalPages - 1 || loading}
-          >
-            Next
-          </button>
-        </div>
+        {!loading && (
+          <div className="pagination">
+            <button
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 0 || loading}
+            >
+              Previous
+            </button>
+            <span>
+              {currentPage + 1} of {totalPages}
+            </span>
+            <button
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage >= totalPages - 1}
+              className="pagination-button"
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
       {loading ? (
@@ -222,39 +245,31 @@ const ManageHunts = () => {
               </tr>
             </thead>
             <tbody>
-              {hunts
-                .filter(
-                  (hunt) =>
-                    hunt.title.toLowerCase().includes(search.toLowerCase()) ||
-                    hunt.huntStatus
-                      .toLowerCase()
-                      .includes(search.toLowerCase()),
-                )
-                .map((item, index) => (
-                  <tr key={item.id}>
-                    <td>{index + 1}</td>
-                    <td>{item.title}</td>
-                    <td>{item.huntStatus}</td>
-                    <td>{formatDisplayDate(item.startDate)}</td>
-                    <td>{formatDisplayDate(item.endDate)}</td>
-                    <td>
-                      <div className="control-btns">
-                        <button
-                          className="edit-btn"
-                          onClick={() => handleEditButtonClick(item)}
-                        >
-                          <FaEdit size={16} className="edit-icon" />
-                        </button>
-                        <button
-                          className="delete-btn"
-                          onClick={() => handleDeleteHunt(item.id)}
-                        >
-                          <FaTrash size={16} className="delete-icon" />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+              {paginatedHunts.map((item, index) => (
+                <tr key={item.id}>
+                  <td>{currentPage * pageSize + index + 1}</td>
+                  <td>{item.title}</td>
+                  <td>{item.huntStatus}</td>
+                  <td>{formatDisplayDate(item.startDate)}</td>
+                  <td>{formatDisplayDate(item.endDate)}</td>
+                  <td>
+                    <div className="control-btns">
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditButtonClick(item)}
+                      >
+                        <FaEdit size={16} className="edit-icon" />
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDeleteHunt(item.id)}
+                      >
+                        <FaTrash size={16} className="delete-icon" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

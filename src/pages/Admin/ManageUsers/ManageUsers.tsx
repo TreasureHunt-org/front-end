@@ -19,7 +19,7 @@ const ManageUsers = () => {
   // State for pagination
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(11);
+  const [pageSize, setPageSize] = useState<number>(7);
 
   // State for sorting
   const [sortBy, setSortBy] = useState<string>("id");
@@ -57,21 +57,29 @@ const ManageUsers = () => {
       const responseData = response.data;
       // console.log("responseData" + JSON.stringify());
 
-      if (responseData.success && Array.isArray(responseData.data)) {
+      // if (responseData.success && Array.isArray(responseData.data)) {
+      if (
+        responseData.success &&
+        Array.isArray(responseData.data) &&
+        responseData.data[0] &&
+        Array.isArray(responseData.data[0].content)
+      ) {
+        const pageData = responseData.data[0];
         // Map the data to match our IUser interface
-        const users = responseData.data[0].content.map((user: any) => ({
+        const users = pageData.content.map((user: any) => ({
+          // const users = responseData.data[0].content.map((user: any) => ({
           id: user.id,
           username: user.username || "Unknown", // API returns 'name' instead of 'username'
           role: user.roles || ["HUNTER"],
           email: user.email || "",
           currentHunt: user.currentHunt || "",
         }));
-        console.log(users);
+        //    console.log(users);
         setUsers(users);
         // Since the API response doesn't include pagination info, we'll handle it differently
         // For now, assume we got all users in one page
-        setTotalPages(1);
-        setCurrentPage(0);
+        setTotalPages(pageData.totalPages || 1);
+        // setCurrentPage(pageData.number || 0);
       } else {
         // Handle case where data is not as expected
         setUsers([]);
@@ -88,8 +96,13 @@ const ManageUsers = () => {
   };
 
   // Handle page change
+  // const handlePageChange = (page: number) => {
+  //   if (page >= 0 && page < totalPages) {
+  //     setCurrentPage(page);
+  //   }
+  // };
   const handlePageChange = (page: number) => {
-    if (page >= 0 && page < totalPages) {
+    if (page !== currentPage && page >= 0 && page < totalPages) {
       setCurrentPage(page);
     }
   };
