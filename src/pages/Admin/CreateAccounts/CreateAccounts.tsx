@@ -47,10 +47,7 @@ const CreateAccounts = () => {
       setError("");
       try {
         console.log(formData);
-        const response = await api.post(
-          API_BASE_URL + `/users/admin/create`,
-          formData,
-        );
+        const response = await api.post(`/users/admin/create`, formData);
 
         console.log(response.data);
       } catch (error) {

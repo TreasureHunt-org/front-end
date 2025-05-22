@@ -11,21 +11,31 @@ import UserProfile from "../pages/User/UserProfile";
 import CreateAccounts from "../pages/Admin/CreateAccounts/CreateAccounts.tsx";
 
 // Lazy-loaded components
-const Home = React.lazy(() => import("../pages/Global/Home"));
-const Hunts = React.lazy(() => import("../pages/Global/Hunts"));
+const Home = React.lazy(() => import("../pages/Global/Home/Home.tsx"));
+const Hunts = React.lazy(() => import("../pages/Global/Hunts/Hunts.tsx"));
 const GlobalLeaderboard = React.lazy(
-  () => import("../pages/Global/GlobalLeaderboard"),
+  () => import("../pages/Global/GlobalLeaderboard/GlobalLeaderboard.tsx"),
 );
-const ContactUs = React.lazy(() => import("../pages/Global/ContactUs"));
-const Login = React.lazy(() => import("../pages/Global/Login"));
-const Register = React.lazy(() => import("../pages/Global/Register"));
-const NotFound = React.lazy(() => import("../pages/Global/NotFound"));
-const SelectedHunt = React.lazy(() => import("../pages/Global/SelectedHunt"));
+const ContactUs = React.lazy(
+  () => import("../pages/Global/ContactUs/ContactUs.tsx"),
+);
+const Login = React.lazy(() => import("../pages/Global/Login/Login.tsx"));
+const Register = React.lazy(
+  () => import("../pages/Global/Register/Register.tsx"),
+);
+const NotFound = React.lazy(
+  () => import("../components/NotFound/NotFound.tsx"),
+);
+const SelectedHunt = React.lazy(
+  () => import("../pages/Global/SelectedHunt/SelectedHunt.tsx"),
+);
 const HuntLeaderboard = React.lazy(
-  () => import("../pages/Global/HuntLeaderboard"),
+  () => import("../pages/Global/HuntLeaderboard/HuntLeaderboard.tsx"),
 );
 const UserDashboard = React.lazy(() => import("../pages/Hunter/UserDashboard"));
-const HuntMapPieces = React.lazy(() => import("../pages/Hunter/HuntMapPieces"));
+const HuntMapPieces = React.lazy(
+  () => import("../pages/Hunter/HuntMapPieces/HuntMapPieces.tsx"),
+);
 const AdminDashboard = React.lazy(
   () => import("../pages/Admin/AdminDashboard/AdminDashboard.tsx"),
 );

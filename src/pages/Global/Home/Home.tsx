@@ -2,9 +2,10 @@ import pirateMap from "/src/assets/map.png";
 
 import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.tsx";
+import { useAuth } from "../../../context/AuthContext.tsx";
 import { useEffect } from "react";
 
+import "../Home/Home.css";
 const Home = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();

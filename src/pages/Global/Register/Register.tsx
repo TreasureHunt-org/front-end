@@ -3,7 +3,7 @@ import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
-import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
+import "../Register/Register.css";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -52,10 +52,7 @@ const Register = () => {
     }
 
     try {
-      const response = await axios.post(
-        API_BASE_URL + "/auth/signup",
-        formData,
-      );
+      const response = await axios.post(`/auth/signup`, formData);
 
       console.log("Response:", response.data);
       alert("Account created successfully!");

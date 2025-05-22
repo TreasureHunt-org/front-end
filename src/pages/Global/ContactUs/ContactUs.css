@@ -1,0 +1,57 @@
+.contact-us {
+  padding: 20px;
+  background-color: #1e1e1e;
+  color: #ffffff;
+  text-align: left;
+}
+
+.contact-us h2 {
+  color: #ffffff;
+  background-color: #f39c12;
+  padding: 10px;
+  display: block;
+  margin-bottom: 20px;
+  font-size: 1em;
+  border-radius: 5px;
+}
+
+.contact-us p {
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+
+.contact-us ul,
+.contact-us ol {
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.contact-us ul li,
+.contact-us ol li {
+  margin-bottom: 10px;
+  line-height: 1.6;
+  font-size: 1.1em;
+}
+
+.contact-us ul li strong,
+.contact-us ol li strong {
+  color: #ffffff;
+}
+
+.social-link {
+  color: #1e90ff;
+  text-decoration: none;
+  font-size: 1.2em;
+}
+
+.social-link:hover {
+  text-decoration: underline;
+}
+
+.footer {
+  margin-top: 40px;
+  text-align: center;
+
+  font-size: 1em;
+}

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import api from "../../api/axios.ts";
+import api from "../../../api/axios.ts";
 
+import "../Hunts/Hunts.css";
 interface Hunt {
   id: number;
   title: string;
@@ -22,7 +23,9 @@ const Hunts: React.FC = () => {
   const [hasMoreUpcoming, setHasMoreUpcoming] = useState(true);
 
   const [liveImages, setLiveImages] = useState<{ [id: number]: string }>({});
-  const [upcomingImages, setUpcomingImages] = useState<{ [id: number]: string }>({});
+  const [upcomingImages, setUpcomingImages] = useState<{
+    [id: number]: string;
+  }>({});
 
   const [loading, setLoading] = useState(false);
 
@@ -52,7 +55,9 @@ const Hunts: React.FC = () => {
 
   const fetchImage = async (id: number, status: "LIVE" | "APPROVED") => {
     try {
-      const res = await api.get(`/hunts/${id}/images/bg`, { responseType: "blob" });
+      const res = await api.get(`/hunts/${id}/images/bg`, {
+        responseType: "blob",
+      });
       const imageUrl = URL.createObjectURL(res.data);
       if (status === "LIVE") {
         setLiveImages((prev) => ({ ...prev, [id]: imageUrl }));
@@ -66,7 +71,8 @@ const Hunts: React.FC = () => {
 
   useEffect(() => {
     if (selectedTab === "LIVE" && livePage === 0) fetchHunts("LIVE", 0);
-    if (selectedTab === "APPROVED" && upcomingPage === 0) fetchHunts("APPROVED", 0);
+    if (selectedTab === "APPROVED" && upcomingPage === 0)
+      fetchHunts("APPROVED", 0);
   }, [selectedTab]);
 
   useEffect(() => {
@@ -79,13 +85,15 @@ const Hunts: React.FC = () => {
 
   const renderCard = (hunt: Hunt, imageSrc: string) => (
     <Link to={`/selected-hunt/${hunt.id}`} key={hunt.id}>
-      <div className="bg-transparent border border-transparent rounded-2xl shadow-md hover:shadow-xl hover:border-[#f39c12] transition duration-300 ease-in-out overflow-hidden group">
-        <div className="relative w-full h-48">
+      <div className="group overflow-hidden rounded-2xl border border-transparent bg-transparent shadow-md transition duration-300 ease-in-out hover:border-[#f39c12] hover:shadow-xl">
+        <div className="relative h-48 w-full">
           <img
             src={imageSrc}
             alt={hunt.title}
-            className="w-full h-full object-contain transform group-hover:scale-105 transition duration-300"
-            onError={(e) => ((e.target as HTMLImageElement).src = "/fallback.jpg")}
+            className="h-full w-full transform object-contain transition duration-300 group-hover:scale-105"
+            onError={(e) =>
+              ((e.target as HTMLImageElement).src = "/fallback.jpg")
+            }
           />
         </div>
         <div className="px-5 py-4">
@@ -97,24 +105,26 @@ const Hunts: React.FC = () => {
     </Link>
   );
 
-
-
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-8">
       {/* Tabs */}
-      <div className="flex space-x-4 mb-8">
+      <div className="mb-8 flex space-x-4">
         <button
           onClick={() => setSelectedTab("LIVE")}
-          className={`px-4 py-2 rounded-md font-medium ${
-            selectedTab === "LIVE" ? "bg-[#f39c12] text-white" : "bg-gray-100 text-gray-800"
+          className={`rounded-md px-4 py-2 font-medium ${
+            selectedTab === "LIVE"
+              ? "bg-[#f39c12] text-white"
+              : "bg-gray-100 text-gray-800"
           }`}
         >
           Live Hunts
         </button>
         <button
           onClick={() => setSelectedTab("APPROVED")}
-          className={`px-4 py-2 rounded-md font-medium ${
-            selectedTab === "APPROVED" ? "bg-[#f39c12] text-white" : "bg-gray-100 text-gray-800"
+          className={`rounded-md px-4 py-2 font-medium ${
+            selectedTab === "APPROVED"
+              ? "bg-[#f39c12] text-white"
+              : "bg-gray-100 text-gray-800"
           }`}
         >
           Upcoming Hunts
@@ -123,22 +133,28 @@ const Hunts: React.FC = () => {
 
       {/* Content Section */}
       <div>
-        {loading && <p className="text-center text-gray-500 mb-4">Loading...</p>}
+        {loading && (
+          <p className="mb-4 text-center text-gray-500">Loading...</p>
+        )}
 
         {selectedTab === "LIVE" && (
           <div>
             {liveHunts.length === 0 && !loading ? (
-              <p className="text-gray-600 text-center">No ongoing hunts found.</p>
+              <p className="text-center text-gray-600">
+                No ongoing hunts found.
+              </p>
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {liveHunts.map((hunt) => renderCard(hunt, liveImages[hunt.id]))}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+                  {liveHunts.map((hunt) =>
+                    renderCard(hunt, liveImages[hunt.id]),
+                  )}
                 </div>
                 {hasMoreLive && (
-                  <div className="text-center mt-6">
+                  <div className="mt-6 text-center">
                     <button
                       onClick={() => setLivePage((prev) => prev + 1)}
-                      className="bg-[#f39c12] text-white px-6 py-2 rounded-md "
+                      className="rounded-md bg-[#f39c12] px-6 py-2 text-white"
                     >
                       Load More
                     </button>
@@ -152,17 +168,21 @@ const Hunts: React.FC = () => {
         {selectedTab === "APPROVED" && (
           <div>
             {upcomingHunts.length === 0 && !loading ? (
-              <p className="text-gray-600 text-center">No upcoming hunts found.</p>
+              <p className="text-center text-gray-600">
+                No upcoming hunts found.
+              </p>
             ) : (
               <>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  {upcomingHunts.map((hunt) => renderCard(hunt, upcomingImages[hunt.id]))}
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+                  {upcomingHunts.map((hunt) =>
+                    renderCard(hunt, upcomingImages[hunt.id]),
+                  )}
                 </div>
                 {hasMoreUpcoming && (
-                  <div className="text-center mt-6">
+                  <div className="mt-6 text-center">
                     <button
                       onClick={() => setUpcomingPage((prev) => prev + 1)}
-                      className="bg- text-white px-6 py-2 rounded-md hover:bg-[#f39c12]"
+                      className="bg- rounded-md px-6 py-2 text-white hover:bg-[#f39c12]"
                     >
                       Load More
                     </button>

@@ -8,6 +8,8 @@ export type HuntStatus =
   | "TERMINATED"
   | "APPROVED";
 
+export type challengeTypes = ["CODING", "BUG_FIX", "MINI_GAME"];
+
 export interface User {
   id: string;
   username: string;

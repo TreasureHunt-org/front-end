@@ -1,0 +1,125 @@
+/* __________________HuntMapPieces style_____________________________  */
+/* __________________HuntMapPieces style_____________________________  */
+/* __________________HuntMapPieces Style_____________________________  */
+.map-pieces-container {
+  text-align: center;
+  padding: 2rem;
+  margin-top: 2rem;
+  color: white;
+}
+
+.timer {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.progress-bar {
+  width: 50%;
+  height: 15px;
+  border-radius: 10px;
+  background: #333;
+}
+
+progress::-webkit-progress-bar {
+  background: #222;
+  border-radius: 10px;
+}
+
+progress::-webkit-progress-value {
+  background: #f39c12;
+  border-radius: 10px;
+}
+
+.map-pieces {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.square {
+  width: 150px;
+  height: 150px;
+  border-radius: 10px;
+  border: 3px solid #f39c12;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
+}
+
+.square:hover {
+  transform: scale(1.1);
+  box-shadow: 0px 0px 15px rgba(243, 157, 18, 0.653);
+}
+
+.locked {
+  opacity: 0.5;
+  filter: grayscale(80%);
+}
+
+.unlocked {
+  opacity: 1;
+  filter: none;
+}
+
+.treasure {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: #222;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.treasure img {
+  width: 200px;
+  margin-top: 1rem;
+}
+
+.rank-btn {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  background-color: #f39c12;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    background-color 0.3s,
+    transform 0.2s;
+}
+
+.rank-btn:hover {
+  background-color: #e67e22;
+  transform: scale(1.1);
+}
+
+.points {
+  margin-top: 1rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: gold;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 80%;
+  height: 10px;
+  border-radius: 5px;
+  background: #ddd;
+}
+
+progress::-webkit-progress-bar {
+  background: #ddd;
+  border-radius: 5px;
+}
+
+progress::-webkit-progress-value {
+  background: #f39c12;
+  border-radius: 5px;
+}

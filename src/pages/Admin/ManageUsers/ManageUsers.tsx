@@ -90,8 +90,8 @@ const ManageUsers = () => {
     } catch (error) {
       console.error("Error fetching users:", error);
       setLoading(false);
-      // Fallback to empty array if API call fails
       setUsers([]);
+      alert("Failed to load users. Please try again later.");
     }
   };
 
@@ -228,12 +228,12 @@ const ManageUsers = () => {
                   <div className="skeleton skeleton-hunt"></div>
                 </td>
                 <td>
-                  <td>
-                    <div className="control-btns">
-                      <div className="skeleton" />
-                      <div className="skeleton" />
-                    </div>
-                  </td>
+                  {/* <td> */}
+                  <div className="control-btns">
+                    <div className="skeleton" />
+                    <div className="skeleton" />
+                  </div>
+                  {/* </td> */}
                 </td>
               </tr>
             ))}

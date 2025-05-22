@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
-import API_BASE_URL from "../../constants/apiURL/API_BASE_URL";
+import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
 import user from "/src/assets/user (1).png";
-import "/src/App.css";
 
+import "../Login/Login.css";
 const Login: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",

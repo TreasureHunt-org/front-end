@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import api from "../../api/axios";
+import api from "../../../api/axios";
 import Avatar from "/src/assets/user (1).png";
-
+import "../GlobalLeaderboard/GlobalLeaderboard.css";
 // Define the user type for leaderboard
 interface LeaderboardUser {
   id: number;
@@ -61,7 +61,7 @@ const GlobalLeaderboard: React.FC = () => {
       const data: LeaderboardResponse = response.data;
 
       // Clean up previous object URLs
-      imageUrlsRef.current.forEach(url => {
+      imageUrlsRef.current.forEach((url) => {
         URL.revokeObjectURL(url);
       });
       imageUrlsRef.current = [];
@@ -72,11 +72,11 @@ const GlobalLeaderboard: React.FC = () => {
           try {
             // Fetch the user's image from the /users/{id}/image endpoint
             const imageResponse = await api.get(`/users/${user.id}/image`, {
-              responseType: 'arraybuffer'
+              responseType: "arraybuffer",
             });
 
             // Convert the binary data to a blob
-            const blob = new Blob([imageResponse.data], { type: 'image/jpeg' });
+            const blob = new Blob([imageResponse.data], { type: "image/jpeg" });
 
             // Create a URL for the blob
             const imageUrl = URL.createObjectURL(blob);
@@ -87,14 +87,14 @@ const GlobalLeaderboard: React.FC = () => {
             // Return the user with the image URL
             return {
               ...user,
-              profileImage: imageUrl
+              profileImage: imageUrl,
             };
           } catch (error) {
             console.error(`Error fetching image for user ${user.id}:`, error);
             // Return the user without an image if there was an error
             return user;
           }
-        })
+        }),
       );
 
       // Update state with the data including images
@@ -118,7 +118,7 @@ const GlobalLeaderboard: React.FC = () => {
       const fakeData: LeaderboardResponse = generateFakeData(page);
 
       // Clean up any URLs that might have been created before the error
-      imageUrlsRef.current.forEach(url => {
+      imageUrlsRef.current.forEach((url) => {
         URL.revokeObjectURL(url);
       });
       imageUrlsRef.current = [];
@@ -148,7 +148,7 @@ const GlobalLeaderboard: React.FC = () => {
       content = [
         // Top 3 users sorted by rank (for display purposes)
         { id: 1, username: "Hamza23", points: 2000 }, // First place
-        { id: 2, username: "Aya", points: 1980 },     // Second place
+        { id: 2, username: "Aya", points: 1980 }, // Second place
         { id: 3, username: "monsters", points: 1950 }, // Third place
 
         // Rest of the users
@@ -158,7 +158,7 @@ const GlobalLeaderboard: React.FC = () => {
         { id: 7, username: "Sara", points: 1650 },
         { id: 8, username: "Mohammed", points: 1600 },
         { id: 9, username: "Layla", points: 1550 },
-        { id: 10, username: "Omar", points: 1500 }
+        { id: 10, username: "Omar", points: 1500 },
       ];
     } else {
       // Generate users for other pages
@@ -169,7 +169,7 @@ const GlobalLeaderboard: React.FC = () => {
           content.push({
             id,
             username: `User${id}`,
-            points: 2000 - (id * 10)
+            points: 2000 - id * 10,
           });
         }
       }
@@ -180,7 +180,7 @@ const GlobalLeaderboard: React.FC = () => {
       totalPages,
       totalElements,
       size,
-      number: page
+      number: page,
     };
   };
 
@@ -190,7 +190,7 @@ const GlobalLeaderboard: React.FC = () => {
 
     // Cleanup function to revoke object URLs when component unmounts
     return () => {
-      imageUrlsRef.current.forEach(url => {
+      imageUrlsRef.current.forEach((url) => {
         URL.revokeObjectURL(url);
       });
       imageUrlsRef.current = [];
@@ -242,10 +242,22 @@ const GlobalLeaderboard: React.FC = () => {
           <div className="rankingContainer">
             {[...Array(7)].map((_, index) => (
               <div className="skeleton-rankingItem" key={index}>
-                <div className="skeleton skeleton-rank" style={{ width: '40px' }}></div>
-                <div className="skeleton skeleton-profileImage" style={{ width: '40px', height: '40px' }}></div>
-                <div className="skeleton skeleton-username" style={{ width: '30%' }}></div>
-                <div className="skeleton skeleton-points" style={{ width: '20%' }}></div>
+                <div
+                  className="skeleton skeleton-rank"
+                  style={{ width: "40px" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-profileImage"
+                  style={{ width: "40px", height: "40px" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-username"
+                  style={{ width: "30%" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-points"
+                  style={{ width: "20%" }}
+                ></div>
               </div>
             ))}
           </div>
@@ -272,24 +284,38 @@ const GlobalLeaderboard: React.FC = () => {
           <div className="rankingContainer">
             {[...Array(10)].map((_, index) => (
               <div className="skeleton-rankingItem" key={index}>
-                <div className="skeleton skeleton-rank" style={{ width: '40px' }}></div>
-                <div className="skeleton skeleton-profileImage" style={{ width: '40px', height: '40px' }}></div>
-                <div className="skeleton skeleton-username" style={{ width: '30%' }}></div>
-                <div className="skeleton skeleton-points" style={{ width: '20%' }}></div>
+                <div
+                  className="skeleton skeleton-rank"
+                  style={{ width: "40px" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-profileImage"
+                  style={{ width: "40px", height: "40px" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-username"
+                  style={{ width: "30%" }}
+                ></div>
+                <div
+                  className="skeleton skeleton-points"
+                  style={{ width: "20%" }}
+                ></div>
               </div>
             ))}
           </div>
 
           {/* Pagination (keep real pagination for page changes) */}
           <div className="pagination">
-            <button 
+            <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 0 || loading}
             >
               Previous
             </button>
-            <span>Page {currentPage + 1} of {totalPages}</span>
-            <button 
+            <span>
+              Page {currentPage + 1} of {totalPages}
+            </span>
+            <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages - 1 || loading}
             >
@@ -311,7 +337,11 @@ const GlobalLeaderboard: React.FC = () => {
             {/* Second place */}
             <div className="topRankingItem">
               <span className="rank">2</span>
-              <img src={topUsers[1]?.profileImage || Avatar} alt="Profile" className="profileImage" />
+              <img
+                src={topUsers[1]?.profileImage || Avatar}
+                alt="Profile"
+                className="profileImage"
+              />
               <span className="username">{topUsers[1]?.username || "Aya"}</span>
               <span className="points">{topUsers[1]?.points || 1980} pt</span>
             </div>
@@ -319,16 +349,28 @@ const GlobalLeaderboard: React.FC = () => {
             {/* First place (center, larger) */}
             <div className="topRankingItem">
               <span className="rank">1</span>
-              <img src={topUsers[0]?.profileImage || Avatar} alt="Profile" className="profileImage" />
-              <span className="username">{topUsers[0]?.username || "Hamza23"}</span>
+              <img
+                src={topUsers[0]?.profileImage || Avatar}
+                alt="Profile"
+                className="profileImage"
+              />
+              <span className="username">
+                {topUsers[0]?.username || "Hamza23"}
+              </span>
               <span className="points">{topUsers[0]?.points || 2000} pt</span>
             </div>
 
             {/* Third place */}
             <div className="topRankingItem">
               <span className="rank">3</span>
-              <img src={topUsers[2]?.profileImage || Avatar} alt="Profile" className="profileImage" />
-              <span className="username">{topUsers[2]?.username || "monsters"}</span>
+              <img
+                src={topUsers[2]?.profileImage || Avatar}
+                alt="Profile"
+                className="profileImage"
+              />
+              <span className="username">
+                {topUsers[2]?.username || "monsters"}
+              </span>
               <span className="points">{topUsers[2]?.points || 1950} pt</span>
             </div>
           </div>
@@ -337,28 +379,38 @@ const GlobalLeaderboard: React.FC = () => {
         <div className="rankingContainer">
           {users.map((user, index) => (
             <div className="rankingItem" key={user.id}>
-              <span className="rank">#{currentPage === 0 ? index + 4 : currentPage * 10 + index + 1}</span>
-              <img src={user.profileImage || Avatar} alt="Profile" className="profileImage" />
+              <span className="rank">
+                #{currentPage === 0 ? index + 4 : currentPage * 10 + index + 1}
+              </span>
+              <img
+                src={user.profileImage || Avatar}
+                alt="Profile"
+                className="profileImage"
+              />
               <span className="username">{user.username}</span>
               <span className="points">{user.points} pt</span>
             </div>
           ))}
 
           {users.length === 0 && !loading && (
-            <div style={{ textAlign: 'center', padding: '1rem' }}>No users found</div>
+            <div style={{ textAlign: "center", padding: "1rem" }}>
+              No users found
+            </div>
           )}
         </div>
 
         {/* Pagination */}
         <div className="pagination">
-          <button 
+          <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 0 || loading}
           >
             Previous
           </button>
-          <span>Page {currentPage + 1} of {totalPages}</span>
-          <button 
+          <span>
+            Page {currentPage + 1} of {totalPages}
+          </span>
+          <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages - 1 || loading}
           >

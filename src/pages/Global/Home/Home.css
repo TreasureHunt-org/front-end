@@ -1,0 +1,62 @@
+/* __________________HOME style_____________________________  */
+
+/* Wave animation for the ocean effect */
+@keyframes wave {
+  0% {
+    transform: translateX(-25%) translateY(10%);
+  }
+  50% {
+    transform: translateX(0%) translateY(0%);
+  }
+  100% {
+    transform: translateX(25%) translateY(15%);
+  }
+}
+.map-img {
+  width: 350px;
+  height: 350px;
+  transform: rotate(67deg);
+  margin-right: 20px;
+}
+
+.welcome {
+  font-size: 35px;
+  max-width: 400px;
+  text-align: left;
+  position: relative;
+  top: 100px;
+}
+
+.welcome-map {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  /* margin-top: 60px; */
+  margin: 100px;
+}
+.span {
+  color: #f39c12;
+}
+
+.bt {
+  border-radius: 20px;
+  padding: 0.8rem 1.5rem;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  position: relative;
+  bottom: 200px;
+  left: 250px;
+  font-size: 1.3rem;
+  width: auto;
+  /* color: #242424; */
+  font-weight: bold;
+}
+
+.bt:hover {
+  background-color: #e67e22;
+}

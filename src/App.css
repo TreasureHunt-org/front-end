@@ -76,7 +76,7 @@
 /* __________________HOME style_____________________________  */
 /* __________________HOME style_____________________________  */
 
-/* Wave animation for the ocean effect */
+/* Wave animation for the ocean effect 
 @keyframes wave {
   0% {
     transform: translateX(-25%) translateY(10%);
@@ -108,7 +108,7 @@
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
-  /* margin-top: 60px; */
+  /* margin-top: 60px; 
   margin: 100px;
 }
 .span {
@@ -129,7 +129,7 @@
   left: 250px;
   font-size: 1.3rem;
   width: auto;
-  /* color: #242424; */
+  /* color: #242424; 
   font-weight: bold;
 }
 
@@ -139,7 +139,7 @@
 
 /* __________________LOGIN  && REGISTER style_____________________________  */
 /* __________________LOGIN  && REGISTER style_____________________________  */
-/* __________________LOGIN  && REGISTER style_____________________________  */
+/* __________________LOGIN  && REGISTER style_____________________________ 
 .login-form,
 .register-form {
   display: flex;
@@ -225,7 +225,7 @@
 .btn:hover {
   background-color: #e67e22;
   transform: scale(1.05);
-} */
+} 
 
 .register-link,
 .login-link {
@@ -237,12 +237,12 @@
   position: relative;
   top: 0.1rem;
   left: 10px;
-}
+} */
 
 /* __________________SELECTED HUNT style_____________________________  */
 /* __________________SELECTED HUNT style_____________________________  */
 /* __________________SELECTED HUNT style_____________________________  */
-/* __________________SELECTED HUNT style_____________________________  */
+/* __________________SELECTED HUNT style_____________________________ 
 .selected-hunt-container {
   display: flex;
   flex-direction: column;
@@ -326,12 +326,12 @@
 h1 {
   font-size: 30px;
   width: 600px;
-}
+} */
 
-/* __________________HuntMapPieces style_____________________________  */
+/* __________________HuntMapPieces style_____________________________ 
 /* __________________HuntMapPieces style_____________________________  */
 /* __________________HuntMapPieces Style_____________________________  */
-.map-pieces-container {
+/*.map-pieces-container {
   text-align: center;
   padding: 2rem;
   margin-top: 2rem;
@@ -452,12 +452,12 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
   background: #f39c12;
   border-radius: 5px;
-}
+} */
 
 /* __________________HuntLeaderboard style_____________________________  */
 /* __________________HuntLeaderboard style_____________________________  */
-/* __________________HuntLeaderboard style_____________________________  */
-/* __________________HuntLeaderboard style_____________________________  */
+/* __________________HuntLeaderboard style_____________________________  
+__________________HuntLeaderboard style_____________________________ 
 .leaderboard-container {
   width: 80%;
   margin: 0 auto;
@@ -526,7 +526,7 @@ progress::-webkit-progress-value {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  /* margin-right: 10px; */
+  /* margin-right: 10px; 
 }
 
 .score-bar {
@@ -562,7 +562,7 @@ progress::-webkit-progress-value {
   color: #fff;
 }
 
-/* Filters for ViewMyHunts */
+/* Filters for ViewMyHunts 
 .filters-container {
   display: flex;
   gap: 20px;
@@ -881,7 +881,7 @@ progress::-webkit-progress-value {
 } */
 
 /* __________________ HUNTS style_____________________________  */
-.container {
+/* .container {
   padding: 10px;
 
   background-color: #1e1e1e;
@@ -950,7 +950,7 @@ progress::-webkit-progress-value {
 
 .cardButton:hover {
   background-color: #e67e22;
-}
+} */
 
 /* __________________ Review HUNT style_____________________________  */
 
@@ -1329,7 +1329,7 @@ progress::-webkit-progress-value {
 }
 
 /* Contact us */
-
+/* 
 .contact-us {
   padding: 20px;
   background-color: #1e1e1e;
@@ -1386,7 +1386,7 @@ progress::-webkit-progress-value {
   text-align: center;
 
   font-size: 1em;
-}
+} */
 
 /* mini game */
 .minigame-container {
@@ -1983,16 +1983,16 @@ progress::-webkit-progress-value {
   margin-top: 1rem;
   width: 100%;
 }
-
+/* 
 /* global ranking */
-.container {
+/* .container {
   padding: 20px;
   background-color: #1e1e1e;
   color: #ffffff;
   text-align: center;
-}
+} */
 
-/* Skeleton loaders */
+/* Skeleton loaders 
 @keyframes skeleton-loading {
   0% {
     background-position: -200px 0;
@@ -2191,9 +2191,9 @@ progress::-webkit-progress-value {
 
 .rankingItem .points {
   color: #ffffff;
-}
+} */
 
-/* Navbar after login styles */
+/* Navbar after login styles
 .navbar .menu .user-info {
   display: flex;
   align-items: center;
@@ -2205,7 +2205,7 @@ progress::-webkit-progress-value {
   border-radius: 50%;
   object-fit: cover;
   margin: 10px;
-  /* margin-right: 10px; */
+  /* margin-right: 10px; 
 }
 .navbar .menu .user-info button {
   margin-left: 40px;
@@ -2240,7 +2240,7 @@ progress::-webkit-progress-value {
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 /* _________________create challenges _______________________ */
 .create-challenges-container {
