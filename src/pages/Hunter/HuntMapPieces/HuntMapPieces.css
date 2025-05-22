@@ -1,4 +1,4 @@
-/* __________________HuntMapPieces style_____________________________  */
+/* __________________HuntMapPieces style_____________________________ 
 /* __________________HuntMapPieces style_____________________________  */
 /* __________________HuntMapPieces Style_____________________________  */
 .map-pieces-container {
@@ -15,7 +15,7 @@
 }
 
 .progress-bar {
-  width: 50%;
+  width: 10%;
   height: 15px;
   border-radius: 10px;
   background: #333;
@@ -33,11 +33,11 @@ progress::-webkit-progress-value {
 
 .map-pieces {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 0.8rem;
   justify-content: center;
   align-items: center;
-  max-width: 500px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
@@ -122,4 +122,163 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
   background: #f39c12;
   border-radius: 5px;
+}
+.map-pieces-container {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.stats-section {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 20px;
+  margin-bottom: 10px;
+}
+
+.map-pieces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.piece-wrapper {
+  position: relative;
+  aspect-ratio: 1/1;
+}
+
+.piece {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.piece.unlocked {
+  border-color: #4caf50;
+  box-shadow: 0 0 10px rgba(76, 175, 80, 0.5);
+}
+
+.piece.locked {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
+
+.timer span {
+  color: #ff5722;
+  font-weight: bold;
+}
+
+.rank-btn {
+  background: #3f51b5;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+.map-pieces-layout {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  align-items: flex-start;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.left-section {
+  flex: 1 1 50%;
+  display: flex;
+  justify-content: center;
+  min-width: 70%;
+}
+
+@media (max-width: 900px) {
+  .map-pieces-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-section,
+  .right-section {
+    width: 100%;
+  }
+}
+
+.right-section {
+  flex: 0 1 30%;
+  max-width: 300px;
+  max-height: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  background-color: #222;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+
+.hunt-status-card,
+.code-entry-card {
+  width: 100%;
+  background-color: #333;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.code-entry-card input {
+  width: 100%;
+  padding: 0.6rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  margin: 0.5rem 0;
+  text-align: center;
+}
+
+.code-entry-card button {
+  width: 100%;
+  background-color: #f39c12;
+  color: white;
+  border: none;
+  padding: 0.6rem;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.code-entry-card button:hover {
+  background-color: #e67e22;
+}
+
+.collected-text {
+  color: #ccc;
+  font-size: 0.95rem;
+  margin-top: 0.3rem;
+}
+
+.congrats-msg {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #f39c12;
+  margin-bottom: 0.5rem;
+  display: block;
 }
