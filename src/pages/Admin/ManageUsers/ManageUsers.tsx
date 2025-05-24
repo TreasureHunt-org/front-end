@@ -19,15 +19,15 @@ const ManageUsers = () => {
   // State for pagination
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(7);
+  const pageSize = 10;
 
   // State for sorting
-  const [sortBy, setSortBy] = useState<string>("id");
-  const [sortDirection, setSortDirection] = useState<string>("ASC");
+  const sortBy = "id"
+  const sortDirection = "ASC";
 
   // State for filtering
   const [usernameFilter, setUsernameFilter] = useState<string>("");
-  const [emailFilter, setEmailFilter] = useState<string>("");
+  const emailFilter = "";
 
   // State for search
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -66,11 +66,11 @@ const ManageUsers = () => {
       ) {
         const pageData = responseData.data[0];
         // Map the data to match our IUser interface
-        const users = pageData.content.map((user: any) => ({
+        const users = pageData.content.map((user: IUser) => ({
           // const users = responseData.data[0].content.map((user: any) => ({
           id: user.id,
           username: user.username || "Unknown", // API returns 'name' instead of 'username'
-          role: user.roles || ["HUNTER"],
+          role: user.role || ["HUNTER"],
           email: user.email || "",
           currentHunt: user.currentHunt || "",
         }));
@@ -132,11 +132,9 @@ const ManageUsers = () => {
     try {
       // Convert our IUser to the format expected by the API
       const apiUser = {
-        id: updatedUser.id,
         name: updatedUser.username,
-        role: updatedUser.role,
+        roles: updatedUser.role,
         email: updatedUser.email,
-        currentHunt: updatedUser.currentHunt,
       };
 
       const response = await api.put(`/users/${updatedUser.id}`, apiUser);
@@ -287,26 +285,33 @@ const ManageUsers = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="role">Role</label>
-              <select
-                id="role"
-                value={selectedUser.role}
-                onChange={(e) =>
-                  setSelectedUser({ ...selectedUser, role: e.target.value })
-                }
-                required
-              >
-                <option value="ADMIN">ADMIN</option>
-                <option value="HUNTER">HUNTER</option>
-                <option value="REVIEWER">REVIEWER</option>
-              </select>
+              <label>Roles</label>
+              <div className="checkbox-group">
+                {['ADMIN', 'HUNTER', 'REVIEWER', 'ORGANIZER'].map((role) => (
+                  <label key={role}>
+                    <input
+                      type="checkbox"
+                      checked={selectedUser.role.includes(role)}
+                      onChange={() => {
+                        const updatedRoles = selectedUser.role.includes(role)
+                          ? selectedUser.role.filter((r) => r !== role) // remove
+                          : [...selectedUser.role, role]; // add
+                        setSelectedUser({ ...selectedUser, role: updatedRoles });
+                      }}
+                    />
+                    {role}
+                  </label>
+                ))}
+              </div>
             </div>
+
             <div className="form-group">
               <label htmlFor="currentHunt">Current Hunt</label>
               <input
                 type="text"
                 id="currentHunt"
                 value={selectedUser.currentHunt}
+                readOnly={true}
                 onChange={(e) =>
                   setSelectedUser({
                     ...selectedUser,
@@ -319,7 +324,11 @@ const ManageUsers = () => {
               <button type="button" onClick={() => setEditModalOpen(false)}>
                 Cancel
               </button>
-              <button type="submit">Save</button>
+              <button onClick={async () => {
+                setLoading(true);
+                await handleSaveUser(selectedUser);
+                setLoading(false);
+              }} type="submit">Save</button>
             </div>
           </form>
         </div>

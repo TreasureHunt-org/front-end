@@ -152,6 +152,8 @@ const AppRoutes: React.FC = () => {
 
         <Route path={ROUTES.CREATE_HUNT} element={<CreateHunt />} />
         <Route path={ROUTES.SEND_ANNOUNCEMENT} element={<SendAnnouncement />} />
+        <Route path={ROUTES.VIEW_MY_HUNTS} element={<ViewMyHunts />} />
+
         {/* <Route
           path={ROUTES.CREATE_REVIEWER}
           element={<CreateReviewerAccount />}

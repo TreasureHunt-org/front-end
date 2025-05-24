@@ -11,7 +11,7 @@ const ViewMyHunts: React.FC = () => {
   const [hunts, setHunts] = useState<Hunt[]>([]);
   const [pageData, setPageData] = useState<PageResponse | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const pageSize = 10;
   const [sortDirection, setSortDirection] = useState<string>("ASC");
   const [status, setStatus] = useState<string>("DRAFT");
 

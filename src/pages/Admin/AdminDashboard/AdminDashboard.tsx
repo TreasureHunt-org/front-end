@@ -13,7 +13,7 @@ const AdminDashboard = () => {
             { name: "Manage Hunts", path: "manage-hunts" },
             {
               name: "My Hunts",
-              path: "/organizer-dashboard/my-hunts",
+              path: "my-hunts",
               absolute: true,
             },
             // { name: "Create a Hunt", path: "create-hunt" },

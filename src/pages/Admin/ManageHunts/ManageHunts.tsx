@@ -4,7 +4,6 @@ import { FiSearch } from "react-icons/fi";
 import api from "../../../api/axios.ts";
 import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL.ts";
 import { useAuth } from "../../../context/AuthContext.tsx";
-import { PageResponse } from "../../../types.ts";
 import Modal from "../../../components/Modal/Modal";
 import "../ManageHunts/ManageHunts.css";
 
@@ -18,15 +17,14 @@ interface Hunt {
 
 const ManageHunts = () => {
   const [hunts, setHunts] = useState<Hunt[]>([]);
-  const [pageData, setPageData] = useState<PageResponse | null>(null);
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(7);
-  const [sortDirection, setSortDirection] = useState<string>("ASC");
-  const [status, setStatus] = useState<string | null>(null);
+  const pageSize = 10;
+  const sortDirection = "ASC";
+  const status= null;
 
   const [totalPages, setTotalPages] = useState<number>(1);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [selectedHunt, setSelectedHunt] = useState<Hunt | null>(null);
+  // const [selectedHunt, setSelectedHunt] = useState<Hunt | null>(null);
   const [editedHunt, setEditedHunt] = useState<Hunt | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [search, setSearch] = useState("");
@@ -80,14 +78,14 @@ const ManageHunts = () => {
   };
 
   const handleEditButtonClick = (hunt: Hunt) => {
-    setSelectedHunt(hunt);
+    // setSelectedHunt(hunt);
     setEditedHunt({ ...hunt });
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setSelectedHunt(null);
+    // setSelectedHunt(null);
     setEditedHunt(null);
   };
 

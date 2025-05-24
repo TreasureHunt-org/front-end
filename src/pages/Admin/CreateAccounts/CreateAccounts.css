@@ -1,111 +1,243 @@
-.reviewer-account-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 800px;
+.account-container {
+  /*margin-left: 250px; !* Adjust for sidebar width *!*/
+  padding: 2rem;
+  width: 100%;
+  /*max-width: 600px;*/
   background-color: #333;
-  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: white;
 }
 
-.reviewer-header {
+.header {
   display: flex;
   align-items: center;
   gap: 1rem;
-  width: 100%;
+  margin-bottom: 1.5rem;
   justify-content: center;
 }
 
-.reviewer-icon {
-  height: 25px;
-  width: 25px;
+.icon {
+  width: 20px;
+  height: 20px;
 }
 
-.reviewer-title {
+.title {
   font-size: 1.5rem;
   color: #f39c12;
-  text-align: center;
 }
 
-.reviewer-form {
-  display: grid;
+.error-text {
+  color: red;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
   gap: 1rem;
-  width: 70%;
-  position: relative;
-  left: 110px;
 }
 
-.reviewer-form label {
+.form label {
   font-weight: bold;
   font-size: 1rem;
-  color: white;
-  text-align: left;
 }
 
-.reviewer-form input {
-  padding: 0.6rem;
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"] {
+  padding: 0.7rem;
+  background-color: #444;
   border: 1px solid #ccc;
   border-radius: 5px;
+  color: white;
   font-size: 1rem;
-  width: 50%;
-  background-color: #444;
+}
+
+.role-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.role-group p {
+  margin-bottom: 0.3rem;
+  font-weight: bold;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
   color: white;
 }
 
-.create-btn {
-  border-radius: 20px;
-  padding: 0.6rem;
+.submit-btn {
+  align-self: start;
+  width: 160px;
+  padding: 0.7rem;
   background-color: #f39c12;
   color: white;
-  border: none;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    transform 0.2s;
-  font-size: 1rem;
   font-weight: bold;
-  width: 200px;
-  text-align: center;
-  position: relative;
-  left: 35px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
 }
 
-.create-btn:hover {
+.submit-btn:hover {
   background-color: #e67e22;
   transform: scale(1.05);
 }
 
-.is-organizer-container {
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+.checkbox-wrapper {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 40%;
+  gap: 0.5rem;
 }
 
-/* .is-organizer-checkbox input {
-  display: none;
-} */
-
-.is-organizer-container input {
-  display: inline-block;
-  width: 150px;
-  height: 20px;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  position: relative;
+.checkbox-wrapper input[type="checkbox"] {
+  accent-color: #f39c12;
+  width: 16px;
+  height: 16px;
   cursor: pointer;
-  margin: 0;
 }
 
-.is-organizer-container label {
+.checkbox-wrapper label {
   font-size: 1rem;
   color: white;
-  font-weight: bold;
+  font-weight: 500;
   cursor: pointer;
-  margin-left: 5px;
-  width: 100%;
 }
+
+.loading-text {
+  color: #f39c12;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+
+/*.reviewer-account-container {*/
+  /*  !*display: flex;*!*/
+  /*  !*flex-direction: column;*!*/
+  /*  !*align-items: center;*!*/
+  /*  !*justify-content: center;*!*/
+  /*  gap: 1rem;*/
+  /*  padding: 1rem;*/
+  /*  border: 1px solid #ddd;*/
+  /*  border-radius: 10px;*/
+  /*  width: 100%;*/
+  /*  background-color: #333;*/
+  /*  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);*/
+  /*  overflow: hidden;*/
+  /*}*/
+
+  /*.reviewer-header {*/
+  /*  display: flex;*/
+  /*  align-items: center;*/
+  /*  gap: 1rem;*/
+  /*  width: 100%;*/
+  /*  justify-content: center;*/
+  /*}*/
+
+  /*.reviewer-icon {*/
+  /*  height: 25px;*/
+  /*  width: 25px;*/
+  /*}*/
+
+  /*.reviewer-title {*/
+  /*  font-size: 1.5rem;*/
+  /*  color: #f39c12;*/
+  /*  text-align: center;*/
+  /*}*/
+
+  /*.reviewer-form {*/
+  /*  !*background-color: red;*!*/
+  /*  !*width: 100%;*!*/
+  /*  display: grid;*/
+  /*  gap: 1rem;*/
+  /*  width: 70%;*/
+  /*  position: relative;*/
+  /*  left: 110px;*/
+  /*}*/
+
+  /*.reviewer-form label {*/
+  /*  font-weight: bold;*/
+  /*  font-size: 1rem;*/
+  /*  color: white;*/
+  /*  text-align: left;*/
+  /*}*/
+
+  /*.reviewer-form input {*/
+  /*  padding: 0.6rem;*/
+  /*  border: 1px solid #ccc;*/
+  /*  border-radius: 5px;*/
+  /*  font-size: 1rem;*/
+  /*  !*width: 50%;*!*/
+  /*  background-color: #444;*/
+  /*  color: white;*/
+  /*}*/
+
+  /*.create-btn {*/
+  /*  border-radius: 20px;*/
+  /*  padding: 0.6rem;*/
+  /*  background-color: #f39c12;*/
+  /*  color: white;*/
+  /*  border: none;*/
+  /*  cursor: pointer;*/
+  /*  transition:*/
+  /*    background-color 0.3s,*/
+  /*    transform 0.2s;*/
+  /*  font-size: 1rem;*/
+  /*  font-weight: bold;*/
+  /*  width: 200px;*/
+  /*  text-align: center;*/
+  /*  position: relative;*/
+  /*  left: 35px;*/
+  /*}*/
+
+  /*.create-btn:hover {*/
+  /*  background-color: #e67e22;*/
+  /*  transform: scale(1.05);*/
+  /*}*/
+
+  /*.is-organizer-container {*/
+  /*  display: flex;*/
+  /*  align-items: center;*/
+  /*  justify-content: flex-start;*/
+  /*  width: 40%;*/
+  /*}*/
+
+  /*!* .is-organizer-checkbox input {*/
+  /*  display: none;*/
+  /*} *!*/
+
+  /*.is-organizer-container input {*/
+  /*  display: inline-block;*/
+  /*  width: 150px;*/
+  /*  height: 20px;*/
+  /*  border: 2px solid #ccc;*/
+  /*  border-radius: 4px;*/
+  /*  position: relative;*/
+  /*  cursor: pointer;*/
+  /*  margin: 0;*/
+  /*}*/
+
+  /*.is-organizer-container label {*/
+  /*  font-size: 1rem;*/
+  /*  color: white;*/
+  /*  font-weight: bold;*/
+  /*  cursor: pointer;*/
+  /*  margin-left: 5px;*/
+  /*  width: 100%;*/
+  /*}*/

@@ -24,7 +24,7 @@ export const ROUTES = {
   SEND_ANNOUNCEMENT: "send-announcement",
   CREATE_REVIEWER: "create-reviewer",
   CREATE_ACCOUNTS: "create-accounts",
-  VIEW_SUBMISSIONS: "view-submissions/:huntId",
+  VIEW_SUBMISSIONS: "view-submissions",
   VIEW_FEEDBACK: "view-feedback",
 
   // Organizer routes
