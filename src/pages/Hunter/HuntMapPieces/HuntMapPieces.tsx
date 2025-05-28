@@ -116,6 +116,8 @@ const HuntMapPieces: React.FC = () => {
       const list: Challenge[] = challRes.data;
       const info = infoRes.data;
 
+      console.log(infoRes.data);
+
       setHuntData(hunt);
       const now = new Date();
       const end = new Date(hunt.endDate);
@@ -136,6 +138,7 @@ const HuntMapPieces: React.FC = () => {
       challengesRef.current = updated;
       setTotalPieces(updated.length);
       setUnlockedPieces(info.challenges.filter((c: any) => c.solved).length);
+      // setUnlockedPieces(info.solved);
       setTotalPoints(info.pointsCollected);
 
       await loadAllImages(updated);
