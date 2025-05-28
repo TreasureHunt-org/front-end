@@ -9,6 +9,9 @@ export const ROUTES = {
   SELECTED_HUNT: "/selected-hunt/:huntId",
   HUNT_RANKING: "/hunt-ranking/:huntId",
 
+  //Hunter routes
+  HUNTER_DASHBOARD: "/hunter-dashboard",
+
   // User routes
   USER_DASHBOARD: "/user-dashboard",
   USER_PROFILE: "/user-profile",

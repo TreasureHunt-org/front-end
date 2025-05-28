@@ -71,6 +71,10 @@ const ViewFeedback = React.lazy(
 const OrganizerDashboard = React.lazy(
   () => import("../pages/Organizer/OrganizerDashboard"),
 );
+
+const HunterDashboard = React.lazy(
+  () => import("../pages/Hunter/HunterDashboard"),
+);
 // const OrganizerViewMyHunts = React.lazy(
 //   () => import("../pages/Organizer/ViewMyHunts"),
 // );
@@ -183,6 +187,14 @@ const AppRoutes: React.FC = () => {
         <Route path={ROUTES.CREATE_CHALLENGES} element={<CreateChallenges />} />
       </Route>
 
+      <Route
+        path={ROUTES.HUNTER_DASHBOARD}
+        element={
+          <ProtectedRoute>
+            <HunterDashboard />
+          </ProtectedRoute>
+        }
+      ></Route>
       {/* Protected Reviewer Route */}
       {/*<Route*/}
       {/*  path={ROUTES.REVIEW_HUNT}*/}

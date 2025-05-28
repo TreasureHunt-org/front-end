@@ -7,11 +7,12 @@ import { useAuth } from "../../context/AuthContext";
 
 import { useEffect, useState } from "react";
 import api from "../../api/axios.ts";
+import { ROUTES } from "../../constants/app routes/routes.ts";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const [userImage, setUserImage] = useState<string | null>(null);
-  const roles = user?.roles;
+  // const roles = user?.roles;
   const fetchUserImage = async () => {
     try {
       const response = await api.get(`/users/${user?.id}/image`, {
@@ -69,27 +70,21 @@ const Navbar = () => {
         {isAuthenticated ? (
           <div className="user-info">
             <div>
-              <Link
-                to={
-                  roles?.includes("ADMIN")
-                    ? "/admin-dashboard"
-                    : "/user-dashboard"
-                }
-                className="dashboard-link"
-              >
+              <Link to={ROUTES.USER_PROFILE} className="dashboard-link">
                 {user?.username || "User"}
-                {user?.id}
               </Link>
-            </div>{" "}
-            <img
-              src={userImage || Avatar}
-              alt="Avatar"
-              className="avatar"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement;
-                target.src = Avatar;
-              }}
-            />
+            </div>
+            <Link to={ROUTES.USER_PROFILE} className="avatar-link">
+              <img
+                src={userImage || Avatar}
+                alt="Avatar"
+                className="avatar"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = Avatar;
+                }}
+              />
+            </Link>
             <button className="bn" onClick={logout}>
               Logout
             </button>
