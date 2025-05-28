@@ -6,6 +6,7 @@ import OrganizerDashboard from "../Organizer/OrganizerDashboard";
 import ReviewerDashboard from "../Reviewer/ReviewerDashboard";
 import api from "../../api/axios";
 import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../constants/app routes/routes.ts";
 
 interface UserData {
   id: string;
@@ -24,9 +25,6 @@ const UserDashboard: React.FC = () => {
     const fetchUserData = async () => {
       try {
         const response = await api.get("/auth/me");
-
-        // console.log("API Response:", response);
-        // console.log("Response Status:", response.status);
 
         if (response.headers["content-type"].includes("text/html")) {
           setError(
@@ -61,16 +59,12 @@ const UserDashboard: React.FC = () => {
       return;
     }
     if (roles?.includes("HUNTER")) {
-      navigate("/hunter-dashboard");
+      navigate(ROUTES.HUNTER_DASHBOARD);
       return;
     }
     if (roles?.includes("ORGANIZER")) {
       navigate("/organizer-dashboard");
     }
-    // {roles?.includes("ADMIN") && <AdminDashboard />}
-    // {roles?.includes("HUNTER") && <HunterDashboard />}
-    // {roles?.includes("ORGANIZER") && <OrganizerDashboard />}
-    // {roles?.includes( "REVIEWER") && <ReviewerDashboard />}
 
     fetchUserData();
   }, [user]);
@@ -81,10 +75,6 @@ const UserDashboard: React.FC = () => {
     <div className="dashboard">
       {userData ? (
         <>
-          {/*<h1>Welcome, {userData.username}!</h1>*/}
-          {/*<p>Email: {userData.email}</p>*/}
-          {/*<p>Role: {userData.roles.join(", ")}</p>*/}
-
           {roles?.includes("ADMIN") && <AdminDashboard />}
           {roles?.includes("HUNTER") && <HunterDashboard />}
           {roles?.includes("ORGANIZER") && <OrganizerDashboard />}

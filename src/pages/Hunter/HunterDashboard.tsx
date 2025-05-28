@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../constants/app routes/routes.ts";
 import Spinner from "../../components/Spinner/Spinner.tsx";
 import api from "../../api/axios";
+import "./HunterDashboard.css";
 
 // Interfaces for type safety
 interface ActiveHunt {
@@ -98,66 +99,39 @@ const HunterDashboard = () => {
 
   if (error) {
     return (
-      <div className="text-center text-red-500">
-        <h2 className="mb-2 text-xl font-bold">Error</h2>
-        <p>{error}</p>
+      <div className="empty-state">
+        <h2 className="empty-state-title" style={{ color: '#e74c3c' }}>Error</h2>
+        <p className="empty-state-subtitle" style={{ color: '#e74c3c' }}>{error}</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      <div className="border-b-2 border-yellow-600 bg-gradient-to-r from-yellow-900 to-gray-900 p-8">
-        <div className="container mx-auto">
-          <h1 className="mb-2 text-4xl font-bold text-yellow-500">
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <div className="dashboard-header-content">
+          <h1 className="dashboard-title">
             Captain's Logbook
           </h1>
-          <p className="text-xl text-yellow-300">
+          <p className="dashboard-subtitle">
             Navigate your voyages, treasures, and achievements
           </p>
         </div>
       </div>
 
-      <div className="container mx-auto p-6">
-        {/* Stats Overview */}
-        {/*<div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-3">*/}
-        {/*  <div className="rounded-lg border-t-4 border-amber-500 bg-gray-700 p-6 shadow">*/}
-        {/*    <h2 className="mb-2 text-xl font-semibold text-white">*/}
-        {/*      Active Hunt*/}
-        {/*    </h2>*/}
-        {/*    <p className="text-3xl font-bold text-amber-500">*/}
-        {/*      {mockActiveHunts.length}*/}
-        {/*    </p>*/}
-        {/*  </div>*/}
-        {/*  <div className="rounded-lg border-t-4 border-green-500 bg-gray-700 p-6 shadow">*/}
-        {/*    <h2 className="mb-2 text-xl font-semibold text-white">*/}
-        {/*      Completed Hunts*/}
-        {/*    </h2>*/}
-        {/*    <p className="text-3xl font-bold text-green-500">*/}
-        {/*      {mockCompletedHunts.length}*/}
-        {/*    </p>*/}
-        {/*  </div>*/}
-        {/*  <div className="rounded-lg border-t-4 border-amber-500 bg-gray-700 p-6 shadow">*/}
-        {/*    <h2 className="mb-2 text-xl font-semibold text-white">*/}
-        {/*      Total Score*/}
-        {/*    </h2>*/}
-        {/*    <p className="text-3xl font-bold text-amber-500">*/}
-        {/*      {userScore.total}*/}
-        {/*    </p>*/}
-        {/*  </div>*/}
-        {/*</div>*/}
+      <div className="dashboard-content">
 
         {/* Hunts Tabs */}
-        <div className="mb-8 overflow-hidden rounded-lg border-2 border-yellow-900 bg-gray-800 shadow-lg">
-          <div className="border-b-2 border-yellow-800">
-            <nav className="flex w-full justify-between bg-gradient-to-r from-gray-800 to-yellow-900 p-4">
+        <div className="hunts-container">
+          <div className="tabs-header">
+            <nav className="tabs-nav">
               <div>
                 <button
                   onClick={() => setActiveTab("active")}
-                  className={`rounded-t-lg px-8 py-4 text-base font-bold transition-all duration-200 ${
+                  className={`tab-button ${
                     activeTab === "active"
-                      ? "bg-opacity-50 border-b-4 border-yellow-500 bg-gray-800 text-yellow-400"
-                      : "text-yellow-300 hover:border-b-4 hover:border-yellow-600 hover:text-yellow-400"
+                      ? "tab-button-active"
+                      : "tab-button-inactive"
                   }`}
                 >
                   Current Voyage
@@ -166,10 +140,10 @@ const HunterDashboard = () => {
               <div>
                 <button
                   onClick={() => setActiveTab("completed")}
-                  className={`rounded-t-lg px-8 py-4 text-base font-bold transition-all duration-200 ${
+                  className={`tab-button ${
                     activeTab === "completed"
-                      ? "bg-opacity-50 border-b-4 border-yellow-500 bg-gray-800 text-yellow-400"
-                      : "text-yellow-300 hover:border-b-4 hover:border-yellow-600 hover:text-yellow-400"
+                      ? "tab-button-active"
+                      : "tab-button-inactive"
                   }`}
                 >
                   Completed Voyages
@@ -178,50 +152,50 @@ const HunterDashboard = () => {
             </nav>
           </div>
 
-          <div className="p-6">
+          <div className="tabs-content">
             {activeTab === "active" ? (
               <div>
                 {activeHunts.length > 0 ? (
-                  <div className="grid grid-cols-1 gap-6">
+                  <div className="hunt-grid">
                     {activeHunts.map((hunt) => (
                       <div
                         key={hunt.id}
-                        className="transform rounded-lg border-2 border-yellow-800 bg-gradient-to-b from-gray-800 to-gray-900 p-6 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+                        className="hunt-card"
                       >
-                        <h3 className="mb-4 text-xl font-bold text-yellow-400">
+                        <h3 className="hunt-title">
                           {hunt.title}
                         </h3>
-                        <div className="mb-4">
-                          <div className="mb-2 flex justify-between text-sm font-medium text-yellow-300">
+                        <div className="progress-container">
+                          <div className="progress-header">
                             <span>Voyage Progress</span>
-                            <span className="font-bold text-yellow-300">
+                            <span className="progress-value">
                               {hunt.progress}%
                             </span>
                           </div>
-                          <div className="h-3 w-full rounded-full border border-yellow-800 bg-gray-700 p-0.5">
+                          <div className="progress-bar-container">
                             <div
-                              className="h-full rounded-full bg-gradient-to-r from-yellow-600 to-yellow-500"
+                              className="progress-bar"
                               style={{ width: `${hunt.progress}%` }}
                             ></div>
                           </div>
                         </div>
-                        <div className="mb-5 flex justify-between text-sm">
-                          <span className="text-yellow-300">
-                            <span className="font-bold text-yellow-300">
+                        <div className="hunt-details">
+                          <span className="hunt-challenges">
+                            <span className="hunt-value">
                               {hunt.completedChallenges}
                             </span>
                             /{hunt.totalChallenges} Challenges
                           </span>
-                          <span className="text-yellow-300">
+                          <span className="hunt-due-date">
                             Ends:{" "}
-                            <span className="font-bold text-yellow-300">
+                            <span className="hunt-value">
                               {hunt.dueDate}
                             </span>
                           </span>
                         </div>
                         <Link
                           to={`${ROUTES.HUNT_MAP_PIECES.replace(":huntId", hunt.id)}`}
-                          className="block rounded-lg border-2 border-yellow-700 bg-yellow-600 px-6 py-3 text-center font-bold text-white shadow-md transition-all duration-200 hover:bg-yellow-500 hover:shadow-lg"
+                          className="continue-button"
                         >
                           Continue Voyage
                         </Link>
@@ -229,11 +203,11 @@ const HunterDashboard = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="py-12 text-center">
-                    <p className="mb-4 text-xl text-yellow-300">
+                  <div className="empty-state">
+                    <p className="empty-state-title">
                       No active voyages on your horizon
                     </p>
-                    <p className="text-gray-400">
+                    <p className="empty-state-subtitle">
                       Set sail on a new adventure to begin your journey!
                     </p>
                   </div>
@@ -242,57 +216,56 @@ const HunterDashboard = () => {
             ) : (
               <div>
                 {completedHunts.length > 0 ? (
-                  <div className="overflow-x-auto rounded-lg border-2 border-yellow-800">
-                    <table className="min-w-full divide-y divide-yellow-900">
-                      <thead className="bg-gradient-to-r from-gray-800 to-yellow-900">
+                  <div className="hunts-table">
+                    <table>
+                      <thead>
                         <tr>
-                          <th className="px-6 py-4 text-left text-sm font-bold tracking-wider text-yellow-400 uppercase">
+                          <th>
                             Voyage
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-bold tracking-wider text-yellow-400 uppercase">
+                          <th>
                             Completed
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-bold tracking-wider text-yellow-400 uppercase">
+                          <th>
                             Treasure
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-bold tracking-wider text-yellow-400 uppercase">
+                          <th>
                             Rank
                           </th>
-                          <th className="px-6 py-4 text-left text-sm font-bold tracking-wider text-yellow-400 uppercase">
+                          <th>
                             Actions
                           </th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-yellow-900 bg-gray-800">
+                      <tbody>
                         {completedHunts.map((hunt) => (
                           <tr
                             key={hunt.id}
-                            className="transition-colors duration-200 hover:bg-gray-700"
                           >
-                            <td className="px-6 py-5 text-base font-medium whitespace-nowrap text-yellow-300">
+                            <td>
                               {hunt.title}
                             </td>
-                            <td className="px-6 py-5 text-base whitespace-nowrap text-yellow-300">
+                            <td>
                               {hunt.completedDate}
                             </td>
-                            <td className="px-6 py-5 text-base font-bold whitespace-nowrap text-yellow-300">
+                            <td>
                               {hunt.score}{" "}
-                              <span className="text-xs text-yellow-400">
+                              <span>
                                 points
                               </span>
                             </td>
-                            <td className="px-6 py-5 text-base font-bold whitespace-nowrap text-yellow-300">
+                            <td>
                               #{hunt.rank}
                             </td>
-                            <td className="px-6 py-5 text-base font-medium whitespace-nowrap">
+                            <td>
                               <Link
                                 to={`${ROUTES.HUNT_RANKING.replace(":huntId", hunt.id)}`}
-                                className="flex items-center text-yellow-500 transition-colors duration-200 hover:text-yellow-300"
+                                className="view-ranks-link"
                               >
                                 <span>View Crew Ranks</span>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
-                                  className="ml-2 h-5 w-5"
+                                  className="view-ranks-icon"
                                   viewBox="0 0 20 20"
                                   fill="currentColor"
                                 >
@@ -310,11 +283,11 @@ const HunterDashboard = () => {
                     </table>
                   </div>
                 ) : (
-                  <div className="py-12 text-center">
-                    <p className="mb-4 text-xl text-yellow-300">
+                  <div className="empty-state">
+                    <p className="empty-state-title">
                       No completed voyages in your logbook
                     </p>
-                    <p className="text-gray-400">
+                    <p className="empty-state-subtitle">
                       Complete your first adventure to see your achievements
                       here!
                     </p>
@@ -327,19 +300,19 @@ const HunterDashboard = () => {
 
         {/* Treasure Details */}
         {userScore && (
-          <div className="overflow-hidden rounded-lg border-2 border-yellow-900 bg-gray-800 shadow-lg">
-            <div className="border-b-2 border-yellow-800 bg-gradient-to-r from-gray-800 to-yellow-900 p-5">
-              <h2 className="text-2xl font-bold text-yellow-500">
+          <div className="treasure-container">
+            <div className="treasure-header">
+              <h2 className="treasure-title">
                 Treasure Vault
               </h2>
             </div>
-            <div className="p-6">
-              <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                <div className="transform rounded-lg border-2 border-yellow-700 bg-gradient-to-b from-gray-800 to-gray-900 p-6 shadow-lg transition-all duration-300 hover:scale-105">
-                  <div className="mb-4 flex items-center">
+            <div className="treasure-content">
+              <div className="treasure-grid">
+                <div className="treasure-card">
+                  <div className="treasure-card-header">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="mr-3 h-8 w-8 text-yellow-500"
+                      className="treasure-icon"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -350,34 +323,34 @@ const HunterDashboard = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <h3 className="text-xl font-bold text-yellow-400">
+                    <h3 className="treasure-card-title">
                       Current Bounty
                     </h3>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="mb-2 text-sm font-medium text-yellow-300">
+                  <div className="treasure-stats">
+                    <div className="treasure-stat">
+                      <p className="treasure-stat-label">
                         Total Treasure
                       </p>
-                      <p className="text-4xl font-bold text-yellow-500">
+                      <p className="treasure-stat-value">
                         {userScore.total}
                       </p>
                     </div>
-                    <div>
-                      <p className="mb-2 text-sm font-medium text-yellow-300">
+                    <div className="treasure-stat">
+                      <p className="treasure-stat-label">
                         Fleet Rank
                       </p>
-                      <p className="text-4xl font-bold text-yellow-500">
+                      <p className="treasure-stat-value">
                         #{userScore.rank}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="transform rounded-lg border-2 border-yellow-700 bg-gradient-to-b from-gray-800 to-gray-900 p-6 shadow-lg transition-all duration-300 hover:scale-105">
-                  <div className="mb-4 flex items-center">
+                <div className="treasure-card">
+                  <div className="treasure-card-header">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="mr-3 h-8 w-8 text-yellow-500"
+                      className="treasure-icon"
                       viewBox="0 0 20 20"
                       fill="currentColor"
                     >
@@ -387,24 +360,24 @@ const HunterDashboard = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <h3 className="text-xl font-bold text-yellow-400">
+                    <h3 className="treasure-card-title">
                       Treasure History
                     </h3>
                   </div>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="mb-2 text-sm font-medium text-yellow-300">
+                  <div className="treasure-stats">
+                    <div className="treasure-stat">
+                      <p className="treasure-stat-label">
                         Last Plunder
                       </p>
-                      <p className="text-4xl font-bold text-yellow-500">
+                      <p className="treasure-stat-value">
                         {userScore.lastEarned}
                       </p>
                     </div>
-                    <div>
-                      <p className="mb-2 text-sm font-medium text-yellow-300">
+                    <div className="treasure-stat">
+                      <p className="treasure-stat-label">
                         Greatest Haul
                       </p>
-                      <p className="text-4xl font-bold text-yellow-500">
+                      <p className="treasure-stat-value">
                         {userScore.highestScore}
                       </p>
                     </div>

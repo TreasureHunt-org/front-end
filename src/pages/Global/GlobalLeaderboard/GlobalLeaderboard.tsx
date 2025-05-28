@@ -34,27 +34,6 @@ const GlobalLeaderboard: React.FC = () => {
   const fetchLeaderboard = async (page: number) => {
     setLoading(true);
     try {
-      // API Comment: The leaderboard endpoint should be:
-      // GET /users/leaderboard?page={page}&size={size}
-      // Response should include:
-      // - content: array of users with id, username, points
-      // - totalPages: total number of pages
-      // - totalElements: total number of users
-      // - size: page size
-      // - number: current page number (0-based)
-      //{
-      //   "content": [
-      //     {
-      //       "id": 9007199254740991,
-      //       "username": "string",
-      //       "points": 1073741824
-      //     }
-      //   ],
-      //   "totalPages": 1073741824,
-      //   "totalElements": 9007199254740991,
-      //   "size": 1073741824,
-      //   "number": 1073741824
-      // }
 
       // Make the API call to get leaderboard data
       const response = await api.get(`/users/leaderboard?page=${page}&size=10`);
@@ -74,6 +53,14 @@ const GlobalLeaderboard: React.FC = () => {
             const imageResponse = await api.get(`/users/${user.id}/image`, {
               responseType: "arraybuffer",
             });
+
+            console.log(imageResponse.data.byteLength);
+            if(imageResponse.data.byteLength === 0){
+              return {
+                ...user,
+                profileImage: undefined,
+              };
+            }
 
             // Convert the binary data to a blob
             const blob = new Blob([imageResponse.data], { type: "image/jpeg" });
@@ -383,7 +370,7 @@ const GlobalLeaderboard: React.FC = () => {
                 #{currentPage === 0 ? index + 4 : currentPage * 10 + index + 1}
               </span>
               <img
-                src={user.profileImage || Avatar}
+                src={user.profileImage ?? Avatar}
                 alt="Profile"
                 className="profileImage"
               />
