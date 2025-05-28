@@ -1,7 +1,9 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../../api/axios";
-import square from "/src/assets/square.jpg";
+// import square from "/src/assets/locked.png";
+import square from "/src/assets/lock-up_9381880.png";
+import unlocked from "/src/assets/unlocked.png";
 import "../../Hunter/HuntMapPieces/HuntMapPieces.css";
 
 interface Challenge {
@@ -61,11 +63,13 @@ const HuntMapPieces: React.FC = () => {
           {
             responseType: "blob",
             headers: {
+              "Content-Type": "image",
               "Cache-Control": "no-cache",
               Pragma: "no-cache",
             },
           },
         );
+
         return URL.createObjectURL(res.data);
       } catch (error) {
         if (retries > 0) {
@@ -82,22 +86,26 @@ const HuntMapPieces: React.FC = () => {
     async (list: Challenge[]) => {
       setLoadingStates(new Array(list.length).fill(true));
 
-      const imagePromises = list.map(async (ch, index) => {
-        if (!ch.solved) return square;
+      const imagePromises = list.map(async (ch) => {
+        if (!ch.solved) return null;
 
         try {
-          const url = await loadImageWithRetry(ch.challengeId);
-          return url;
+          return await loadImageWithRetry(ch.challengeId);
+          // const url = await loadImageWithRetry(ch.challengeId);
+          // return url;
         } catch (error) {
-          console.error(
-            `Failed to load image for challenge ${ch.challengeId}:`,
-            error,
-          );
-          return square;
+          console.error("Image load failed:", error);
+          // console.error(
+          //   `Failed to load image for challenge ${ch.challengeId}:`,
+          //   error,
+          // );
+          // return square;
+          return null;
         }
       });
 
       const urls = await Promise.all(imagePromises);
+      console.log("Loaded image URLs:", urls);
       setChallengeImages(urls);
       setLoadingStates(new Array(list.length).fill(false));
     },
@@ -136,12 +144,14 @@ const HuntMapPieces: React.FC = () => {
 
       setChallenges(updated);
       challengesRef.current = updated;
+      await loadAllImages(challengesRef.current);
+
       setTotalPieces(updated.length);
       setUnlockedPieces(info.challenges.filter((c: any) => c.solved).length);
       // setUnlockedPieces(info.solved);
       setTotalPoints(info.pointsCollected);
 
-      await loadAllImages(updated);
+      // await loadAllImages(updated);
     } catch (e) {
       console.error("Initialization error:", e);
     }
@@ -178,9 +188,11 @@ const HuntMapPieces: React.FC = () => {
 
         setChallengeImages((prev) => {
           const newImages = [...prev];
+          if (prev[idx]) URL.revokeObjectURL(prev[idx]!);
           newImages[idx] = imageUrl;
           return newImages;
         });
+        console.log(challengeImages);
       } catch (error) {
         console.error("Failed to load solved challenge image:", error);
       } finally {
@@ -223,7 +235,8 @@ const HuntMapPieces: React.FC = () => {
   useEffect(() => {
     return () => {
       challengeImages.forEach((url) => {
-        if (url && url !== square) {
+        // if (url && url !== square) {
+        if (url && url !== "/src/assets/square.jpg") {
           URL.revokeObjectURL(url);
         }
       });
@@ -250,13 +263,44 @@ const HuntMapPieces: React.FC = () => {
       setSubmitting(false);
     }
   };
+  useEffect(() => {
+    const updateImagesForSolved = async () => {
+      const promises = challenges.map(async (ch, index) => {
+        if (ch.solved && !challengeImages[index]) {
+          try {
+            const url = await loadImageWithRetry(ch.challengeId);
+            return url;
+          } catch {
+            return null;
+          }
+        }
+        return challengeImages[index];
+      });
+
+      const updatedImages = await Promise.all(promises);
+      setChallengeImages(updatedImages);
+    };
+
+    updateImagesForSolved();
+  }, [challengeImages, challenges, loadImageWithRetry]);
 
   return (
     <div className="map-pieces-layout">
       <div className="left-section">
         <div className="map-pieces">
           {challenges.map((ch, i) => {
-            const imgSrc = ch.solved ? challengeImages[i] || square : square;
+            // const imgSrc = ch.solved ? challengeImages[i] || square : square;
+            const imgSrc =
+              ch.solved && challengeImages[i] ? challengeImages[i]! : square;
+
+            // const imgSrc = ch.solved && challengeImages[i];
+
+            // const imgSrc =
+            //   ch.solved &&
+            //   challengeImages[i] &&
+            //   !challengeImages[i].includes("square.jpg")
+            //     ? challengeImages[i]
+            //     : square;
 
             return (
               <div
@@ -275,11 +319,16 @@ const HuntMapPieces: React.FC = () => {
                   alt={
                     ch.solved ? `Solved: ${ch.title}` : `Locked: ${ch.title}`
                   }
+                  // onError={(e) => {
+                  //   const img = e.target as HTMLImageElement;
+                  //   if (img.src !== square) {
+                  //     img.src = square;
+                  //   }
+                  // }}
+
                   onError={(e) => {
                     const img = e.target as HTMLImageElement;
-                    if (img.src !== square) {
-                      img.src = square;
-                    }
+                    img.src = unlocked;
                   }}
                 />
               </div>
@@ -316,9 +365,10 @@ const HuntMapPieces: React.FC = () => {
 
             {unlockedPieces === totalPieces && (
               <div className="code-entry-section">
-                <br />
-                <span className="timer">🎉 All Pieces Unlocked!</span>
-                <p>Enter your final code:</p>
+                <h2 className="win-banner">
+                  🎉 Congratulations! You’ve completed the hunt! 🎯
+                </h2>
+                <p>Enter your final code to claim your reward:</p>
                 <input
                   type="text"
                   maxLength={6}

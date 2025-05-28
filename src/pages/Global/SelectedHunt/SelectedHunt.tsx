@@ -188,7 +188,7 @@ const SelectedHunt = () => {
           <div className="hunt-image">
             <img
               className="logo"
-              src={image || skull}
+              src={image}
               alt={hunt.title || "Hunt image"}
               onError={(e) => {
                 e.currentTarget.src = skull;

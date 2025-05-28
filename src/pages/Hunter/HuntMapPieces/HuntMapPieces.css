@@ -7,6 +7,28 @@
   margin-top: 2rem;
   color: white;
 }
+.win-banner {
+  font-size: 1.4rem;
+  color: #f39c12;
+  margin-bottom: 1rem;
+  animation: pulse 1.5s infinite;
+  text-align: center;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
 
 .timer {
   font-size: 1.5rem;
