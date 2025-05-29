@@ -169,9 +169,9 @@ const ViewMyHunts: React.FC = () => {
                 <td>{calculateDuration(hunt.startDate, hunt.endDate)}</td>
                 <td>{hunt.huntStatus.replace("_", " ")}</td>
                 <td className="control-btns">
-                  <button className="edit-btn">
+                  {/* <button className="edit-btn">
                     <FaEdit className="edit-icon" />
-                  </button>
+                  </button> */}
                   <Link
                     to={`/organizer-dashboard/create-challenges/${hunt.id}`}
                   >

@@ -172,20 +172,22 @@ const CreateChallenges: React.FC = () => {
   };
 
   const handleSubmit = async () => {
-    if (!isAuthenticated) return alert("Please log in first");
+    if (!isAuthenticated) return;
     if (challenges.some((ch) => !ch.challengeType)) {
-      alert("Please select a challenge type for all challenges.");
+      console.log("Please select a challenge type for all challenges.");
       return;
     }
     if (challenges.some((ch) => !ch.image)) {
-      alert("Please upload an image for all challenges.");
+      console.log("Please upload an image for all challenges.");
       return;
     }
 
     // Validate required fields based on challenge type
     for (const challenge of challenges) {
       if (challenge.challengeType === "GAME" && !challenge.externalGameUri) {
-        alert("Please enter an external game URI for all GAME challenges.");
+        console.log(
+          "Please enter an external game URI for all GAME challenges.",
+        );
         return;
       }
       if (
@@ -195,7 +197,7 @@ const CreateChallenges: React.FC = () => {
           challenge.challengeCodes.length === 0 ||
           !challenge.challengeCodes[0].code)
       ) {
-        alert(
+        console.log(
           "Please enter challenge code for all CODING and BUGFIX challenges.",
         );
         return;
@@ -206,7 +208,7 @@ const CreateChallenges: React.FC = () => {
           challenge.optimalSolutions.length === 0 ||
           !challenge.optimalSolutions[0].code)
       ) {
-        alert("Please enter optimal solution for all BUGFIX challenges.");
+        console.log("Please enter optimal solution for all BUGFIX challenges.");
         return;
       }
       if (
@@ -217,7 +219,7 @@ const CreateChallenges: React.FC = () => {
           !challenge.testCases[0].input ||
           !challenge.testCases[0].expectedOutput)
       ) {
-        alert(
+        console.log(
           "Please enter at least one test case for all CODING and BUGFIX challenges.",
         );
         return;
@@ -265,7 +267,7 @@ const CreateChallenges: React.FC = () => {
 
     try {
       await api.put(`/hunts/${huntId}/challenges`, formData);
-      alert("Challenges submitted successfully!");
+      console.log("Challenges submitted successfully!");
       // Reset state and refetch challenges
       setChallenges([
         {
@@ -284,7 +286,7 @@ const CreateChallenges: React.FC = () => {
       setFetchedChallenges(challengesRes.data || []);
     } catch (error: any) {
       console.error("Error adding challenges:", error);
-      alert(
+      console.log(
         `Submission failed: ${error.response?.data?.message || error.message}`,
       );
     } finally {
@@ -308,9 +310,9 @@ const CreateChallenges: React.FC = () => {
     // huntId
     const resp = await api.put(`/hunts/${huntId}`);
     if (resp.status === 200) {
-      alert("Hunt submitted for review");
+      console.log("Hunt submitted for review");
     } else {
-      alert("Error submitting hunt for review");
+      console.log("Error submitting hunt for review");
     }
   };
 
