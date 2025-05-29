@@ -66,13 +66,13 @@ const SelectedHunt = () => {
       //   },
       // );
       if (res.status === 200) {
-        alert("Successfully joined the hunt!");
+        // alert("Successfully joined the hunt!");
         navigate(`/hunt-map-pieces/${huntId}`);
       }
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || "Failed to join hunt";
       setError(errorMessage);
-      alert(errorMessage);
+      // alert(errorMessage);
     }
   };
 

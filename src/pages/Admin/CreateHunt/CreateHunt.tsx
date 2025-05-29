@@ -17,7 +17,8 @@ const CreateHunt: React.FC = () => {
   const navigate = useNavigate();
 
   if (!isAuthenticated) {
-    return <div>Please log in to create a hunt.</div>;
+    // return <div>Please log in to create a hunt.</div>;
+    return;
   }
 
   const handleBackgroundChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -69,7 +70,7 @@ const CreateHunt: React.FC = () => {
       navigate("/organizer-dashboard/my-hunts");
     } catch (err: any) {
       console.error(err.response?.data || err.message);
-      alert("Bad request: " + (err.response?.data?.message || err.message));
+      // alert("Bad request: " + (err.response?.data?.message || err.message));
     }
   };
 

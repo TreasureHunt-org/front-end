@@ -17,7 +17,7 @@ const ProtectedOrganizerRoute: React.FC<ProtectedOrganizerRouteProps> = ({
   if (!roles?.includes("ADMIN") && !roles?.includes("ORGANIZER")) {
     return <Navigate to="/" replace />;
   }
-
+  // organizer is not an admin  , admin is an organizer
   return <>{children}</>;
 };
 

@@ -1,7 +1,6 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
-// ProtectedRoute.tsx
 interface ProtectedRouteProps {
   children: React.ReactNode;
   inverted?: boolean;
