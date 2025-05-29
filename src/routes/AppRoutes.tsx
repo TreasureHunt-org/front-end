@@ -49,7 +49,10 @@ const CreateHunt = React.lazy(
   () => import("../pages/Admin/CreateHunt/CreateHunt.tsx"),
 );
 const CreateChallenges = React.lazy(
-  () => import("../pages/Organizer/CreateChallenges"),
+  () =>
+    import(
+      "../pages/Organizer/ViewMyHunts/CreateChallenges/CreateChallenges.tsx"
+    ),
 );
 
 const SendAnnouncement = React.lazy(

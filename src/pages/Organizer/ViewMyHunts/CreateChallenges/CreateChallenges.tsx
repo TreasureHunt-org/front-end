@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext.tsx";
-import api from "../../api/axios.ts";
+import { useAuth } from "../../../../context/AuthContext.tsx";
+import api from "../../../../api/axios.ts";
 import { Plus, Trash2 } from "lucide-react";
+
+import "../CreateChallenges/CreateChallenges.css";
 
 const challengeTypes = ["CODING", "BUGFIX", "GAME"];
 
@@ -315,10 +317,10 @@ const CreateChallenges: React.FC = () => {
   return (
     <div className="px-20 pb-10">
       {/* Header */}
-      <div className="mb-6 flex items-center justify-between border-b border-gray-300 pb-4">
-        <h2 className="view-hunts-title">
+      <div className="border-bpb-4 mb-6 flex items-center justify-between">
+        {/* <h2 className="view-hunts-title">
           Create Challenges for Hunt #{huntId}
-        </h2>
+        </h2> */}
         {/*<button*/}
         {/*  onClick={() => navigate(-1)}*/}
         {/*  className="add-btn flex items-center justify-center"*/}
