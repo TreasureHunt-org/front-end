@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import CodeEditor from "../../../components/CodeEditor/CodeEditor";
 import api from "../../../api/axios";
 import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
@@ -28,7 +27,7 @@ const BugFixChallenge = ({ challenge }: { challenge: Challenge }) => {
     return match ? match.code : "// No buggy code available";
   };
 
-  const [language, setLanguage] = useState(defaultLanguage);
+  const [language] = useState(defaultLanguage);
   const [code, setCode] = useState(getBuggyCode(defaultLanguage));
   const buggyCode = challenge.challengeCodes?.[0]?.code || "// Buggy code";
   // const handleLanguageChange = (lang: string) => {
@@ -82,7 +81,7 @@ const BugFixChallenge = ({ challenge }: { challenge: Challenge }) => {
             language={language}
             height="100%"
             readonly={false}
-            value={code}
+            code={code}
             onChange={setCode}
           />
         </div>

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import CodeEditor from "../../../components/CodeEditor/CodeEditor";
 import api from "../../../api/axios";
 import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
@@ -68,7 +67,7 @@ const ProblemSolvingChallenge = ({ challenge }: { challenge: Challenge }) => {
             language={language}
             height="100%"
             readonly={false}
-            value={code}
+            code={code}
             onChange={setCode}
           />
         </div>
