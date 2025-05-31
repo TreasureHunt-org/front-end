@@ -21,7 +21,7 @@ function CodeEditor({
   readonly: boolean;
   onChange?: ((value: string, event?: any) => void) | undefined;
   height: string;
-  language: "java" | "python" | "c_cpp";
+  language: "java" | "python" | "c_cpp" | string;
 }) {
   console.log(language);
   return (

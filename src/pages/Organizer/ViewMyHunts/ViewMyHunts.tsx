@@ -3,7 +3,6 @@ import api from "../../../api/axios.ts";
 import { useAuth } from "../../../context/AuthContext.tsx";
 import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL.ts";
 import { Link } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
 import { Hunt, PageResponse } from "../../../types.ts";
 import "../ViewMyHunts/ViewMyHunts.css";
 

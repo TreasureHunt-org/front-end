@@ -1,6 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 
+// @ts-ignore
 const MinigameChallenge = ({ challenge }) => {
   return (
     <div className="minigame-container">

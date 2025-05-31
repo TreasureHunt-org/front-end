@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaEye, FaTrash, FaFilter } from "react-icons/fa";
+import { FaEye, FaTrash } from "react-icons/fa";
 
 import "../ViewFeedback/ViewFeedback.css";
 
