@@ -24,7 +24,7 @@ const HuntMapPieces: React.FC = () => {
   const { huntId } = useParams<{ huntId: string }>();
   const navigate = useNavigate();
 
-  // const [huntData, setHuntData] = useState<any>(null);
+  const [huntData, setHuntData] = useState<any>(null);
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [challengeImages, setChallengeImages] = useState<(string | null)[]>([]);
   const [unlockedPieces, setUnlockedPieces] = useState(0);
@@ -126,7 +126,7 @@ const HuntMapPieces: React.FC = () => {
 
       console.log(infoRes.data);
 
-      // setHuntData(hunt);
+      setHuntData(hunt);
       const now = new Date();
       const end = new Date(hunt.endDate);
       const rem =
