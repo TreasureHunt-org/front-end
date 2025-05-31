@@ -28,7 +28,7 @@ function CodeEditor({
     <AceEditor
       width={"1000px"}
       readOnly={readonly}
-      height={height}
+      // height={height}
       value={code}
       mode={"java"}
       theme="monokai"
