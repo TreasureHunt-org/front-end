@@ -82,7 +82,9 @@ const UserProfile: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Error updating user info:", error);
-      setError(error.response?.data?.message || "Failed to update user information");
+      setError(
+        error.response?.data?.message || "Failed to update user information",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -117,7 +119,9 @@ const UserProfile: React.FC = () => {
       }
     } catch (error: any) {
       console.error("Error updating profile image:", error);
-      setError(error.response?.data?.message || "Failed to update profile image");
+      setError(
+        error.response?.data?.message || "Failed to update profile image",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -146,55 +150,59 @@ const UserProfile: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 w-full bg-gray-900 min-h-screen">
-      <h1 className="text-4xl font-bold mb-8 text-left text-yellow-500 pt-6">Captain's Profile</h1>
+    <div className="container mx-auto min-h-screen w-full bg-[#1c1c1c] p-4 text-white">
+      <h1 className="mb-8 pt-6 text-left text-4xl font-bold text-[#f39c12]">
+        Edit Profile
+      </h1>
 
       {error && (
-        <div className="bg-red-900 border-2 border-red-600 text-red-200 px-4 py-3 rounded-lg mb-6 shadow-lg">
+        <div className="mb-6 rounded-lg border-2 border-red-600 bg-red-950 px-4 py-3 text-red-200 shadow-lg">
           {error}
         </div>
       )}
 
       {success && (
-        <div className="bg-green-900 border-2 border-green-600 text-green-200 px-4 py-3 rounded-lg mb-6 shadow-lg">
+        <div className="mb-6 rounded-lg border-2 border-green-600 bg-green-950 px-4 py-3 text-green-200 shadow-lg">
           {success}
         </div>
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
         {/* Profile Image Section */}
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg border-2 border-yellow-900">
-          <h2 className="text-2xl font-semibold mb-6 text-yellow-400 border-b-2 border-yellow-700 pb-2">Profile Image</h2>
+        <div className="rounded-lg border-2 border-[#f39c12] bg-[#2c2c2c] p-6 shadow-lg">
+          <h2 className="mb-6 border-b-2 border-[#e67e22] pb-2 text-2xl font-semibold text-[#f1c40f]">
+            Profile Image
+          </h2>
 
           <div className="flex flex-col items-center">
-            <div className="w-40 h-40 rounded-full overflow-hidden mb-6 bg-gray-700 border-4 border-yellow-600 shadow-lg">
-              <img 
-                src={previewImage || userImage || "/src/assets/user (1).png"} 
-                alt="Profile" 
-                className="w-full h-full object-cover"
+            <div className="mb-6 h-40 w-40 overflow-hidden rounded-full border-4 border-[#e67e22] bg-[#3a3a3a] shadow-lg">
+              <img
+                src={previewImage || userImage || "/src/assets/user (1).png"}
+                alt="Profile"
+                className="h-full w-full object-cover"
               />
             </div>
 
             <form onSubmit={handleUpdateImage} className="w-full">
               <div className="mb-5">
-                <label className="block text-sm font-medium text-yellow-300 mb-2">
+                <label className="mb-2 block text-sm font-medium text-[#f1c40f]">
                   Select new image
                 </label>
                 <input
                   type="file"
                   accept="image/*"
                   onChange={handleImageChange}
-                  className="w-full text-sm text-gray-300 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-2 file:border-yellow-600 file:text-sm file:font-semibold file:bg-yellow-900 file:text-yellow-300 hover:file:bg-yellow-800"
+                  className="w-full text-sm text-white file:mr-4 file:rounded-full file:border-2 file:border-[#e67e22] file:bg-[#444] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#f39c12] hover:file:bg-[#555]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={!newImage || isLoading}
-                className={`w-full py-3 px-4 rounded-lg ${
+                className={`w-full rounded-lg px-4 py-3 ${
                   !newImage || isLoading
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-yellow-600 hover:bg-yellow-700 text-white font-bold shadow-md transform hover:scale-105 transition-all duration-200"
+                    ? "cursor-not-allowed bg-[#555]"
+                    : "transform bg-[#f39c12] font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-[#e67e22]"
                 }`}
               >
                 {isLoading ? "Updating..." : "Update Profile Image"}
@@ -204,32 +212,34 @@ const UserProfile: React.FC = () => {
         </div>
 
         {/* User Info Section */}
-        <div className="bg-gray-800 p-6 rounded-lg shadow-lg border-2 border-yellow-900">
-          <h2 className="text-2xl font-semibold mb-6 text-yellow-400 border-b-2 border-yellow-700 pb-2">Sailor Information</h2>
+        <div className="rounded-lg border-2 border-[#f39c12] bg-[#2c2c2c] p-6 shadow-lg">
+          <h2 className="mb-6 border-b-2 border-[#e67e22] pb-2 text-2xl font-semibold text-[#f1c40f]">
+            Hunter Information
+          </h2>
 
           <form onSubmit={handleUpdateInfo}>
             <div className="mb-5">
-              <label className="block text-sm text-left font-medium text-yellow-300 mb-2">
+              <label className="mb-2 block text-left text-sm font-medium text-[#f1c40f]">
                 Username
               </label>
               <input
                 type="text"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-700 border-2 border-yellow-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white"
+                className="w-full rounded-lg border-2 border-[#e67e22] bg-[#3a3a3a] px-4 py-3 text-white focus:ring-2 focus:ring-[#f39c12] focus:outline-none"
                 required
               />
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm text-left font-medium text-yellow-300 mb-2">
+              <label className="mb-2 block text-left text-sm font-medium text-[#f1c40f]">
                 Email
               </label>
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 bg-gray-700 border-2 border-yellow-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent text-white"
+                className="w-full rounded-lg border-2 border-[#e67e22] bg-[#3a3a3a] px-4 py-3 text-white focus:ring-2 focus:ring-[#f39c12] focus:outline-none"
                 required
               />
             </div>
@@ -237,10 +247,10 @@ const UserProfile: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className={`w-full py-3 px-4 rounded-lg ${
+              className={`w-full rounded-lg px-4 py-3 ${
                 isLoading
-                  ? "bg-gray-600 cursor-not-allowed"
-                  : "bg-yellow-600 hover:bg-yellow-700 text-white font-bold shadow-md transform hover:scale-105 transition-all duration-200"
+                  ? "cursor-not-allowed bg-[#555]"
+                  : "transform bg-[#f39c12] font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-[#e67e22]"
               }`}
             >
               {isLoading ? "Updating..." : "Update Information"}
@@ -250,36 +260,42 @@ const UserProfile: React.FC = () => {
       </div>
 
       {/* Delete Account Section */}
-      <div className="bg-gray-800 p-6 rounded-lg shadow-lg mt-8 border-2 border-red-900">
-        <h2 className="text-2xl font-semibold mb-6 text-red-400 border-b-2 border-red-700 pb-2">Abandon Ship</h2>
+      <div className="mt-8 rounded-lg border-2 border-red-800 bg-[#2c2c2c] p-6 shadow-lg">
+        {/* <h2 className="mb-6 border-b-2 border-red-700 pb-2 text-2xl font-semibold text-red-400">
+          Abandon Ship
+        </h2> */}
 
         {!showDeleteConfirm ? (
-          <button
-            onClick={() => setShowDeleteConfirm(true)}
-            className="w-full py-3 px-4 bg-red-700 hover:bg-red-800 text-white rounded-lg font-bold shadow-md transform hover:scale-105 transition-all duration-200"
-          >
-            Delete Account
-          </button>
+          <div>
+            <p className="mb-6 text-lg text-red-300">Delete my account</p>
+            <button
+              onClick={() => setShowDeleteConfirm(true)}
+              className="w-1/2 transform rounded-lg bg-red-700 px-4 py-3 font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-red-800"
+            >
+              Delete Account
+            </button>
+          </div>
         ) : (
           <div>
-            <p className="mb-6 text-red-300 text-lg">
-              Are you sure you want to delete your account? This action cannot be undone.
+            <p className="mb-6 text-lg text-red-300">
+              Are you sure you want to delete your account? This action cannot
+              be undone.
             </p>
             <div className="flex space-x-6">
               <button
                 onClick={handleDeleteAccount}
                 disabled={isLoading}
-                className={`flex-1 py-3 px-4 rounded-lg ${
+                className={`w-1/2 flex-1 rounded-lg px-4 py-3 ${
                   isLoading
-                    ? "bg-gray-600 cursor-not-allowed"
-                    : "bg-red-700 hover:bg-red-800 text-white font-bold shadow-md transform hover:scale-105 transition-all duration-200"
+                    ? "cursor-not-allowed bg-[#555]"
+                    : "transform bg-red-700 font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-red-800"
                 }`}
               >
                 {isLoading ? "Processing..." : "Yes, Delete My Account"}
               </button>
               <button
                 onClick={() => setShowDeleteConfirm(false)}
-                className="flex-1 py-3 px-4 bg-gray-600 hover:bg-gray-700 text-white rounded-lg font-bold shadow-md transform hover:scale-105 transition-all duration-200"
+                className="w-1/2 flex-1 transform rounded-lg bg-[#555] px-4 py-3 font-bold text-white shadow-md transition-all duration-200 hover:scale-105 hover:bg-[#666]"
               >
                 Cancel
               </button>

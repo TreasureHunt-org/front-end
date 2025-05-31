@@ -4,8 +4,6 @@ export const ROUTES = {
   HUNTS: "/hunts",
   LEADERBOARD: "/leaderboard",
   ABOUT: "/about",
-  LOGIN: "/login",
-  REGISTER: "/register",
   SELECTED_HUNT: "/selected-hunt/:huntId",
   HUNT_RANKING: "/hunt-ranking/:huntId",
 

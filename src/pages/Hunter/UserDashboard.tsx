@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import AdminDashboard from "../Admin/AdminDashboard/AdminDashboard";
-import HunterDashboard from "../Hunter/HunterDashboard";
+import HunterDashboard from "./HunterDashboard/HunterDashboard.tsx";
 import OrganizerDashboard from "../Organizer/OrganizerDashboard";
 import ReviewerDashboard from "../Reviewer/ReviewerDashboard";
 import api from "../../api/axios";

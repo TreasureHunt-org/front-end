@@ -3,12 +3,15 @@ import pirateMap from "/src/assets/map.png";
 import "/src/App.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext.tsx";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import "../Home/Home.css";
+import RegisterModal from "../Register/RegisterModal.tsx";
 const Home = () => {
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
+
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -33,9 +36,17 @@ const Home = () => {
           />
         </div>
       </div>
-      <Link to="/register">
-        <button className="bt">Become a Hunter!</button>
-      </Link>
+      {/* <Link to="/register">
+        <button className="dbt">Become a Hunter!</button>
+      </Link> */}
+
+      <button className="dbt" onClick={() => setRegisterOpen(true)}>
+        Become a Hunter!
+      </button>
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={() => setRegisterOpen(false)}
+      />
     </>
   );
 };

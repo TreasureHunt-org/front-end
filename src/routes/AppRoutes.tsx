@@ -19,10 +19,10 @@ const GlobalLeaderboard = React.lazy(
 const ContactUs = React.lazy(
   () => import("../pages/Global/ContactUs/ContactUs.tsx"),
 );
-const Login = React.lazy(() => import("../pages/Global/Login/Login.tsx"));
-const Register = React.lazy(
-  () => import("../pages/Global/Register/Register.tsx"),
-);
+// const Login = React.lazy(() => import("../pages/Global/Login/Login.tsx"));
+// const Register = React.lazy(
+//   () => import("../pages/Global/Register/Register.tsx"),
+// );
 const NotFound = React.lazy(
   () => import("../components/NotFound/NotFound.tsx"),
 );
@@ -49,10 +49,7 @@ const CreateHunt = React.lazy(
   () => import("../pages/Admin/CreateHunt/CreateHunt.tsx"),
 );
 const CreateChallenges = React.lazy(
-  () =>
-    import(
-      "../pages/Organizer/ViewMyHunts/CreateChallenges/CreateChallenges.tsx"
-    ),
+  () => import("../pages/Organizer/CreateChallenges/CreateChallenges.tsx"),
 );
 
 const SendAnnouncement = React.lazy(
@@ -76,7 +73,7 @@ const OrganizerDashboard = React.lazy(
 );
 
 const HunterDashboard = React.lazy(
-  () => import("../pages/Hunter/HunterDashboard"),
+  () => import("../pages/Hunter/HunterDashboard/HunterDashboard.tsx"),
 );
 // const OrganizerViewMyHunts = React.lazy(
 //   () => import("../pages/Organizer/ViewMyHunts"),
@@ -91,22 +88,22 @@ const AppRoutes: React.FC = () => {
       <Route path={ROUTES.HUNTS} element={<Hunts />} />
       <Route path={ROUTES.LEADERBOARD} element={<GlobalLeaderboard />} />
       <Route path={ROUTES.ABOUT} element={<ContactUs />} />
-      <Route
+      {/* <Route
         path={ROUTES.LOGIN}
         element={
           <ProtectedRoute inverted>
             <Login />
           </ProtectedRoute>
         }
-      />
-      <Route
+      /> */}
+      {/* <Route
         path={ROUTES.REGISTER}
         element={
           <ProtectedRoute inverted>
             <Register />
           </ProtectedRoute>
         }
-      />
+      /> */}
       <Route path={ROUTES.SELECTED_HUNT} element={<SelectedHunt />} />
       <Route path={ROUTES.HUNT_RANKING} element={<HuntLeaderboard />} />
 

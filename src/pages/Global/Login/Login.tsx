@@ -6,7 +6,10 @@ import API_BASE_URL from "../../../constants/apiURL/API_BASE_URL";
 import user from "/src/assets/user (1).png";
 
 import "../Login/Login.css";
+import RegisterModal from "../Register/RegisterModal";
 const Login: React.FC = () => {
+  const [isRegisterOpen, setRegisterOpen] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -106,54 +109,78 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="login-form">
-      <div className="user-login">
-        <img className="user" alt="user" src={user} />
-        <h3 className="login">Login to your account</h3>
+    <div className="flex w-full flex-col items-center">
+      <div className="mb-6 flex flex-col items-center">
+        <img src={user} alt="user icon" className="mb-2 h-20 w-20" />
+        <h3 className="text-xl font-semibold text-white">Welcome back</h3>
       </div>
 
-      <form className="login-inputs" onSubmit={handleFormSubmission}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          id="email"
-          required
-          value={formData.email}
-          onChange={handleFormChange}
-          autoComplete="username"
-        />
+      <div className="w-full max-w-xs">
+        <form className="flex flex-col gap-4" onSubmit={handleFormSubmission}>
+          <div className="flex w-full flex-col">
+            <label
+              htmlFor="email"
+              className="mb-1 text-left text-sm text-white"
+            >
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              required
+              value={formData.email}
+              onChange={handleFormChange}
+              autoComplete="username"
+              className="w-full rounded border border-gray-600 bg-[#333] px-3 py-2 text-base text-white placeholder-gray-400 focus:ring-2 focus:ring-[#f39c12] focus:outline-none"
+            />
+          </div>
 
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          required
-          value={formData.password}
-          onChange={handleFormChange}
-          autoComplete="current-password"
-        />
+          <div className="flex w-full flex-col">
+            <label
+              htmlFor="password"
+              className="mb-1 text-left text-sm text-white"
+            >
+              Password
+            </label>
+            <input
+              type="password"
+              id="password"
+              required
+              value={formData.password}
+              onChange={handleFormChange}
+              autoComplete="current-password"
+              className="w-full rounded border border-gray-600 bg-[#333] px-3 py-2 text-base text-white placeholder-gray-400 focus:ring-2 focus:ring-[#f39c12] focus:outline-none"
+            />
+          </div>
 
-        {error && (
-          <p
-            className="error-message"
-            style={{ color: "red", margin: "10px 0" }}
+          {error && (
+            <p className="-mt-2 mb-3 text-center text-sm text-red-400">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full rounded bg-[#f39c12] py-2 text-lg font-semibold text-white transition-colors hover:bg-[#e67e22]"
           >
-            {error}
-          </p>
-        )}
+            LOGIN
+          </button>
+        </form>
 
-        <button className="btn" type="submit">
-          LOGIN
-        </button>
-      </form>
+        <div className="mt-4 text-center">
+          <button
+            className="text-sm text-[#f39c12] underline hover:text-[#e67e22]"
+            onClick={() => setRegisterOpen(true)}
+          >
+            Don’t have an account?
+          </button>
+        </div>
+      </div>
 
-      <Link
-        className="register-link"
-        to="/register"
-        style={{ display: "block", marginTop: "20px", textAlign: "center" }}
-      >
-        Don't have an account?
-      </Link>
+      <RegisterModal
+        isOpen={isRegisterOpen}
+        onClose={() => setRegisterOpen(false)}
+      />
     </div>
   );
 };

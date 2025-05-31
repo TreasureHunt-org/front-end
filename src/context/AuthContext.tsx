@@ -111,7 +111,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
     delete api.defaults.headers.common["Authorization"];
     setUserState(null);
     setRoles([]);
-    window.location.href = "/login";
+    window.location.href = "/";
   };
 
   const isAuthenticated = !!user;

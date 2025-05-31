@@ -1,122 +1,139 @@
-/* __________________LOGIN  && REGISTER style_____________________________  */
-.login-form,
-.register-form {
+/* ──────────────────────────────────────────────────────────────────────────
+/* Login.css                                                                 */
+/* ────────────────────────────────────────────────────────────────────────── */
+/*
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  background-color: #222;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+
+.login-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  padding: 3rem;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  width: 800px;
-  margin: 1rem;
-  align-self: center;
-  position: relative;
-  top: 0.1rem;
-  left: 18rem;
-  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.1);
-  background-color: #333;
+  width: 100%;
 }
 
-.user-login,
-.user-register {
+.user-login {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 1rem;
-  width: 100%;
-  justify-content: center;
+  margin-bottom: 1.5rem; 
 }
 
 .user {
-  height: 30px;
-  width: 30px;
+  width: 80px;
+  height: 80px;
+  margin-bottom: 0.5rem; 
 }
 
-.login,
-.register {
-  font-size: 2rem;
-}
-.login-inputs,
-.register-inputs {
-  position: relative;
-  left: 6rem;
-  display: grid;
-  gap: 1rem;
-  width: 70%;
+.login-title {
+  color: #fff;
+  font-size: 1.5rem;
+  margin: 0;
 }
 
-.login-inputs label,
-.register-inputs label {
-  text-align: left;
-  align-self: center;
-  font-weight: bold;
-  font-size: 1rem;
-}
-
-.login-inputs input,
-.register-inputs input {
-  padding: 0.6rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  width: 60%;
-}
-
-/* .btn {
-  border-radius: 20px;
-  padding: 0.6rem;
-  background-color: #f39c12;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    transform 0.2s;
-  font-size: 1rem;
-  font-weight: bold;
-  position: relative;
-  top: 0.1rem;
-  left: 75px;
-  width: 10rem;
-  text-align: center;
-}
-
-.btn:hover {
-  background-color: #e67e22;
-  transform: scale(1.05);
-} */
-
-.register-link,
-.login-link {
-  text-align: center;
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  display: block;
-  font-size: 1.1rem;
-  color: inherit;
-  position: relative;
-  top: 0.1rem;
-  left: 10px;
+  max-width: 300px;
 }
-.btn {
-  border-radius: 20px;
-  padding: 0.6rem;
-  background-color: #f39c12;
-  color: white;
-  border: none;
-  cursor: pointer;
-  transition:
-    background-color 0.3s,
-    transform 0.2s;
+
+.login-inputs {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 0.1rem; 
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.input-group label {
+  color: #fff;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  text-align: left;
+  direction: ltr;
+}
+
+.input-group input {
+  padding: 0.5rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background-color: #333;
+  color: #fff;
   font-size: 1rem;
-  font-weight: bold;
-  position: relative;
-  top: 0.1rem;
-  left: 75px;
-  width: 10rem;
+  width: 100%;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.error-message {
+  color: #ff6b6b; 
+  font-size: 0.9rem;
+  text-align: center;
+  margin: -0.5rem 0 0.75rem; }
+
+.btn {
+  padding: 0.75rem;
+  background-color: #f39c12; 
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
   text-align: center;
 }
 
-.btn:hover {
-  background-color: #e67e22;
-  transform: scale(1.05);
-}
+.register-link {
+  background: none;
+  border: none;
+  color: #f39c12;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-decoration: underline;
+  margin-top: 1.25rem; 
+  align-self: center;
+} */

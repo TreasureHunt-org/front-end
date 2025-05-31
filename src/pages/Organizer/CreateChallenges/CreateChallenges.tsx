@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useAuth } from "../../../../context/AuthContext.tsx";
-import api from "../../../../api/axios.ts";
+import { useAuth } from "../../../context/AuthContext.tsx";
+import api from "../../../api/axios.ts";
 import { Plus, Trash2 } from "lucide-react";
 
 import "../CreateChallenges/CreateChallenges.css";

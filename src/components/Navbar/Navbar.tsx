@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import pirateFlag from "../../assets/pirate-flag (2).png";
 import "../Navbar/Navbar.css";
 import Avatar from "/src/assets/user (1).png";
@@ -8,10 +8,15 @@ import { useAuth } from "../../context/AuthContext";
 import { useEffect, useState } from "react";
 import api from "../../api/axios.ts";
 import { ROUTES } from "../../constants/app routes/routes.ts";
+import LoginModal from "../../pages/Global/Login/LoginModal.tsx";
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth();
   const [userImage, setUserImage] = useState<string | null>(null);
+
+  const [isLoginOpen, setLoginOpen] = useState(false);
+  const navigate = useNavigate();
+
   // const roles = user?.roles;
   const fetchUserImage = async () => {
     try {
@@ -90,11 +95,15 @@ const Navbar = () => {
             </button>
           </div>
         ) : (
-          <Link to="/login" className="login-link">
-            <button className="bn">LOGIN</button>
-          </Link>
+          // <Link to="/login" className="login-link">
+          //   <button className="bn">LOGIN</button>
+          // </Link>
+          <button className="login-link" onClick={() => setLoginOpen(true)}>
+            Login
+          </button>
         )}
       </div>
+      <LoginModal isOpen={isLoginOpen} onClose={() => setLoginOpen(false)} />
     </nav>
   );
 };

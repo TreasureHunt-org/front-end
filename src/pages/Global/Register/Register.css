@@ -1,5 +1,5 @@
 /* __________________LOGIN  && REGISTER style_____________________________  */
-.login-form,
+/* .login-form,
 .register-form {
   display: flex;
   flex-direction: column;
@@ -60,7 +60,7 @@
   border-radius: 5px;
   font-size: 1rem;
   width: 60%;
-}
+} */
 
 /* .btn {
   border-radius: 20px;
@@ -85,7 +85,7 @@
   background-color: #e67e22;
   transform: scale(1.05);
 } */
-
+/* 
 .register-link,
 .login-link {
   text-align: center;
@@ -119,4 +119,4 @@
 .btn:hover {
   background-color: #e67e22;
   transform: scale(1.05);
-}
+} */

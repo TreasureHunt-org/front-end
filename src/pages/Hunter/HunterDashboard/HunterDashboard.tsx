@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ROUTES } from "../../constants/app routes/routes.ts";
-import Spinner from "../../components/Spinner/Spinner.tsx";
-import api from "../../api/axios";
+import { ROUTES } from "../../../constants/app routes/routes.ts";
+import Spinner from "../../../components/Spinner/Spinner.tsx";
+import api from "../../../api/axios.ts";
 import "./HunterDashboard.css";
 
 // Interfaces for type safety
@@ -100,8 +100,12 @@ const HunterDashboard = () => {
   if (error) {
     return (
       <div className="empty-state">
-        <h2 className="empty-state-title" style={{ color: '#e74c3c' }}>Error</h2>
-        <p className="empty-state-subtitle" style={{ color: '#e74c3c' }}>{error}</p>
+        <h2 className="empty-state-title" style={{ color: "#e74c3c" }}>
+          Error
+        </h2>
+        <p className="empty-state-subtitle" style={{ color: "#e74c3c" }}>
+          {error}
+        </p>
       </div>
     );
   }
@@ -110,17 +114,14 @@ const HunterDashboard = () => {
     <div className="dashboard-container">
       <div className="dashboard-header">
         <div className="dashboard-header-content">
-          <h1 className="dashboard-title">
-            Captain's Logbook
-          </h1>
+          <h1 className="dashboard-title">My Adventure Log</h1>
           <p className="dashboard-subtitle">
-            Navigate your voyages, treasures, and achievements
+            Track your progress, rewards, and completed hunts.
           </p>
         </div>
       </div>
 
       <div className="dashboard-content">
-
         {/* Hunts Tabs */}
         <div className="hunts-container">
           <div className="tabs-header">
@@ -134,7 +135,7 @@ const HunterDashboard = () => {
                       : "tab-button-inactive"
                   }`}
                 >
-                  Current Voyage
+                  Current Hunt
                 </button>
               </div>
               <div>
@@ -146,7 +147,7 @@ const HunterDashboard = () => {
                       : "tab-button-inactive"
                   }`}
                 >
-                  Completed Voyages
+                  Completed Hunts
                 </button>
               </div>
             </nav>
@@ -158,13 +159,8 @@ const HunterDashboard = () => {
                 {activeHunts.length > 0 ? (
                   <div className="hunt-grid">
                     {activeHunts.map((hunt) => (
-                      <div
-                        key={hunt.id}
-                        className="hunt-card"
-                      >
-                        <h3 className="hunt-title">
-                          {hunt.title}
-                        </h3>
+                      <div key={hunt.id} className="hunt-card">
+                        <h3 className="hunt-title">{hunt.title}</h3>
                         <div className="progress-container">
                           <div className="progress-header">
                             <span>Voyage Progress</span>
@@ -188,9 +184,7 @@ const HunterDashboard = () => {
                           </span>
                           <span className="hunt-due-date">
                             Ends:{" "}
-                            <span className="hunt-value">
-                              {hunt.dueDate}
-                            </span>
+                            <span className="hunt-value">{hunt.dueDate}</span>
                           </span>
                         </div>
                         <Link
@@ -205,10 +199,10 @@ const HunterDashboard = () => {
                 ) : (
                   <div className="empty-state">
                     <p className="empty-state-title">
-                      No active voyages on your horizon
+                      You haven’t joined any hunts yet.
                     </p>
                     <p className="empty-state-subtitle">
-                      Set sail on a new adventure to begin your journey!
+                      Start a new hunt to begin your adventure!
                     </p>
                   </div>
                 )}
@@ -220,43 +214,22 @@ const HunterDashboard = () => {
                     <table>
                       <thead>
                         <tr>
-                          <th>
-                            Voyage
-                          </th>
-                          <th>
-                            Completed
-                          </th>
-                          <th>
-                            Treasure
-                          </th>
-                          <th>
-                            Rank
-                          </th>
-                          <th>
-                            Actions
-                          </th>
+                          <th>Voyage</th>
+                          <th>Completed</th>
+                          <th>Treasure</th>
+                          <th>Rank</th>
+                          <th>Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {completedHunts.map((hunt) => (
-                          <tr
-                            key={hunt.id}
-                          >
+                          <tr key={hunt.id}>
+                            <td>{hunt.title}</td>
+                            <td>{hunt.completedDate}</td>
                             <td>
-                              {hunt.title}
+                              {hunt.score} <span>points</span>
                             </td>
-                            <td>
-                              {hunt.completedDate}
-                            </td>
-                            <td>
-                              {hunt.score}{" "}
-                              <span>
-                                points
-                              </span>
-                            </td>
-                            <td>
-                              #{hunt.rank}
-                            </td>
+                            <td>#{hunt.rank}</td>
                             <td>
                               <Link
                                 to={`${ROUTES.HUNT_RANKING.replace(":huntId", hunt.id)}`}
@@ -302,9 +275,7 @@ const HunterDashboard = () => {
         {userScore && (
           <div className="treasure-container">
             <div className="treasure-header">
-              <h2 className="treasure-title">
-                Treasure Vault
-              </h2>
+              <h2 className="treasure-title">My Rewards</h2>
             </div>
             <div className="treasure-content">
               <div className="treasure-grid">
@@ -323,26 +294,16 @@ const HunterDashboard = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <h3 className="treasure-card-title">
-                      Current Bounty
-                    </h3>
+                    <h3 className="treasure-card-title">Points Earned</h3>
                   </div>
                   <div className="treasure-stats">
                     <div className="treasure-stat">
-                      <p className="treasure-stat-label">
-                        Total Treasure
-                      </p>
-                      <p className="treasure-stat-value">
-                        {userScore.total}
-                      </p>
+                      <p className="treasure-stat-label">Total Points</p>
+                      <p className="treasure-stat-value">{userScore.total}</p>
                     </div>
                     <div className="treasure-stat">
-                      <p className="treasure-stat-label">
-                        Fleet Rank
-                      </p>
-                      <p className="treasure-stat-value">
-                        #{userScore.rank}
-                      </p>
+                      <p className="treasure-stat-label">Leaderboard Rank</p>
+                      <p className="treasure-stat-value">#{userScore.rank}</p>
                     </div>
                   </div>
                 </div>
@@ -360,22 +321,18 @@ const HunterDashboard = () => {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <h3 className="treasure-card-title">
-                      Treasure History
-                    </h3>
+                    <h3 className="treasure-card-title">Treasure History</h3>
                   </div>
                   <div className="treasure-stats">
                     <div className="treasure-stat">
-                      <p className="treasure-stat-label">
-                        Last Plunder
-                      </p>
+                      <p className="treasure-stat-label">Last Points Earned</p>
                       <p className="treasure-stat-value">
                         {userScore.lastEarned}
                       </p>
                     </div>
                     <div className="treasure-stat">
                       <p className="treasure-stat-label">
-                        Greatest Haul
+                        Highest Points from a Hunt
                       </p>
                       <p className="treasure-stat-value">
                         {userScore.highestScore}
